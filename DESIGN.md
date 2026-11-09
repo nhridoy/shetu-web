@@ -1,95 +1,96 @@
 ---
+
 name: Terra
 description: An open-source home for your servers, owned by the people using it.
 colors:
-  surface: "#111615"
-  raised: "#191f1d"
-  ink: "#edf1ed"
-  muted: "#a7b2ac"
-  mint: "#a8dbbd"
-  mint-ink: "#15251b"
-  line: "#35413a"
-  mint-hover: "#bce8cd"
-  outline: "#607168"
-  search-border: "#56625b"
-  host-selected: "#26372d"
-  host-selected-border: "#425b4c"
-  host-hover: "#24312a"
-  feature-transfer: "#1c2420"
-  feature-hosts: "#1c2b23"
-  feature-shortcuts: "#202724"
+surface: "#111615"
+raised: "#191f1d"
+ink: "#edf1ed"
+muted: "#a7b2ac"
+mint: "#a8dbbd"
+mint-ink: "#15251b"
+line: "#35413a"
+mint-hover: "#bce8cd"
+outline: "#607168"
+search-border: "#56625b"
+host-selected: "#26372d"
+host-selected-border: "#425b4c"
+host-hover: "#24312a"
+feature-transfer: "#1c2420"
+feature-hosts: "#1c2b23"
+feature-shortcuts: "#202724"
 typography:
-  display:
-    fontFamily: '"Geist Variable", sans-serif'
-    fontSize: "clamp(46px, 5.4vw, 72px)"
-    fontWeight: 500
-    lineHeight: 1.07
-    letterSpacing: "-0.04em"
-  headline:
-    fontFamily: '"Geist Variable", sans-serif'
-    fontSize: "clamp(34px, 4vw, 49px)"
-    fontWeight: 500
-    lineHeight: 1.12
-    letterSpacing: "-0.04em"
-  title:
-    fontFamily: '"Geist Variable", sans-serif'
-    fontSize: "26px"
-    fontWeight: 500
-    lineHeight: 1.25
-    letterSpacing: "-0.03em"
-  body:
-    fontFamily: '"Geist Variable", sans-serif'
-    fontSize: "16px"
-    lineHeight: 1.7
-  label:
-    fontFamily: '"Geist Variable", sans-serif'
-    fontSize: "14px"
-    fontWeight: 550
-  terminal:
-    fontFamily: '"SFMono-Regular", Consolas, "Liberation Mono", monospace'
-    fontSize: "12px"
-    lineHeight: 1.8
+display:
+fontFamily: '"Geist Variable", sans-serif'
+fontSize: "clamp(46px, 5.4vw, 72px)"
+fontWeight: 500
+lineHeight: 1.07
+letterSpacing: "-0.04em"
+headline:
+fontFamily: '"Geist Variable", sans-serif'
+fontSize: "clamp(34px, 4vw, 49px)"
+fontWeight: 500
+lineHeight: 1.12
+letterSpacing: "-0.04em"
+title:
+fontFamily: '"Geist Variable", sans-serif'
+fontSize: "26px"
+fontWeight: 500
+lineHeight: 1.25
+letterSpacing: "-0.03em"
+body:
+fontFamily: '"Geist Variable", sans-serif'
+fontSize: "16px"
+lineHeight: 1.7
+label:
+fontFamily: '"Geist Variable", sans-serif'
+fontSize: "14px"
+fontWeight: 550
+terminal:
+fontFamily: '"SFMono-Regular", Consolas, "Liberation Mono", monospace'
+fontSize: "12px"
+lineHeight: 1.8
 rounded:
-  panel: "12px"
-  control: "8px"
-  compact: "6px"
+panel: "12px"
+control: "8px"
+compact: "6px"
 spacing:
-  section: "104px"
-  section-mobile: "66px"
-  heading-gap: "46px"
-  heading-gap-mobile: "30px"
-  mosaic-gap: "18px"
+section: "104px"
+section-mobile: "66px"
+heading-gap: "46px"
+heading-gap-mobile: "30px"
+mosaic-gap: "18px"
 components:
-  button-primary:
-    backgroundColor: "{colors.mint}"
-    textColor: "{colors.mint-ink}"
-    typography: "{typography.label}"
-    rounded: "{rounded.control}"
-    padding: "0 22px"
-  button-primary-hover:
-    backgroundColor: "{colors.mint-hover}"
-  button-outline:
-    backgroundColor: "transparent"
-    textColor: "{colors.ink}"
-    typography: "{typography.label}"
-    rounded: "{rounded.control}"
-    padding: "0 22px"
-  button-outline-hover:
-    backgroundColor: "{colors.raised}"
-  host-search:
-    backgroundColor: "transparent"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.compact}"
-    padding: "0 10px"
-  host-selected:
-    backgroundColor: "{colors.host-selected}"
-    textColor: "{colors.mint}"
-    rounded: "{rounded.compact}"
-    padding: "11px 12px"
-  feature-hosts:
-    backgroundColor: "{colors.feature-hosts}"
-    rounded: "{rounded.panel}"
-    padding: "32px 34px"
+button-primary:
+backgroundColor: "{colors.mint}"
+textColor: "{colors.mint-ink}"
+typography: "{typography.label}"
+rounded: "{rounded.control}"
+padding: "0 22px"
+button-primary-hover:
+backgroundColor: "{colors.mint-hover}"
+button-outline:
+backgroundColor: "transparent"
+textColor: "{colors.ink}"
+typography: "{typography.label}"
+rounded: "{rounded.control}"
+padding: "0 22px"
+button-outline-hover:
+backgroundColor: "{colors.raised}"
+host-search:
+backgroundColor: "transparent"
+textColor: "{colors.ink}"
+rounded: "{rounded.compact}"
+padding: "0 10px"
+host-selected:
+backgroundColor: "{colors.host-selected}"
+textColor: "{colors.mint}"
+rounded: "{rounded.compact}"
+padding: "11px 12px"
+feature-hosts:
+backgroundColor: "{colors.feature-hosts}"
+rounded: "{rounded.panel}"
+padding: "32px 34px"
 ---
 
 # Design System: Terra
