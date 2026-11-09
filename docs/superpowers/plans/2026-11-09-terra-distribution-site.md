@@ -1306,7 +1306,8 @@ export function formatBytes(bytes: number): string {
     units.length - 1,
   );
   const value = bytes / 1024 ** exponent;
-  return `${value >= 10 || exponent === 0 ? Math.round(value) : value.toFixed(1)} ${units[exponent]}`;
+  const rounded = Number.isInteger(value) ? String(value) : value.toFixed(1);
+  return `${rounded} ${units[exponent]}`;
 }
 
 export function formatReleaseDate(iso: string): string {
