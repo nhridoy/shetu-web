@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Not found — Terra" description="The page you requested does not exist.">
+  <section class="mx-auto max-w-[1200px] px-6 py-24">
+    <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">404</p>
+    <h1 class="mt-4 text-5xl font-medium tracking-[-0.045em]">That host is unreachable.</h1>
+    <p class="mt-4 max-w-xl text-lg text-muted">
+      The page you asked for does not exist. Try the download page, the docs, or the home page.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href="/" class="rounded-lg bg-ink px-5 py-3 text-sm font-medium text-paper">Home</a>
+      <a href="/download" class="rounded-lg border border-line px-5 py-3 text-sm font-medium">Download</a>
+      <a href="/docs" class="rounded-lg border border-line px-5 py-3 text-sm font-medium">Docs</a>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,36 @@
+---
+import { NAV_ITEMS, REPOS } from '../../lib/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-line">
+  <div class="mx-auto grid max-w-[1200px] gap-8 px-6 py-12 md:grid-cols-[1.5fr_1fr_1fr]">
+    <div>
+      <a href="/" class="font-mono text-sm font-medium">terra</a>
+      <p class="mt-3 max-w-xs text-sm leading-relaxed text-muted">
+        The open-source, self-hostable SSH client. Your servers. Your rules.
+      </p>
+      <p class="mt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-muted">
+        MIT licensed · {year}
+      </p>
+    </div>
+    <div>
+      <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">Site</p>
+      <ul class="mt-3 space-y-2">
+        {NAV_ITEMS.map((item) => (
+          <li><a href={item.href} class="text-sm text-muted hover:text-accent">{item.label}</a></li>
+        ))}
+      </ul>
+    </div>
+    <div>
+      <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">Source</p>
+      <ul class="mt-3 space-y-2">
+        <li><a href={REPOS.monorepo} class="text-sm text-muted hover:text-accent">terra</a></li>
+        <li><a href={REPOS.client} class="text-sm text-muted hover:text-accent">terra-client</a></li>
+        <li><a href={REPOS.server} class="text-sm text-muted hover:text-accent">terra-server</a></li>
+        <li><a href={REPOS.web} class="text-sm text-muted hover:text-accent">terra-web</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
