@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ReleaseList from '../components/download/ReleaseList';
+---
+
+<BaseLayout
+  title="Releases — Terra"
+  description="Terra release history, tags, dates, and download assets."
+>
+  <section class="mx-auto max-w-[900px] px-6 py-16">
+    <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
+      Releases
+    </p>
+    <h1 class="mt-4 text-5xl font-medium tracking-[-0.05em]">
+      Every release, in the open.
+    </h1>
+    <p class="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
+      Terra ships from GitHub Releases. The list below is fetched live and
+      falls back to the last known release when the API is unavailable.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-4 text-sm">
+      <a
+        href="https://github.com/nhridoy/terra-client/releases"
+        class="font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent"
+      >
+        All releases on GitHub
+      </a>
+      <a
+        href="/download"
+        class="font-medium text-muted underline decoration-line underline-offset-4 hover:text-accent"
+      >
+        Download the latest
+      </a>
+    </div>
+    <div class="mt-10">
+      <ReleaseList client:visible />
+    </div>
+  </section>
+</BaseLayout>
