@@ -1,0 +1,22 @@
+---
+interface Props {
+  tone?: 'note' | 'warning';
+  title: string;
+}
+
+const { tone = 'note', title } = Astro.props;
+---
+
+<div
+  class:list={[
+    'rounded-xl border p-4',
+    tone === 'warning'
+      ? 'border-amber-300 bg-amber-50'
+      : 'border-line bg-surface',
+  ]}
+>
+  <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
+    {title}
+  </p>
+  <div class="mt-2 text-sm leading-relaxed text-ink"><slot /></div>
+</div>

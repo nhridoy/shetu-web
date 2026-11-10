@@ -1,0 +1,46 @@
+---
+const values = [
+  {
+    title: 'Direct connections',
+    body: 'SSH and SFTP go from your machine to the host. No relay, no proxy, no server in the path.',
+    visual: 'ssh prod-web-01',
+  },
+  {
+    title: 'Encrypted vault',
+    body: 'Credentials and keys are encrypted on your device with Argon2id and XChaCha20-Poly1305.',
+    visual: 'vault · locked',
+  },
+  {
+    title: 'SFTP and editor',
+    body: 'Browse remote files, edit in place, and move files without leaving the workspace.',
+    visual: 'sftp /var/www',
+  },
+  {
+    title: 'Port forwarding',
+    body: 'Open local and remote forwards for databases, dashboards, and internal services.',
+    visual: '127.0.0.1:5432 → db',
+  },
+];
+---
+
+<section class="mx-auto max-w-[1200px] px-6 py-20 md:py-28">
+  <div class="max-w-2xl">
+    <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
+      What you get
+    </p>
+    <h2 class="mt-3 text-4xl font-medium tracking-[-0.04em] md:text-5xl">
+      A terminal workspace, not a browser tab.
+    </h2>
+  </div>
+  <div class="mt-10 grid gap-4 sm:grid-cols-2">
+    {values.map((value) => (
+      <article class="rounded-xl border border-line bg-surface p-6">
+        <div class="rounded-lg border border-white/10 bg-terminal px-3 py-2 font-mono text-[11px] text-terminal-text">
+          {value.visual}
+        </div>
+        <h3 class="mt-5 text-lg font-medium tracking-[-0.02em]">{value.title}</h3>
+        <p class="mt-2 text-sm leading-relaxed text-muted">{value.body}</p>
+      </article>
+    ))}
+  </div>
+</section>

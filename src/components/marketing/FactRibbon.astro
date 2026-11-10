@@ -1,0 +1,22 @@
+---
+const facts = [
+  'MIT licensed',
+  'Windows · macOS · Linux',
+  'Direct SSH',
+  'Encrypted vault',
+  'Self-hosted sync',
+];
+---
+
+<section class="border-y border-line bg-surface">
+  <div class="mx-auto flex max-w-[1200px] flex-wrap items-center gap-x-8 gap-y-3 px-6 py-4 font-mono text-[10px] uppercase tracking-[0.16em] text-muted">
+    {facts.map((fact, index) => (
+      <>
+        {index > 0 && (
+          <span class="hidden h-1 w-1 rounded-full bg-line sm:block" aria-hidden="true"></span>
+        )}
+        <span>{fact}</span>
+      </>
+    ))}
+  </div>
+</section>
