@@ -17,6 +17,7 @@ The desktop app screenshots supplied on 2026-11-10 are the primary visual eviden
 - Make the site feel like an open-source desktop app, not a corporate landing page.
 - Make “download the desktop app” the primary action on the homepage.
 - Show the real product with real screenshots, not drawn mockups.
+- Give every core capability a first-class homepage section: hosts/vault, terminal workspaces, SFTP/editor, teams, themes, port forwarding, security, and self-hosted sync.
 - Rewrite the homepage copy around concrete features and outcomes.
 - Apply one coherent dark visual system to every page.
 - Keep the existing static architecture, OS detection, runtime release data, fallback snapshot, and no-JS behavior.
@@ -161,7 +162,7 @@ Primary buttons are white (`#F5F7F6`) with near-black text. Secondary buttons ar
 - H2: **Your whole fleet, one list.**
 - Body: “Group machines by project or environment, add tags and colors, and find the right host without digging through config files.”
 - Bullets: `Groups, tags, and colors` · `Search across hosts` · `Connection status at a glance`
-- Image: hosts screenshot, image right.
+- Image: edit-host screenshot, image right.
 
 ### 8.4 Showcase: terminal
 
@@ -187,7 +188,34 @@ Primary buttons are white (`#F5F7F6`) with near-black text. Secondary buttons ar
 - Bullets: `Team invites` · `Shared vaults` · `Member roles`
 - Image: team screenshot, image left.
 
-### 8.7 Self-hosted server
+### 8.7 Showcase: themes
+
+- Eyebrow: `Themes`
+- H2: **Make the workspace yours.**
+- Body: “Choose a dark, light, or named theme. The whole workspace changes, not just the terminal.”
+- Bullets: `Dark and light` · `Named themes` · `Workspace-wide`
+- Image: themes screenshot, image right.
+
+### 8.8 Showcase: port forwarding
+
+- Eyebrow: `Port forwarding`
+- H2: **Reach the services behind the firewall.**
+- Body: “Open local, remote, and dynamic tunnels for databases, dashboards, and internal APIs without leaving the workspace.”
+- Bullets: `Local and remote forwards` · `Dynamic SOCKS proxies` · `No extra client`
+- Layout: text left, code block right, no screenshot. Code label `shell`:
+
+  ```sh
+  ssh -L 5432:localhost:5432 deploy@acme-prod-01
+  ```
+
+### 8.9 Security
+
+- Use the existing `SecurityFlow` component, restyled for the dark system.
+- Keep its content: master password → Argon2id, vault key → XChaCha20-Poly1305, X25519 identity, sync server stores ciphertext.
+- Add a `Read the security overview` link to `/security` inside the section.
+- This is the homepage’s security section, separate from the self-host deployment section.
+
+### 8.10 Self-hosted server
 
 - Eyebrow: `Self-hosted`
 - H2: **Run the sync server yourself.**
@@ -203,7 +231,7 @@ Primary buttons are white (`#F5F7F6`) with near-black text. Secondary buttons ar
 - Link: `Read the server guide` → `/docs/server`.
 - No cloud URL, no pricing, no “one-click deploy” claim.
 
-### 8.8 Open source
+### 8.11 Open source
 
 - Eyebrow: `Open source`
 - H2: **Yours to run, read, and change.**
@@ -216,7 +244,7 @@ Primary buttons are white (`#F5F7F6`) with near-black text. Secondary buttons ar
 - CTAs: `View on GitHub` → monorepo, `Read the docs` → `/docs`.
 - No star counts, contributor counts, or customer logos.
 
-### 8.9 Install
+### 8.12 Install
 
 - Eyebrow: `Install`
 - H2: **Install in one line.**
@@ -224,7 +252,7 @@ Primary buttons are white (`#F5F7F6`) with near-black text. Secondary buttons ar
 - Static `InstallCommand` with both Unix and Windows commands.
 - Link: `All downloads` → `/download`.
 
-### 8.10 Closing CTA
+### 8.13 Closing CTA
 
 - H2: **Your servers are waiting.**
 - Body: “Download Terra, connect your first host, and keep the rest of your setup where it belongs.”
@@ -235,18 +263,20 @@ Primary buttons are white (`#F5F7F6`) with near-black text. Secondary buttons ar
 
 ### 9.1 Selected screenshots
 
-Use four, not all fourteen:
+Use six full screenshots, not all fourteen:
 
 | Asset | Source (2026-11-10) | Use |
 |---|---|---|
-| `hosts.webp` | 13:57:06 hosts list | Hero and hosts showcase |
+| `hosts.webp` | 13:57:06 hosts list | Hero |
+| `edit-host.webp` | 13:57:26 edit-host modal | Hosts showcase |
 | `terminal.webp` | 13:59:32 terminal `ls` | Terminal showcase |
 | `editor.webp` | 14:05:10 editor + explorer | Files showcase |
 | `team-vault.webp` | 13:58:27 team detail | Teams showcase |
+| `themes.webp` | 14:05:35 settings/themes | Themes showcase |
 
-A fifth crop, `terminal-inset.webp`, may be derived from the terminal screenshot for the hero inset.
+An additional crop, `terminal-inset.webp`, may be derived from the terminal screenshot for the hero inset.
 
-Do not use the six-pane OpenCode screenshot, the save-preset modal, the SFTP empty split, or the settings/themes screenshot. They either contain third-party product names, too much personal context, or are not compelling enough.
+Do not use the six-pane OpenCode screenshot, the save-preset modal, the SFTP empty split, or the create-team modal. They either contain third-party product names, too much personal context, or are not compelling enough.
 
 ### 9.2 Redaction and renaming
 
@@ -260,11 +290,12 @@ Replace all real data before publishing:
 - Terminal prompt `nahidujjaman-hridoy@...` → `alex@studio`.
 - Local paths such as `/run/media/.../terra/terra-web` → `/home/alex/projects/terra-web`.
 - `NaN ago` → `2m ago`.
+- The `Claude` theme label → `Mist`.
 - Any other personal, local, or third-party text → neutral demo values or crop it out.
 
 Crop the macOS menu bar and desktop chrome. Keep the app’s own title bar and tabs. Do not leave the macOS date/time, battery, or Wi-Fi indicators in the final assets.
 
-Verification: run OCR (if available) or a visual inspection over each processed asset and confirm none of `nahidujjaman`, `hridoyboss`, `telehack`, `/run/media`, or `Binary Tech` remain.
+Verification: run OCR (if available) or a visual inspection over each processed asset and confirm none of `nahidujjaman`, `hridoyboss`, `telehack`, `/run/media`, `Binary Tech`, or `Claude` remain.
 
 ### 9.3 Image handling
 
@@ -296,10 +327,11 @@ New or rewritten marketing components:
 - `src/components/marketing/FeatureShowcase.astro` — new; props for eyebrow, title, body, bullets, image, alt, and image side.
 - `src/components/marketing/AppWindow.astro` — new; frame around a screenshot, optional inset.
 - `src/components/marketing/SelfHostSection.astro` — new; replaces `SelfHostPanel.astro`.
+- `src/components/marketing/PortForwardingSection.astro` — new; text plus code block.
 - `src/components/marketing/OpenSourceSection.astro` — new; replaces `OpenSource.astro`.
 - `src/components/marketing/InstallSection.astro` — new.
 - `src/components/marketing/ClosingCta.astro` — rewritten.
-- `src/components/marketing/SecurityFlow.astro` — retained for `/security`, restyled.
+- `src/components/marketing/SecurityFlow.astro` — retained for `/security` and reused on the homepage, restyled.
 - Delete `FactRibbon.astro`, `ValueCards.astro`, and `WorkspaceMock.astro` once unused.
 
 Shell and shared:
@@ -370,7 +402,7 @@ Allowed:
   - `/docs/*` routes and TOC anchors resolve.
   - One `h1` per page.
   - No banned terms in built HTML.
-  - No `nahidujjaman`, `hridoyboss`, `telehack`, `/run/media`, or `Binary Tech` in processed assets (OCR or visual check).
+  - No `nahidujjaman`, `hridoyboss`, `telehack`, `/run/media`, `Binary Tech`, or `Claude` in processed assets (OCR or visual check).
 - Manual/browser checks if available:
   - 360, 768, 1024, 1440 widths.
   - JS disabled: matrix, install commands, navigation, docs, GitHub Releases links.
@@ -383,11 +415,11 @@ Allowed:
 
 - Replace the old homepage sections; remove unused marketing components.
 - Remove old screenshot/mock references.
-- Keep `SecurityFlow` for `/security`.
+- Keep `SecurityFlow` for `/security` and the homepage.
 - Keep all existing routes.
 - Update `SITE_DESCRIPTION` and the homepage JSON-LD description to the new product description.
 - No changes outside `terra-web`.
 
 ## 17. Approval
 
-The user approved the product-led direction (Approach A), the dark visual system, the homepage flow, the four-screenshot plan, and the dark-only decision on 2026-11-10. This document is the written spec for review before the implementation plan.
+The user approved the product-led direction (Approach A), the dark visual system, the homepage flow, and the dark-only decision on 2026-11-10. This revision adds first-class themes, port forwarding, and security sections, plus the edit-host and themes screenshots, so every core capability has a dedicated homepage section. This document is the written spec for review before the implementation plan.
