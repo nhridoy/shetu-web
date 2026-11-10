@@ -48,7 +48,7 @@ export default function ReleaseList({ load }: ReleaseListProps) {
         <p className="text-sm text-muted">
           {checked
             ? 'Release history is unavailable right now.'
-            : 'Release history is loaded from GitHub.'}
+            : 'Release history loads from GitHub.'}
         </p>
         <a
           href="https://github.com/nhridoy/terra-client/releases"
