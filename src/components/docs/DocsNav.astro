@@ -1,0 +1,71 @@
+---
+import { getCollection } from 'astro:content';
+
+const docs = (await getCollection('docs')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const groups = [
+  {
+    id: 'desktop',
+    label: 'Desktop',
+    items: docs.filter((entry) => entry.data.section === 'desktop'),
+  },
+  {
+    id: 'server',
+    label: 'Server',
+    items: docs.filter((entry) => entry.data.section === 'server'),
+  },
+];
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<nav aria-label="Docs">
+  <a
+    href="/docs"
+    aria-current={currentPath === '/docs' ? 'page' : undefined}
+    class:list={[
+      'block rounded-lg px-3 py-2 text-sm',
+      currentPath === '/docs'
+        ? 'bg-accent-wash text-accent'
+        : 'text-muted hover:bg-accent-wash hover:text-accent',
+    ]}
+  >
+    Docs home
+  </a>
+
+  {groups.map((group) => (
+    <div class="mt-6">
+      <p class="px-3 font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
+        {group.label}
+      </p>
+      <ul class="mt-2 space-y-1">
+        {group.items.map((entry) => {
+          const href = `/docs/${entry.id}`;
+          const active = currentPath === href;
+          return (
+            <li>
+              <a
+                href={href}
+                aria-current={active ? 'page' : undefined}
+                class:list={[
+                  'block rounded-lg px-3 py-2 text-sm',
+                  active
+                    ? 'bg-accent-wash text-accent'
+                    : 'text-muted hover:bg-accent-wash hover:text-accent',
+                ]}
+              >
+                {entry.data.title}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  ))}
+
+  <div class="mt-6 border-t border-line pt-4">
+    <a href="/security" class="block rounded-lg px-3 py-2 text-sm text-muted hover:bg-accent-wash hover:text-accent">
+      Security overview
+    </a>
+  </div>
+</nav>

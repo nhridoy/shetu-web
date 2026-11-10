@@ -1,0 +1,146 @@
+---
+title: Self-host the sync server
+description: Run the Terra sync and auth server with Docker Compose, PostgreSQL, TLS, and optional OAuth.
+section: server
+order: 2
+updated: "2026-11-09"
+---
+
+Terra works without a server. Self-hosting adds encrypted sync and account features across devices. The server stores ciphertext and wrapped keys. It never sees your SSH traffic or plaintext credentials.
+
+## Requirements
+
+- Docker Engine with Compose v2
+- A PostgreSQL database
+- A domain name and TLS certificate for production
+- A long random `JWT_SECRET`
+
+SQLite works for local development. Use PostgreSQL in production.
+
+## Docker Compose
+
+Create `compose.yaml`:
+
+```yaml
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: terra
+      POSTGRES_PASSWORD: change-me
+      POSTGRES_DB: terra
+    volumes:
+      - terra-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U terra"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  terra-server:
+    image: ghcr.io/nhridoy/terra-server:latest
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      TERRA_HOST: 0.0.0.0
+      TERRA_PORT: "8080"
+      DATABASE_URL: postgres://terra:change-me@postgres:5432/terra?sslmode=disable
+      JWT_SECRET: replace-with-a-long-random-string
+      BASE_URL: https://sync.example.com
+      CORS_ALLOWED_ORIGINS: http://tauri.localhost,tauri://localhost
+    restart: unless-stopped
+
+volumes:
+  terra-db:
+```
+
+Generate a secret with:
+
+```bash
+openssl rand -base64 48
+```
+
+Start the stack:
+
+```bash
+docker compose up -d
+```
+
+Check the logs:
+
+```bash
+docker compose logs -f terra-server
+```
+
+## Environment
+
+| Variable | Required | Purpose |
+|---|---|---|
+| `DATABASE_URL` | Yes | PostgreSQL connection string in production |
+| `JWT_SECRET` | Yes | Signs access tokens |
+| `BASE_URL` | Yes in production | Public URL, used for OAuth callbacks |
+| `TERRA_HOST` | No | Bind address, default `0.0.0.0` |
+| `TERRA_PORT` | No | HTTP port, default `8080` |
+| `JWT_EXPIRY` | No | Access token lifetime, default `15m` |
+| `REFRESH_TOKEN_EXPIRY` | No | Refresh token lifetime, default `720h` |
+| `CORS_ALLOWED_ORIGINS` | No | Browser origins allowed to call the API |
+| `TRUSTED_PROXIES` | No | CIDRs trusted for `X-Forwarded-For` |
+| `REDIS_URL` | No | Shared token storage for multiple instances |
+
+The full list is in [`.env.example`](https://github.com/nhridoy/terra-server/blob/main/.env.example).
+
+## TLS and reverse proxy
+
+Terminate TLS at a reverse proxy and forward to `127.0.0.1:8080`. Set `BASE_URL` to the public HTTPS URL and set `TRUSTED_PROXIES` to the proxy's CIDR.
+
+If the proxy runs on the host, bind the container to localhost:
+
+```yaml
+ports:
+  - "127.0.0.1:8080:8080"
+```
+
+Example Caddyfile:
+
+```
+sync.example.com {
+  reverse_proxy 127.0.0.1:8080
+}
+```
+
+## Accounts and OAuth
+
+Email and password registration works out of the box. Set `JWT_SECRET` before exposing the server.
+
+Google and GitHub OAuth are optional. Set the matching `OAUTH_GOOGLE_CLIENT_ID` / `OAUTH_GOOGLE_CLIENT_SECRET` or `OAUTH_GITHUB_CLIENT_ID` / `OAUTH_GITHUB_CLIENT_SECRET`. The callback URL is based on `BASE_URL`.
+
+The desktop app uses loopback callbacks. Keep the default `TERRA_OAUTH_REDIRECT_URIS` unless you also change the client's listener ports.
+
+## Email verification
+
+Set `REQUIRE_EMAIL_VERIFICATION=true` to require a 6-digit code for new email/password signups. Configure `SMTP_HOST`, `SMTP_PORT`, `SMTP_USERNAME`, `SMTP_PASSWORD`, and `SMTP_FROM`.
+
+The server refuses to start when verification is on and neither SMTP nor `LOG_OTP_FALLBACK` is configured. `LOG_OTP_FALLBACK=true` logs codes to the console and is for development only.
+
+## Upgrades
+
+Pull the new image and recreate the container:
+
+```bash
+docker compose pull terra-server
+docker compose up -d terra-server
+```
+
+GORM runs schema migrations on startup. Back up PostgreSQL before upgrading production.
+
+## Point the client at your server
+
+Open Terra's settings and find the sync section. Enter your server URL, for example `https://sync.example.com`. Sign in or create an account. Sync is optional; local-only use keeps working without it.
+
+## Next
+
+- [Security reference](/docs/security)
+- [Troubleshooting](/docs/troubleshooting)
