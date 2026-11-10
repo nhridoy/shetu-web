@@ -58,36 +58,36 @@ Every technical claim must map to behavior that exists in the code. The site mus
 
 ## 4. Locked decisions
 
-| Decision | Choice |
-|---|---|
-| Scope | New multi-page distribution and marketing site, from scratch |
-| Pages | Core distribution set: Home, Download, Docs, Releases, Security, Community |
+| Decision         | Choice                                                                                       |
+| ---------------- | -------------------------------------------------------------------------------------------- |
+| Scope            | New multi-page distribution and marketing site, from scratch                                 |
+| Pages            | Core distribution set: Home, Download, Docs, Releases, Security, Community                   |
 | Visual direction | Field Manual: light editorial open-source aesthetic, one mint accent, dark terminal surfaces |
-| Rendering | Astro static output, React islands only where interaction is required |
-| Download data | Runtime fetch of the latest GitHub release, isolated in a client island |
-| OS handling | Client-side OS detection with an architecture recommendation |
-| Docs | Fresh user-facing MDX guides in Astro content collections |
-| Hosting | Static and host-agnostic |
-| Package manager | pnpm |
-| Home page | Highest design priority; it is the marketing surface |
+| Rendering        | Astro static output, React islands only where interaction is required                        |
+| Download data    | Runtime fetch of the latest GitHub release, isolated in a client island                      |
+| OS handling      | Client-side OS detection with an architecture recommendation                                 |
+| Docs             | Fresh user-facing MDX guides in Astro content collections                                    |
+| Hosting          | Static and host-agnostic                                                                     |
+| Package manager  | pnpm                                                                                         |
+| Home page        | Highest design priority; it is the marketing surface                                         |
 
 ## 5. Information architecture
 
 **Global navigation:** Download · Docs · Security · Releases · Community, plus a persistent Download button.
 
-| Route | Job | Primary content |
-|---|---|---|
-| `/` | Convince and route | Hero with OS-aware download; product proof; security; self-host; install; open source; closing CTA |
-| `/download` | Deliver the right binary | Detected recommendation, full platform matrix, install commands, first-launch notes, requirements, version and date |
-| `/docs` | Choose a path | Desktop and Server tracks, Security, Troubleshooting |
-| `/docs/desktop` | Install and run the app | Per-OS install, first launch, connecting, updates, uninstall |
-| `/docs/server` | Self-host sync | Docker Compose, environment variables, Postgres, TLS, OAuth, email verification, upgrades |
-| `/docs/security` | Explain the model | Key hierarchy, server visibility, recovery kit, threat model |
-| `/docs/troubleshooting` | Recover from common failures | First-launch warnings, connection issues, sync issues, logs |
-| `/releases` | Prove momentum | Release list with tag, date, notes, assets, prerelease labels |
-| `/security` | Build trust | Direct SSH, client-side encryption, zero-knowledge sync, disclosure policy |
-| `/community` | Make contributing easy | Repos, issues, discussions, contributing, MIT license |
-| `404` | Recover | Friendly not-found page with links to home, download, docs |
+| Route                   | Job                          | Primary content                                                                                                     |
+| ----------------------- | ---------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `/`                     | Convince and route           | Hero with OS-aware download; product proof; security; self-host; install; open source; closing CTA                  |
+| `/download`             | Deliver the right binary     | Detected recommendation, full platform matrix, install commands, first-launch notes, requirements, version and date |
+| `/docs`                 | Choose a path                | Desktop and Server tracks, Security, Troubleshooting                                                                |
+| `/docs/desktop`         | Install and run the app      | Per-OS install, first launch, connecting, updates, uninstall                                                        |
+| `/docs/server`          | Self-host sync               | Docker Compose, environment variables, Postgres, TLS, OAuth, email verification, upgrades                           |
+| `/docs/security`        | Explain the model            | Key hierarchy, server visibility, recovery kit, threat model                                                        |
+| `/docs/troubleshooting` | Recover from common failures | First-launch warnings, connection issues, sync issues, logs                                                         |
+| `/releases`             | Prove momentum               | Release list with tag, date, notes, assets, prerelease labels                                                       |
+| `/security`             | Build trust                  | Direct SSH, client-side encryption, zero-knowledge sync, disclosure policy                                          |
+| `/community`            | Make contributing easy       | Repos, issues, discussions, contributing, MIT license                                                               |
+| `404`                   | Recover                      | Friendly not-found page with links to home, download, docs                                                          |
 
 ## 6. Visual direction — Field Manual
 
@@ -95,18 +95,18 @@ A light editorial open-source aesthetic. Paper-like canvas, strong typographic h
 
 ### Tokens
 
-| Role | Value |
-|---|---|
-| Canvas | `#F7F5EF` |
-| Raised surface | `#FFFFFF` |
-| Ink | `#161816` |
-| Muted ink | `#646A63` |
-| Hairline | `rgba(22, 24, 22, 0.12)` |
-| Accent (text/links) | `#1C6B47` |
-| Accent wash | `#E4EFE7` |
-| Terminal surface | `#101413` |
-| Terminal text | `#A8DBBD` and paper |
-| Focus ring | `#1C6B47`, 2px, 3px offset |
+| Role                | Value                      |
+| ------------------- | -------------------------- |
+| Canvas              | `#F7F5EF`                  |
+| Raised surface      | `#FFFFFF`                  |
+| Ink                 | `#161816`                  |
+| Muted ink           | `#646A63`                  |
+| Hairline            | `rgba(22, 24, 22, 0.12)`   |
+| Accent (text/links) | `#1C6B47`                  |
+| Accent wash         | `#E4EFE7`                  |
+| Terminal surface    | `#101413`                  |
+| Terminal text       | `#A8DBBD` and paper        |
+| Focus ring          | `#1C6B47`, 2px, 3px offset |
 
 ### Typography
 
@@ -321,13 +321,13 @@ Shape:
 
 ## 10. Error states
 
-| Condition | Behavior |
-|---|---|
-| GitHub API unreachable or rate-limited | Render the committed snapshot with a notice and GitHub link |
-| Release found but no asset for the platform | Show the release page and the full matrix |
-| OS or architecture undetectable | Skip the recommendation and show the matrix |
-| Clipboard blocked | Select the command text and show a copy hint |
-| No JavaScript | Static links to `/download`, install scripts, and GitHub Releases |
+| Condition                                   | Behavior                                                          |
+| ------------------------------------------- | ----------------------------------------------------------------- |
+| GitHub API unreachable or rate-limited      | Render the committed snapshot with a notice and GitHub link       |
+| Release found but no asset for the platform | Show the release page and the full matrix                         |
+| OS or architecture undetectable             | Skip the recommendation and show the matrix                       |
+| Clipboard blocked                           | Select the command text and show a copy hint                      |
+| No JavaScript                               | Static links to `/download`, install scripts, and GitHub Releases |
 
 ## 11. Accessibility, SEO, and performance
 
@@ -360,12 +360,14 @@ Shape:
 ## 14. Acceptance criteria
 
 **Home**
+
 - Static HTML renders hero, all sections, and footer without JavaScript.
 - Download CTA reaches the correct asset on supported platforms and falls back to `/download`.
 - Responsive from 360px to 1440px with no horizontal scroll.
 - Reduced motion respected.
 
 **Download**
+
 - Correct OS recommendation.
 - All six platform and architecture combinations listed.
 - Version and release date shown.
@@ -373,26 +375,29 @@ Shape:
 - API-failure fallback verified.
 
 **Docs**
+
 - MDX builds; sidebar, TOC, highlighting, mobile nav, and previous/next links work.
 
 **Releases**
+
 - Releases listed with tag, date, notes link, and prerelease label.
 - Fallback works.
 
 **Global**
+
 - Sitemap, robots, per-page metadata, JSON-LD, and 404 present.
 - `pnpm build`, `astro check`, Biome, and Vitest pass.
 - Island JavaScript stays within the agreed budget.
 
 ## 15. Risks and mitigations
 
-| Risk | Mitigation |
-|---|---|
-| GitHub API rate limits (60/hour unauthenticated) | 10-minute session cache plus committed snapshot |
-| Architecture detection is unreliable | Detect OS only; recommend the common architecture and always show alternatives |
-| Unsigned builds trigger OS warnings | Explicit first-launch guidance on Download and in Docs |
-| Copy drifts from the product | Accuracy rules and links to source; review claims against code |
-| Coded product mock diverges from real UI | Keep the mock abstract and representative, never claim it is a screenshot |
+| Risk                                             | Mitigation                                                                     |
+| ------------------------------------------------ | ------------------------------------------------------------------------------ |
+| GitHub API rate limits (60/hour unauthenticated) | 10-minute session cache plus committed snapshot                                |
+| Architecture detection is unreliable             | Detect OS only; recommend the common architecture and always show alternatives |
+| Unsigned builds trigger OS warnings              | Explicit first-launch guidance on Download and in Docs                         |
+| Copy drifts from the product                     | Accuracy rules and links to source; review claims against code                 |
+| Coded product mock diverges from real UI         | Keep the mock abstract and representative, never claim it is a screenshot      |
 
 ## 16. Out of scope
 

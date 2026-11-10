@@ -110,6 +110,7 @@ Retired in Task 11: `src/components/landing/*`, `src/components/ui/{badge,button
 ## Task 1: Foundation, Design Tokens, and Base Shell
 
 **Files:**
+
 - Modify: `package.json`
 - Modify: `astro.config.mjs`
 - Modify: `tsconfig.json`
@@ -126,6 +127,7 @@ Retired in Task 11: `src/components/landing/*`, `src/components/ui/{badge,button
 - Create: `src/pages/robots.txt.ts`
 
 **Interfaces:**
+
 - Produces `SITE_NAME`, `SITE_DESCRIPTION`, `REPOS`, `NAV_ITEMS`, `INSTALL_COMMANDS` from `src/lib/site.ts`.
 - Produces `BaseLayout` with props `{ title, description, canonical?, jsonLd? }`.
 - Produces a global `[data-copy]` click handler used by every copy control.
@@ -297,8 +299,8 @@ Create `src/env.d.ts`:
 Replace `src/styles/global.css` with:
 
 ```css
-@import 'tailwindcss';
-@import '@fontsource-variable/geist';
+@import "tailwindcss";
+@import "@fontsource-variable/geist";
 
 @theme {
   --color-paper: #f7f5ef;
@@ -310,7 +312,7 @@ Replace `src/styles/global.css` with:
   --color-accent-wash: #e4efe7;
   --color-terminal: #101413;
   --color-terminal-text: #a8dbbd;
-  --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
@@ -361,20 +363,20 @@ Replace `src/styles/global.css` with:
   display: none;
 }
 
-#install-unix:checked ~ [data-panel='unix'],
-#install-windows:checked ~ [data-panel='windows'] {
+#install-unix:checked ~ [data-panel="unix"],
+#install-windows:checked ~ [data-panel="windows"] {
   display: block;
 }
 
-#install-unix:checked ~ .install-tabs label[for='install-unix'],
-#install-windows:checked ~ .install-tabs label[for='install-windows'] {
+#install-unix:checked ~ .install-tabs label[for="install-unix"],
+#install-windows:checked ~ .install-tabs label[for="install-windows"] {
   border-color: var(--color-accent);
   background: var(--color-accent-wash);
   color: var(--color-accent);
 }
 
-#install-unix:focus-visible ~ .install-tabs label[for='install-unix'],
-#install-windows:focus-visible ~ .install-tabs label[for='install-windows'] {
+#install-unix:focus-visible ~ .install-tabs label[for="install-unix"],
+#install-windows:focus-visible ~ .install-tabs label[for="install-windows"] {
   outline: 2px solid var(--color-accent);
   outline-offset: 3px;
 }
@@ -725,10 +727,12 @@ git commit -m "feat: add site foundation and field manual tokens"
 ## Task 2: Platform Detection
 
 **Files:**
+
 - Create: `src/lib/platform.ts`
 - Create: `src/lib/platform.test.ts`
 
 **Interfaces:**
+
 - Produces `OS = 'macos' | 'windows' | 'linux' | 'unknown'`.
 - Produces `Arch = 'arm64' | 'x64' | 'unknown'`.
 - Produces `DetectedPlatform = { os: OS; arch: Arch }`.
@@ -762,7 +766,9 @@ describe('detectOs', () => {
 
   it('falls back to the user agent', () => {
     expect(
-      detectOs({ userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)' }),
+      detectOs({
+        userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)',
+      }),
     ).toBe('macos');
     expect(
       detectOs({ userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' }),
@@ -793,11 +799,14 @@ describe('detectOs', () => {
 
 describe('detectArch', () => {
   it('reads arm64 and x64 from the user agent', () => {
-    expect(detectArch({ userAgent: 'Mozilla/5.0 (Macintosh; ARM64)' }, 'macos')).toBe(
-      'arm64',
-    );
     expect(
-      detectArch({ userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' }, 'windows'),
+      detectArch({ userAgent: 'Mozilla/5.0 (Macintosh; ARM64)' }, 'macos'),
+    ).toBe('arm64');
+    expect(
+      detectArch(
+        { userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' },
+        'windows',
+      ),
     ).toBe('x64');
   });
 
@@ -916,7 +925,10 @@ export function detectOs(input: PlatformInput): OS {
   return 'unknown';
 }
 
-export function detectArch(input: PlatformInput, os: OS = detectOs(input)): Arch {
+export function detectArch(
+  input: PlatformInput,
+  os: OS = detectOs(input),
+): Arch {
   const ua = (input.userAgent ?? '').toLowerCase();
   if (/(aarch64|arm64|apple silicon)/.test(ua)) return 'arm64';
   if (/(x86_64|win64|x64|amd64)/.test(ua)) return 'x64';
@@ -925,7 +937,9 @@ export function detectArch(input: PlatformInput, os: OS = detectOs(input)): Arch
   return 'unknown';
 }
 
-export async function detectPlatform(nav: NavigatorLike): Promise<DetectedPlatform> {
+export async function detectPlatform(
+  nav: NavigatorLike,
+): Promise<DetectedPlatform> {
   const os = detectOs(nav);
   let arch = detectArch(nav, os);
 
@@ -935,7 +949,8 @@ export async function detectPlatform(nav: NavigatorLike): Promise<DetectedPlatfo
       'bitness',
     ]);
     if (high?.architecture === 'arm') arch = 'arm64';
-    else if (high?.architecture === 'x86' && high.bitness === '64') arch = 'x64';
+    else if (high?.architecture === 'x86' && high.bitness === '64')
+      arch = 'x64';
   } catch {
     // Detection is best-effort. Keep the user-agent result.
   }
@@ -964,6 +979,7 @@ git commit -m "feat: add client-side platform detection"
 ## Task 3: Release Parsing, Asset Mapping, and Fallback
 
 **Files:**
+
 - Create: `src/lib/releases.ts`
 - Create: `src/lib/releases.test.ts`
 - Create: `src/lib/github.ts`
@@ -972,6 +988,7 @@ git commit -m "feat: add client-side platform detection"
 - Create: `src/data/releases.json`
 
 **Interfaces:**
+
 - Produces `Release`, `ReleaseAsset`, `PlatformAsset`, `Format`.
 - Produces `parseRelease(raw)`, `mapAssets(release)`, `pickRecommended(assets, platform)`, `formatBytes(bytes)`, `formatReleaseDate(iso)`.
 - Produces `getLatestRelease({ fallback, ... })` returning `{ release, source }`.
@@ -996,8 +1013,7 @@ const raw = {
   tag_name: 'v0.0.15',
   name: 'v0.0.15',
   published_at: '2026-11-05T10:20:49Z',
-  html_url:
-    'https://github.com/nhridoy/terra-client/releases/tag/v0.0.15',
+  html_url: 'https://github.com/nhridoy/terra-client/releases/tag/v0.0.15',
   prerelease: false,
   body: 'Notes',
   assets: [
@@ -1114,9 +1130,9 @@ describe('pickRecommended', () => {
     const assets = mapAssets(parseRelease(raw)).filter(
       (asset) => !(asset.os === 'windows' && asset.arch === 'arm64'),
     );
-    expect(pickRecommended(assets, { os: 'windows', arch: 'arm64' })?.arch).toBe(
-      'x64',
-    );
+    expect(
+      pickRecommended(assets, { os: 'windows', arch: 'arm64' })?.arch,
+    ).toBe('x64');
   });
 
   it('returns null for an unknown OS', () => {
@@ -1210,7 +1226,8 @@ function archOf(name: string): Arch {
 }
 
 function labelFor(os: OS, arch: Arch, format: Format): string {
-  const osName = os === 'macos' ? 'macOS' : os === 'windows' ? 'Windows' : 'Linux';
+  const osName =
+    os === 'macos' ? 'macOS' : os === 'windows' ? 'Windows' : 'Linux';
   const archName = arch === 'arm64' ? 'ARM64' : 'x64';
   const formatName =
     format === 'dmg'
@@ -1682,11 +1699,13 @@ git commit -m "feat: add release parsing, caching, and fallback snapshot"
 ## Task 4: Download Panel and Install Commands
 
 **Files:**
+
 - Create: `src/components/download/DownloadPanel.tsx`
 - Create: `src/components/download/DownloadPanel.test.tsx`
 - Create: `src/components/download/InstallCommand.astro`
 
 **Interfaces:**
+
 - Consumes `detectPlatform`, `getLatestRelease`, `mapAssets`, `pickRecommended`, `formatBytes`, `formatReleaseDate`.
 - `DownloadPanel` props: `{ variant?: 'hero' | 'full'; detect?: () => Promise<DetectedPlatform>; load?: () => Promise<ReleaseResult> }`.
 - `InstallCommand` has no props; it imports `INSTALL_COMMANDS` directly.
@@ -1746,7 +1765,10 @@ describe('DownloadPanel', () => {
       />,
     );
     const link = await screen.findByTestId('recommended-download');
-    expect(link).toHaveAttribute('href', 'https://example.com/linux-x64.AppImage');
+    expect(link).toHaveAttribute(
+      'href',
+      'https://example.com/linux-x64.AppImage',
+    );
     expect(screen.getByTestId('release-version')).toHaveTextContent('v9.9.9');
   });
 
@@ -1781,10 +1803,7 @@ Create `src/components/download/DownloadPanel.tsx`:
 import { useEffect, useMemo, useState } from 'react';
 import fallbackData from '../../data/releases.json';
 import { sessionCache } from '../../lib/browser';
-import {
-  getLatestRelease,
-  type ReleaseResult,
-} from '../../lib/github';
+import { getLatestRelease, type ReleaseResult } from '../../lib/github';
 import {
   detectPlatform,
   type DetectedPlatform,
@@ -1868,7 +1887,9 @@ export default function DownloadPanel({
         data-testid="hero-download"
         className="inline-flex items-center justify-center rounded-lg bg-ink px-5 py-3 text-sm font-medium text-paper transition-colors duration-150 hover:bg-ink/90"
       >
-        {recommended ? `Download for ${osLabel(platform?.os ?? '')}` : 'Download Terra'}
+        {recommended
+          ? `Download for ${osLabel(platform?.os ?? '')}`
+          : 'Download Terra'}
       </a>
     );
   }
@@ -2107,6 +2128,7 @@ git commit -m "feat: add download panel and static install commands"
 ## Task 5: Home Page and Marketing Sections
 
 **Files:**
+
 - Replace: `src/pages/index.astro`
 - Create: `src/components/ui/CodeBlock.astro`
 - Create: `src/components/ui/Callout.astro`
@@ -2122,6 +2144,7 @@ git commit -m "feat: add download panel and static install commands"
 - Delete: `src/components/landing/WorkspaceDemo.tsx`
 
 **Interfaces:**
+
 - `CodeBlock.astro` props: `{ code: string; label?: string }`.
 - `Callout.astro` props: `{ tone?: 'note' | 'warning'; title: string }`.
 - `Hero.astro` hydrates `DownloadPanel` with `client:load`.
@@ -2714,9 +2737,11 @@ git commit -m "feat: build the field manual home page"
 ## Task 6: Download Page
 
 **Files:**
+
 - Create: `src/pages/download.astro`
 
 **Interfaces:**
+
 - Consumes `DownloadPanel` (`client:load`), `InstallCommand`, `Callout`.
 
 **Step 1: Create the page**
@@ -2852,11 +2877,13 @@ git commit -m "feat: add the download page"
 ## Task 7: Releases Page
 
 **Files:**
+
 - Create: `src/components/download/ReleaseList.tsx`
 - Create: `src/components/download/ReleaseList.test.tsx`
 - Create: `src/pages/releases.astro`
 
 **Interfaces:**
+
 - `ReleaseList` props: `{ load?: () => Promise<ReleasesResult> }`.
 - Consumes `getReleases`, `formatReleaseDate`, `Release`.
 
@@ -2895,9 +2922,7 @@ describe('ReleaseList', () => {
 
   it('shows a GitHub fallback when no releases are available', async () => {
     render(
-      <ReleaseList
-        load={async () => ({ releases: [], source: 'fallback' })}
-      />,
+      <ReleaseList load={async () => ({ releases: [], source: 'fallback' })} />,
     );
     expect(
       await screen.findByText('Release history is unavailable right now.'),
@@ -3116,6 +3141,7 @@ git commit -m "feat: add the releases page"
 ## Task 8: Documentation
 
 **Files:**
+
 - Create: `src/content.config.ts`
 - Create: `src/content/docs/desktop.mdx`
 - Create: `src/content/docs/server.mdx`
@@ -3127,6 +3153,7 @@ git commit -m "feat: add the releases page"
 - Create: `src/pages/docs/[...slug].astro`
 
 **Interfaces:**
+
 - Collection `docs` schema: `{ title: string; description: string; section: 'desktop' | 'server'; order: number; updated?: string }`.
 - `DocsLayout` props: `{ title, description, headings?, prev?, next? }`.
 - `DocsNav` reads the collection itself; no props.
@@ -3400,7 +3427,7 @@ Open Terra's settings and find the sync section. Enter your server URL, for exam
 
 Create `src/content/docs/security.mdx`:
 
-````mdx
+```mdx
 ---
 title: Security reference
 description: How Terra derives keys, encrypts the vault, wraps team keys, and what the sync server can see.
@@ -3461,7 +3488,7 @@ Do not open a public issue for a vulnerability. Include the affected version, yo
 
 - [terra-client](https://github.com/nhridoy/terra-client)
 - [terra-server](https://github.com/nhridoy/terra-server)
-````
+```
 
 **Step 5: Write the troubleshooting guide**
 
@@ -3938,9 +3965,11 @@ git commit -m "feat: add MDX documentation"
 ## Task 9: Security Page
 
 **Files:**
+
 - Create: `src/pages/security.astro`
 
 **Interfaces:**
+
 - Consumes `BaseLayout` and `SecurityFlow`.
 
 **Step 1: Create the page**
@@ -4098,9 +4127,11 @@ git commit -m "feat: add the security page"
 ## Task 10: Community Page
 
 **Files:**
+
 - Create: `src/pages/community.astro`
 
 **Interfaces:**
+
 - Consumes `BaseLayout`, `REPOS`.
 
 **Step 1: Create the page**
@@ -4266,6 +4297,7 @@ git commit -m "feat: add the community page"
 ## Task 11: CI, Cleanup, and Final Verification
 
 **Files:**
+
 - Create: `.github/workflows/ci.yml`
 - Modify: `README.md`
 - Delete: `src/components/ui/{badge,button,card,separator}.tsx`
@@ -4466,5 +4498,3 @@ git commit -m "chore: add CI and remove the legacy landing page"
 - [ ] `pnpm lint`, `pnpm check`, `pnpm test`, and `pnpm build` pass.
 - [ ] No page claims SRP6a, XSalsa20, GitLab OAuth, Microsoft OAuth, a mobile app, pricing, customers, testimonials, benchmarks, or cloud signup.
 - [ ] Only `terra-web` files changed.
-
-

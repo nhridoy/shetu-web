@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import ReleaseList from './ReleaseList';
 import type { Release } from '../../lib/releases';
+import ReleaseList from './ReleaseList';
 
 const release: Release = {
   tag_name: 'v1.0.0',
