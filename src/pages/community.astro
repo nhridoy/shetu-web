@@ -1,0 +1,132 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { REPOS } from '../lib/site';
+
+const repos = [
+  {
+    name: 'terra',
+    href: REPOS.monorepo,
+    description:
+      'Project home, documentation, and cross-cutting issues. Start here if you are new.',
+  },
+  {
+    name: 'terra-client',
+    href: REPOS.client,
+    description:
+      'The Tauri v2 desktop client. Rust for the native layer, React and TypeScript for the interface.',
+  },
+  {
+    name: 'terra-server',
+    href: REPOS.server,
+    description:
+      'The Go sync and auth server. Gin, GORM, PostgreSQL, and optional Redis.',
+  },
+  {
+    name: 'terra-web',
+    href: REPOS.web,
+    description:
+      'This site. Astro, React islands, Tailwind, and MDX documentation.',
+  },
+];
+---
+
+<BaseLayout
+  title="Community — Terra"
+  description="Contribute to Terra, report issues, and read the MIT license."
+>
+  <section class="mx-auto max-w-[1200px] px-6 pt-14 pb-16 md:pt-20">
+    <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
+      Community
+    </p>
+    <h1 class="mt-4 max-w-4xl text-5xl font-medium tracking-[-0.05em] md:text-6xl">
+      Built in the open.
+    </h1>
+    <p class="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
+      Terra is MIT licensed and developed in public. Read the code, report a
+      bug, or send a pull request. The project is small enough that a focused
+      contribution makes a visible difference.
+    </p>
+  </section>
+
+  <section class="border-y border-line bg-surface">
+    <div class="mx-auto max-w-[1200px] px-6 py-16 md:py-20">
+      <h2 class="text-3xl font-medium tracking-[-0.03em]">Repositories</h2>
+      <div class="mt-8 grid gap-4 sm:grid-cols-2">
+        {repos.map((repo) => (
+          <a
+            href={repo.href}
+            class="rounded-xl border border-line bg-paper p-6 transition-colors duration-150 hover:border-accent/40 hover:bg-accent-wash/40"
+          >
+            <p class="font-mono text-sm text-ink">{repo.name}</p>
+            <p class="mt-2 text-sm leading-relaxed text-muted">
+              {repo.description}
+            </p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto grid max-w-[1200px] gap-10 px-6 py-20 md:grid-cols-2 md:py-28">
+    <div>
+      <h2 class="text-3xl font-medium tracking-[-0.03em]">Issues and help</h2>
+      <p class="mt-4 text-sm leading-relaxed text-muted">
+        Use GitHub Issues for bug reports and questions. GitHub Discussions is
+        not enabled on these repositories, so issues are the public support
+        channel.
+      </p>
+      <ul class="mt-5 space-y-3 text-sm">
+        <li>
+          <a class="font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent" href="https://github.com/nhridoy/terra/issues">
+            Project issues
+          </a>
+        </li>
+        <li>
+          <a class="font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent" href="https://github.com/nhridoy/terra-client/issues">
+            Desktop client issues
+          </a>
+        </li>
+        <li>
+          <a class="font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent" href="https://github.com/nhridoy/terra-server/issues">
+            Server issues
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="text-3xl font-medium tracking-[-0.03em]">Contributing</h2>
+      <p class="mt-4 text-sm leading-relaxed text-muted">
+        Read the contributing guide, fork the repository, create a focused
+        branch, run the tests, and open a pull request. For a first
+        contribution, filter the issue list for good first issues.
+      </p>
+      <ul class="mt-5 space-y-3 text-sm">
+        <li>
+          <a class="font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent" href="https://github.com/nhridoy/terra/blob/main/CONTRIBUTING.md">
+            Contributing guide
+          </a>
+        </li>
+        <li>
+          <a class="font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent" href="https://github.com/nhridoy/terra/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">
+            Good first issues
+          </a>
+        </li>
+        <li>
+          <a class="font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent" href="https://github.com/nhridoy/terra/blob/main/LICENSE">
+            MIT license
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="border-t border-line">
+    <div class="mx-auto max-w-[1200px] px-6 py-16">
+      <p class="max-w-2xl text-sm leading-relaxed text-muted">
+        Terra is distributed under the MIT license. The client, server, and
+        website are separate repositories so each part can be built, tested, and
+        released independently.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
