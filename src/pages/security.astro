@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SecurityFlow from '../components/marketing/SecurityFlow.astro';
+---
+
+<BaseLayout
+  title="Security — Terra"
+  description="Terra connects directly to your servers and encrypts your vault on your device. The sync server stores ciphertext, never plaintext."
+>
+  <section class="mx-auto max-w-[1200px] px-6 pt-14 pb-16 md:pt-20">
+    <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
+      Security
+    </p>
+    <h1 class="mt-4 max-w-4xl text-5xl font-medium tracking-[-0.05em] md:text-6xl">
+      Trust the math, not the server.
+    </h1>
+    <p class="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
+      Terra connects directly to your servers. Your credentials are encrypted on
+      your device before they are stored or synced. The server stores ciphertext
+      and wrapped keys, never plaintext.
+    </p>
+  </section>
+
+  <SecurityFlow />
+
+  <section class="mx-auto max-w-[1200px] px-6 py-20 md:py-28">
+    <div class="grid gap-4 md:grid-cols-2">
+      <div class="rounded-xl border border-line bg-surface p-6">
+        <h2 class="text-2xl font-medium tracking-[-0.03em]">
+          What the server stores
+        </h2>
+        <ul class="mt-4 space-y-2 text-sm leading-relaxed text-muted">
+          <li>Account identifiers and authentication state.</li>
+          <li>Encrypted vault records.</li>
+          <li>Wrapped team keys.</li>
+          <li>Sync metadata needed to order and deliver records.</li>
+        </ul>
+      </div>
+      <div class="rounded-xl border border-line bg-surface p-6">
+        <h2 class="text-2xl font-medium tracking-[-0.03em]">
+          What it never sees
+        </h2>
+        <ul class="mt-4 space-y-2 text-sm leading-relaxed text-muted">
+          <li>Your master password.</li>
+          <li>Plaintext credentials or private keys.</li>
+          <li>SSH traffic. Connections go directly to the host.</li>
+          <li>Terminal output or file contents.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-y border-line bg-surface">
+    <div class="mx-auto grid max-w-[1200px] gap-10 px-6 py-20 md:grid-cols-[1fr_1.2fr] md:py-28">
+      <div>
+        <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
+          Key hierarchy
+        </p>
+        <h2 class="mt-3 text-4xl font-medium tracking-[-0.04em]">
+          One password, layered keys.
+        </h2>
+        <p class="mt-4 text-lg leading-relaxed text-muted">
+          The master password unlocks the vault key. The vault key encrypts your
+          data. Team keys are wrapped for each member with X25519. The server
+          only handles ciphertext and wrapped keys.
+        </p>
+      </div>
+      <ol class="space-y-3">
+        <li class="rounded-xl border border-line bg-paper p-4">
+          <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-accent">01 · Master password</p>
+          <p class="mt-2 text-sm text-muted">Argon2id derives the vault key on your device. The password never leaves it.</p>
+        </li>
+        <li class="rounded-xl border border-line bg-paper p-4">
+          <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-accent">02 · Vault key</p>
+          <p class="mt-2 text-sm text-muted">XChaCha20-Poly1305 encrypts credentials and private keys before storage or sync.</p>
+        </li>
+        <li class="rounded-xl border border-line bg-paper p-4">
+          <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-accent">03 · X25519 identity</p>
+          <p class="mt-2 text-sm text-muted">Team keys are wrapped for each member's public key. The server stores the envelopes.</p>
+        </li>
+        <li class="rounded-xl border border-line bg-paper p-4">
+          <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-accent">04 · Sync server</p>
+          <p class="mt-2 text-sm text-muted">Stores ciphertext and wrapped keys. It cannot decrypt them without the vault key.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-[1200px] px-6 py-20 md:py-28">
+    <div class="grid gap-10 md:grid-cols-2">
+      <div>
+        <h2 class="text-3xl font-medium tracking-[-0.03em]">Recovery kit</h2>
+        <p class="mt-4 text-sm leading-relaxed text-muted">
+          Terra creates a recovery kit when you set up the vault. Store it
+          offline. It is the only way to recover the vault if you forget the
+          master password. The server cannot reset it, and the maintainers
+          cannot recover it for you.
+        </p>
+      </div>
+      <div>
+        <h2 class="text-3xl font-medium tracking-[-0.03em]">Disclosure</h2>
+        <p class="mt-4 text-sm leading-relaxed text-muted">
+          Report vulnerabilities privately through GitHub Security Advisories.
+          Do not open a public issue. Include the affected version, your OS,
+          reproduction steps, and impact.
+        </p>
+        <a
+          href="https://github.com/nhridoy/terra/security/advisories/new"
+          class="mt-4 inline-flex text-sm font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent"
+        >
+          Report a vulnerability
+        </a>
+      </div>
+    </div>
+    <div class="mt-10 border-t border-line pt-6">
+      <a
+        href="/docs/security"
+        class="text-sm font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent"
+      >
+        Read the technical security reference
+      </a>
+    </div>
+  </section>
+</BaseLayout>
