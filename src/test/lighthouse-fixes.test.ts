@@ -50,7 +50,10 @@ describe('Lighthouse findings', () => {
       'src/pages/termius-alternative.astro',
       'src/pages/download.astro',
     ]) {
-      expect(read(file), file).toMatch(/<DownloadPanel\s+client:idle/);
+      // Interactive above the fold: idle, but never later than 1s.
+      expect(read(file), file).toMatch(
+        /<DownloadPanel\s+client:idle=\{\{ timeout: 1000 \}\}/,
+      );
     }
     expect(read('src/components/marketing/Hero.astro')).toContain(
       '<ReleaseTag client:idle',

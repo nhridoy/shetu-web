@@ -32,7 +32,7 @@ import TerraWindow from '../mockups/TerraWindow.astro';
       </p>
 
       <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
-        <DownloadPanel client:idle variant="hero" />
+        <DownloadPanel client:idle={{ timeout: 1000 }} variant="hero" />
         <a href={REPOS.monorepo} class="btn-ghost px-5 py-3">
           <GithubLogo size={16} weight="fill" /> Star on GitHub
         </a>

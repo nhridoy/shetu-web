@@ -41,7 +41,7 @@ const path = `/download/${os}` as const;
     lede={`Terra runs on ${guide.label} (${guide.archs}) with split terminals, SFTP, port forwarding and an encrypted vault. Free, MIT licensed, no account tiers.`}
   >
     <div class="mt-8 flex flex-wrap items-center gap-3">
-      <DownloadPanel client:idle variant="hero" targetOs={os} />
+      <DownloadPanel client:idle={{ timeout: 1000 }} variant="hero" targetOs={os} />
       <a href="/download" class="btn-ghost px-5 py-3">All platforms</a>
     </div>
   </PageHeader>

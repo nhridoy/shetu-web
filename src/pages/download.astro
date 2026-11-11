@@ -42,7 +42,7 @@ const latest = latestRelease(await loadReleases());
   />
 
   <section class="mx-auto max-w-[1200px] px-5 py-14 sm:px-6 md:py-20">
-    <DownloadPanel client:idle variant="full" />
+    <DownloadPanel client:idle={{ timeout: 1000 }} variant="full" />
     <div class="mt-10 grid gap-4 md:grid-cols-3">
       {requirements.map(({ Icon, os, href }) => (
         <a href={href} class="panel lift flex items-center gap-3 p-5">
