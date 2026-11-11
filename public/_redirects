@@ -1,2 +1,10 @@
+# Old trailing-slash URLs from before clean URLs: permanent, one hop.
 /releases /changelog 301
 /releases/ /changelog 301
+/download/ /download 301
+/docs/ /docs 301
+/docs/:slug/ /docs/:slug 301
+/security/ /security 301
+/community/ /community 301
+# robots.txt used to point here.
+/sitemap-index.xml /sitemap.xml 301

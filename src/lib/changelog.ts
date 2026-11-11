@@ -73,6 +73,7 @@ export function renderNotes(body: string): string {
       'h2',
       'h3',
       'h4',
+      'h5',
       'blockquote',
       'br',
       'hr',
@@ -81,6 +82,10 @@ export function renderNotes(body: string): string {
     allowedSchemes: ['http', 'https', 'mailto'],
     transformTags: {
       a: sanitizeHtml.simpleTransform('a', { rel: 'nofollow noopener' }),
+      // Notes sit under the page's own h2, so drop every heading one level.
+      h2: 'h3',
+      h3: 'h4',
+      h4: 'h5',
     },
   });
 }
@@ -94,7 +99,7 @@ export function releasePageMeta(
 ): PageMeta & { noindex: boolean } {
   const tag = release.tag_name;
   return {
-    title: `Terra ${tag} release notes and downloads`,
+    title: `Terra ${tag} release notes and downloads · Changelog`,
     description: `What changed in Terra ${tag}, released ${formatReleaseDate(release.published_at)}: release notes and downloads for macOS, Windows and Linux, x64 and ARM64.`,
     noindex: !hasNotes(release.body),
   };

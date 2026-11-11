@@ -33,42 +33,42 @@ export const PAGES = {
       'Download Terra, the free open-source SSH client, for macOS, Windows and Linux on x64 and ARM64. One-line installers plus DMG, EXE, AppImage and DEB builds.',
   },
   '/download/windows': {
-    title: 'Free open-source SSH client for Windows · Terra',
+    title: 'Free open-source SSH and SFTP client for Windows · Terra',
     description:
       'Install Terra, a free open-source SSH and SFTP client for Windows on x64 and ARM64, with one PowerShell command or the installer, plus first-launch steps.',
   },
   '/download/macos': {
-    title: 'Free open-source SSH client for Mac · Terra',
+    title: 'Free open-source SSH and SFTP client for Mac · Terra',
     description:
       'Install Terra, a free open-source SSH and SFTP client for macOS on Apple Silicon and Intel, with one Terminal command or the DMG, plus first-launch steps.',
   },
   '/download/linux': {
-    title: 'Free open-source SSH client for Linux · Terra',
+    title: 'Free open-source SSH and SFTP client for Linux · Terra',
     description:
       'Install Terra, a free open-source SSH and SFTP client for Linux on x64 and ARM64, as an AppImage or a .deb, with a one-line installer and removal steps.',
   },
   '/termius-alternative': {
-    title: 'Open-source Termius alternative · Terra',
+    title: 'Free, open-source Termius alternative for SSH · Terra',
     description:
       'Looking for a Termius alternative? Terra is a free, MIT-licensed SSH client with SFTP, port forwarding and encrypted sync you can run on your own server.',
   },
   '/self-hosted': {
-    title: 'Self-hosted SSH sync server · Terra',
+    title: 'Self-hosted SSH sync server with Docker and Postgres · Terra',
     description:
       "Run Terra's open-source sync server with Docker and PostgreSQL. Keep SSH hosts, private keys and team vaults encrypted on infrastructure you control.",
   },
   '/changelog': {
-    title: 'Terra changelog · Every release and its downloads',
+    title: 'Terra changelog · Every SSH client release and its downloads',
     description:
       'Every Terra release with its notes and downloads for macOS, Windows and Linux. Terra is the free, open-source SSH client and Termius alternative.',
   },
   '/docs': {
-    title: 'Terra docs · Install, self-host and secure Terra',
+    title: 'Terra docs · Install, self-host and secure your SSH client',
     description:
       'Guides to install the Terra SSH client, self-host the sync server, understand the security model and fix common problems on macOS, Windows and Linux.',
   },
   '/security': {
-    title: 'Terra security · How your SSH keys stay encrypted',
+    title: 'Terra security · How your SSH private keys stay encrypted',
     description:
       'Terra encrypts your vault on your device with Argon2id and XChaCha20-Poly1305. The sync server stores ciphertext, and SSH connects directly to your hosts.',
   },
@@ -142,12 +142,14 @@ export function breadcrumbJsonLd(
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
-    itemListElement: items.map((item, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: item.name,
-      item: absoluteUrl(item.path),
-    })),
+    itemListElement: [{ name: 'Home', path: '/' }, ...items].map(
+      (item, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        name: item.name,
+        item: absoluteUrl(item.path),
+      }),
+    ),
   };
 }
 

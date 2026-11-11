@@ -38,7 +38,7 @@ describe('structured data', () => {
       { name: 'Docs', path: '/docs' },
       { name: 'Security', path: '/docs/security' },
     ]) as unknown as { itemListElement: { position: number; item: string }[] };
-    expect(crumbs.itemListElement.map((c) => c.position)).toEqual([1, 2]);
+    expect(crumbs.itemListElement.map((c) => c.position)).toEqual([1, 2, 3]);
     for (const c of crumbs.itemListElement) {
       expect(c.item.startsWith('https://terra.iamnahid.com/')).toBe(true);
     }

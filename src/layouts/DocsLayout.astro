@@ -18,6 +18,7 @@ interface Props {
   prev?: CollectionEntry<'docs'> | null;
   next?: CollectionEntry<'docs'> | null;
   updated?: string;
+  seoTitle?: string;
 }
 
 const {
@@ -27,6 +28,7 @@ const {
   prev = null,
   next = null,
   updated,
+  seoTitle,
 } = Astro.props;
 const path = cleanPath(Astro.url.pathname);
 const toc = headings.filter(
@@ -35,7 +37,7 @@ const toc = headings.filter(
 ---
 
 <BaseLayout
-  title={`${title} · Terra Docs`}
+  title={seoTitle ?? `${title} · Terra Docs`}
   description={description}
   type="article"
   jsonLd={[
