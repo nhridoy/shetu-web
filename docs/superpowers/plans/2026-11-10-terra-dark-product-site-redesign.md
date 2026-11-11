@@ -2,7 +2,7 @@
 
 > **For the implementer:** Follow this plan task by task. Each task ends with a build check and a commit. Do not deploy between Tasks 2 and 4; the homepage is mid-migration during that window.
 
-**Goal:** Replace the light “Field Manual” marketing site with a dark, product-led open-source app site, using redacted real screenshots and rewritten homepage copy.
+**Goal:** Replace the light “Field Manual” marketing site with a dark, product-led open-source app site, using real screenshots with sensitive text blurred and rewritten homepage copy.
 
 **Architecture:** Static Astro output with React islands. Keep the existing routing, OS detection, runtime GitHub release fetching, committed fallback, docs content collections, and no-JS behavior. Change the design tokens, shell, homepage composition, and component styling.
 
@@ -47,24 +47,11 @@ Create `/tmp/process-terra-screenshots.py` with:
 ```python
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageFilter
 
 SRC = Path.home() / "Pictures/Screenshots"
 OUT = Path("src/assets/app")
 OUT.mkdir(parents=True, exist_ok=True)
-
-SANS = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
-SANS_BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
-MONO = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"
-
-WHITE = "#f5f7f6"
-MUTED = "#98a2a0"
-MINT = "#5eead4"
-BLACK = "#000000"
-SIDEBAR = "#0a0a0a"
-CARD = "#0b1511"
-INPUT = "#0e1012"
-TEAM_CARD = "#1a1a1a"
 
 
 def load(name: str) -> Image.Image:
@@ -72,85 +59,54 @@ def load(name: str) -> Image.Image:
 
 
 def crop_chrome(img: Image.Image) -> Image.Image:
-    # Remove the macOS menu bar. Keep the app's own title bar and tabs.
-    return img.crop((0, 24, img.width, img.height))
+    return img.crop((0, 30, img.width, img.height))
 
 
-def draw_text(
-    img: Image.Image,
-    xy: tuple[int, int],
-    text: str,
-    font_path: str,
-    size: int,
-    fill: str,
-) -> None:
-    draw = ImageDraw.Draw(img)
-    draw.text(xy, text, font=ImageFont.truetype(font_path, size), fill=fill)
+def blur_region(img: Image.Image, box: tuple[int, int, int, int], radius: int) -> None:
+    region = img.crop(box).filter(ImageFilter.GaussianBlur(radius))
+    img.paste(region, box)
 
 
-def redact_sidebar_footer(img: Image.Image) -> None:
-    draw = ImageDraw.Draw(img)
-    draw.rectangle((48, 700, 224, 744), fill=SIDEBAR)
-    draw_text(img, (58, 704), "Alex Morgan", SANS_BOLD, 12, WHITE)
-    draw_text(img, (58, 722), "alex@example.com", SANS, 10, MUTED)
+def blur_sidebar_footer(img: Image.Image) -> None:
+    blur_region(img, (40, 680, 210, 732), 16)
 
 
-def redact_host_card(img: Image.Image, right: int) -> None:
-    draw = ImageDraw.Draw(img)
-    draw.rectangle((300, 258, right, 306), fill=CARD)
-    draw_text(img, (303, 260), "acme-prod-01", SANS_BOLD, 13, WHITE)
-    draw_text(img, (303, 288), "Ubuntu 24.04 · SSH · 2m ago", SANS, 10, MUTED)
+def blur_host_card(img: Image.Image) -> None:
+    blur_region(img, (292, 244, 470, 276), 14)
+    blur_region(img, (250, 272, 480, 310), 20)
 
 
-def redact_terminal(img: Image.Image) -> None:
-    draw = ImageDraw.Draw(img)
-
-    # Tab label.
-    draw.rectangle((350, 22, 440, 40), fill="#1a1a1a")
-    draw_text(img, (355, 25), "acme-prod-01", SANS, 11, MUTED)
-
-    # Prompt and listing.
-    draw.rectangle((0, 70, 900, 118), fill=BLACK)
-    draw_text(img, (2, 71), "alex@studio", MONO, 12, MINT)
-    draw_text(img, (86, 71), ":~$ ls", MONO, 12, WHITE)
-    draw_text(img, (2, 87), "projects  scripts  notes  terra", MONO, 12, WHITE)
-    draw_text(img, (2, 103), "alex@studio", MONO, 12, MINT)
-    draw_text(img, (86, 103), ":~$ ", MONO, 12, WHITE)
-    draw.rectangle((122, 103, 130, 115), fill=WHITE)
+def blur_edit_modal(img: Image.Image) -> None:
+    blur_region(img, (487, 132, 600, 154), 14)
+    blur_region(img, (487, 196, 600, 214), 14)
 
 
-def redact_editor(img: Image.Image) -> None:
-    draw = ImageDraw.Draw(img)
-    draw.rectangle((0, 50, 1366, 80), fill="#0a0c0d")
-    draw_text(
-        img,
-        (8, 55),
-        "/home/alex/projects/terra-web",
-        MONO,
-        11,
-        MUTED,
-    )
-    # Rename the third-party-branded notes file in the explorer.
-    draw.rectangle((55, 534, 130, 550), fill=SIDEBAR)
-    draw_text(img, (55, 536), "NOTES.md", SANS, 11, MUTED)
+def blur_terminal_split(img: Image.Image) -> None:
+    # Tab label, left-pane prompt and listing, right-pane host label, and lower prompt.
+    blur_region(img, (275, 12, 340, 34), 14)
+    blur_region(img, (0, 60, 670, 150), 16)
+    blur_region(img, (670, 40, 800, 70), 18)
+    blur_region(img, (650, 414, 1366, 442), 14)
 
 
-def redact_team(img: Image.Image) -> None:
-    draw = ImageDraw.Draw(img)
-
-    # Team card: avatar, name, detail title.
-    draw.ellipse((242, 124, 270, 152), fill="#2a2a2a")
-    draw_text(img, (252, 130), "A", SANS_BOLD, 12, WHITE)
-    draw.rectangle((286, 124, 390, 150), fill=TEAM_CARD)
-    draw_text(img, (290, 126), "Acme", SANS_BOLD, 12, WHITE)
-    draw.rectangle((500, 131, 640, 166), fill=SIDEBAR)
-    draw_text(img, (505, 134), "Acme", SANS_BOLD, 24, WHITE)
+def blur_terminal_inset(img: Image.Image) -> None:
+    # Tab label and the connection status label.
+    blur_region(img, (345, 8, 430, 32), 14)
+    blur_region(img, (12, 44, 98, 62), 14)
 
 
-def redact_themes(img: Image.Image) -> None:
-    draw = ImageDraw.Draw(img)
-    draw.rectangle((730, 616, 800, 642), fill=SIDEBAR)
-    draw_text(img, (742, 618), "Mist", SANS, 12, WHITE)
+def blur_editor(img: Image.Image) -> None:
+    blur_region(img, (0, 52, 460, 78), 16)
+    blur_region(img, (60, 450, 145, 475), 24)
+
+
+def blur_team(img: Image.Image) -> None:
+    blur_region(img, (286, 118, 380, 144), 14)
+    blur_region(img, (500, 126, 650, 160), 20)
+
+
+def blur_themes(img: Image.Image) -> None:
+    blur_region(img, (730, 610, 800, 638), 14)
 
 
 def save(img: Image.Image, name: str) -> None:
@@ -159,42 +115,42 @@ def save(img: Image.Image, name: str) -> None:
 
 def main() -> None:
     hosts = crop_chrome(load("Screenshot From 2026-11-10 13-57-06.png"))
-    redact_sidebar_footer(hosts)
-    redact_host_card(hosts, 470)
+    blur_sidebar_footer(hosts)
+    blur_host_card(hosts)
     save(hosts, "hosts.webp")
 
     edit = crop_chrome(load("Screenshot From 2026-11-10 13-57-26.png"))
-    redact_sidebar_footer(edit)
-    redact_host_card(edit, 456)
-    draw = ImageDraw.Draw(edit)
-    draw.rectangle((482, 130, 872, 155), fill=INPUT)
-    draw_text(edit, (490, 136), "acme-prod-01", SANS, 12, WHITE)
-    draw.rectangle((482, 195, 740, 219), fill=INPUT)
-    draw_text(edit, (490, 201), "acme-prod-01.internal", SANS, 12, WHITE)
+    blur_sidebar_footer(edit)
+    blur_host_card(edit)
+    blur_edit_modal(edit)
     save(edit, "edit-host.webp")
 
-    terminal = crop_chrome(load("Screenshot From 2026-11-10 13-59-32.png"))
-    redact_terminal(terminal)
+    terminal = crop_chrome(load("Screenshot From 2026-11-10 14-00-25.png"))
+    blur_terminal_split(terminal)
     save(terminal, "terminal.webp")
-    save(terminal.crop((0, 0, 1000, 360)), "terminal-inset.webp")
+
+    inset = crop_chrome(load("Screenshot From 2026-11-10 13-59-48.png"))
+    blur_terminal_inset(inset)
+    save(inset.crop((0, 0, 1000, 360)), "terminal-inset.webp")
 
     editor = crop_chrome(load("Screenshot From 2026-11-10 14-05-10.png"))
-    redact_editor(editor)
+    blur_editor(editor)
     save(editor, "editor.webp")
 
     team = crop_chrome(load("Screenshot From 2026-11-10 13-58-27.png"))
-    redact_sidebar_footer(team)
-    redact_team(team)
+    blur_sidebar_footer(team)
+    blur_team(team)
     save(team, "team-vault.webp")
 
     themes = crop_chrome(load("Screenshot From 2026-11-10 14-05-35.png"))
-    redact_sidebar_footer(themes)
-    redact_themes(themes)
+    blur_sidebar_footer(themes)
+    blur_themes(themes)
     save(themes, "themes.webp")
 
 
 if __name__ == "__main__":
     main()
+
 ```
 
 **Step 2: Run the script from the repo root**
@@ -209,14 +165,14 @@ Expected: seven WebP files in `src/assets/app/`, no errors.
 
 Open each file with the `read` tool and check:
 
-- No name, email, `telehack.com`, `/run/media`, `Binary Tech`, `Claude`, or `CLAUDE.md` is visible.
-- The redaction rectangles blend into their backgrounds.
-- The terminal text is readable and the cursor is aligned.
-- The team avatar says `A`, the team name says `Acme`, and the detail title says `Acme`.
-- The themes label says `Mist`.
+- No name, email, `telehack.com`, `/run/media`, `Binary Tech`, `Claude`, or `CLAUDE.md` is readable.
+- The blur covers only the text, leaving the surrounding UI, icons, borders, and layout intact.
+- The right-pane `whoami` output is readable; the left-pane prompt and listing and the lower-pane prompt are blurred.
+- The team avatar is still visible, and the team name and detail title are blurred.
+- The themes label is blurred.
 - The macOS menu bar, date/time, battery, and Wi-Fi are gone.
 
-If a rectangle is misaligned, adjust the coordinates in `/tmp/process-terra-screenshots.py`, rerun, and inspect again. Do not commit until the images look clean.
+If a blur box is misaligned, adjust the coordinates in `/tmp/process-terra-screenshots.py`, rerun, and inspect again. Do not commit until the images look clean.
 
 **Step 4: Verify dimensions and file sizes**
 
@@ -230,13 +186,13 @@ for path in sorted(Path("src/assets/app").glob("*.webp")):
 PY
 ```
 
-Expected: full screenshots are 1366×744; `terminal-inset.webp` is 1000×360; each file is reasonably small.
+Expected: full screenshots are 1366×738; `terminal-inset.webp` is 1000×360; each file is reasonably small.
 
 **Step 5: Commit**
 
 ```sh
 git add src/assets/app
-git commit -m "chore: add redacted app screenshots"
+git commit -m "chore: add blurred app screenshots"
 ```
 
 ---
@@ -595,6 +551,7 @@ git commit -m "feat: add dark design system and shell"
 - Create: `src/components/marketing/AppWindow.astro`
 - Rewrite: `src/components/marketing/Hero.astro`
 - Create: `src/components/marketing/FeatureGrid.astro`
+- Create: `src/components/marketing/FactStrip.astro`
 - Modify: `src/pages/index.astro` (partial)
 
 **Step 1: Create `src/components/marketing/AppWindow.astro`**
@@ -748,6 +705,7 @@ import AppWindow from './AppWindow.astro';
 ```astro
 ---
 import {
+  ArrowUpRight,
   ArrowsLeftRight,
   FileCode,
   FolderSimple,
@@ -763,41 +721,49 @@ const features = [
     icon: FolderSimple,
     title: 'Hosts & groups',
     body: 'Keep production, staging, and home-lab machines organized with groups, tags, and colors.',
+    href: '#hosts',
   },
   {
     icon: LockKey,
     title: 'Encrypted vault',
     body: 'Hosts, keys, and snippets are encrypted on your device with Argon2id and XChaCha20-Poly1305.',
+    href: '#security',
   },
   {
     icon: TerminalWindow,
     title: 'Terminal workspace',
     body: 'Tabs, split panes, and saved workspaces for local and remote shells.',
+    href: '#terminal',
   },
   {
     icon: FileCode,
     title: 'SFTP & editor',
     body: 'Browse remote files, transfer them, and edit in place beside the terminal.',
+    href: '#files',
   },
   {
     icon: ArrowsLeftRight,
     title: 'Port forwarding',
     body: 'Local, remote, and dynamic tunnels for databases and internal services.',
+    href: '#port-forwarding',
   },
   {
     icon: UsersThree,
     title: 'Teams & shared vaults',
     body: 'Invite teammates, assign member roles, and share vaults from one workspace.',
+    href: '#teams',
   },
   {
     icon: Palette,
     title: 'Themes',
     body: 'Dark, light, and named themes, so the workspace fits the way you work.',
+    href: '#themes',
   },
   {
     icon: HardDrives,
     title: 'Self-hosted sync',
     body: 'Run the Terra server on your own infrastructure when you want sync or shared vaults.',
+    href: '#self-hosted',
   },
 ];
 ---
@@ -822,23 +788,59 @@ const features = [
     <div
       class="mt-12 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4"
     >
-      {features.map(({ icon: Icon, title, body }) => (
-        <article
-          class="bg-paper p-6 transition-colors duration-150 hover:bg-surface"
+      {features.map(({ icon: Icon, title, body, href }) => (
+        <a
+          href={href}
+          class="group bg-paper p-6 transition-colors duration-150 hover:bg-surface"
         >
-          <Icon size={20} weight="duotone" class="text-accent" />
+          <div class="flex items-start justify-between gap-3">
+            <Icon size={20} weight="duotone" class="text-accent" />
+            <ArrowUpRight
+              size={14}
+              weight="bold"
+              class="text-muted transition-colors group-hover:text-accent"
+            />
+          </div>
           <h3 class="mt-5 text-base font-medium tracking-[-0.01em]">
             {title}
           </h3>
           <p class="mt-2 text-sm leading-relaxed text-muted">{body}</p>
-        </article>
+        </a>
       ))}
     </div>
   </div>
 </section>
 ```
 
-**Step 4: Update `src/pages/index.astro` partially**
+**Step 4: Create `src/components/marketing/FactStrip.astro`**
+
+```astro
+---
+const facts = [
+  { label: 'License', value: 'MIT' },
+  { label: 'Systems', value: 'Windows, macOS, Linux' },
+  { label: 'Connections', value: 'Direct SSH' },
+  { label: 'Sync', value: 'Self-hosted' },
+];
+---
+
+<section class="border-y border-line bg-surface">
+  <div
+    class="mx-auto grid max-w-[1200px] grid-cols-2 gap-px bg-line md:grid-cols-4"
+  >
+    {facts.map((fact) => (
+      <div class="bg-surface px-6 py-5">
+        <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted">
+          {fact.label}
+        </p>
+        <p class="mt-1 text-sm font-medium text-ink">{fact.value}</p>
+      </div>
+    ))}
+  </div>
+</section>
+```
+
+**Step 5: Update `src/pages/index.astro` partially**
 
 For this task, replace the top of the page with the new hero and grid, remove the old one-workspace section, and keep the remaining old sections until Task 4. The file should be:
 
@@ -846,6 +848,7 @@ For this task, replace the top of the page with the new hero and grid, remove th
 ---
 import InstallCommand from '../components/download/InstallCommand.astro';
 import ClosingCta from '../components/marketing/ClosingCta.astro';
+import FactStrip from '../components/marketing/FactStrip.astro';
 import FeatureGrid from '../components/marketing/FeatureGrid.astro';
 import Hero from '../components/marketing/Hero.astro';
 import OpenSource from '../components/marketing/OpenSource.astro';
@@ -873,6 +876,7 @@ const jsonLd = {
   jsonLd={jsonLd}
 >
   <Hero />
+  <FactStrip />
   <FeatureGrid />
   <SecurityFlow />
   <SelfHostPanel />
@@ -904,7 +908,7 @@ const jsonLd = {
 
 Note: this removes the old `FactRibbon`, `ValueCards`, and `WorkspaceMock` usage. Do not delete those files yet; Task 4 removes them.
 
-**Step 5: Build and check**
+**Step 6: Build and check**
 
 ```sh
 pnpm build
@@ -920,10 +924,10 @@ grep -c "Terra host list with groups" dist/index.html
 
 Each should be at least 1.
 
-**Step 6: Commit**
+**Step 7: Commit**
 
 ```sh
-git add src/components/marketing/AppWindow.astro src/components/marketing/Hero.astro src/components/marketing/FeatureGrid.astro src/pages/index.astro
+git add src/components/marketing/AppWindow.astro src/components/marketing/Hero.astro src/components/marketing/FeatureGrid.astro src/components/marketing/FactStrip.astro src/pages/index.astro
 git commit -m "feat: rebuild homepage hero and feature grid"
 ```
 
@@ -937,6 +941,7 @@ git commit -m "feat: rebuild homepage hero and feature grid"
 - Create: `src/components/marketing/SelfHostSection.astro`
 - Create: `src/components/marketing/OpenSourceSection.astro`
 - Create: `src/components/marketing/InstallSection.astro`
+- Create: `src/components/marketing/FaqSection.astro`
 - Rewrite: `src/components/marketing/ClosingCta.astro`
 - Rewrite: `src/pages/index.astro`
 - Delete: `src/components/marketing/FactRibbon.astro`
@@ -1028,7 +1033,7 @@ import CodeBlock from '../ui/CodeBlock.astro';
 const command = 'ssh -L 5432:localhost:5432 deploy@acme-prod-01';
 ---
 
-<section class="border-t border-line">
+<section id="port-forwarding" class="scroll-mt-24 border-t border-line">
   <div
     class="mx-auto grid max-w-[1200px] gap-10 px-6 py-20 md:grid-cols-2 md:items-center md:gap-16 md:py-28"
   >
@@ -1082,7 +1087,7 @@ docker compose -f docker-compose.prod.yml pull
 docker compose -f docker-compose.prod.yml up -d`;
 ---
 
-<section class="border-t border-line bg-surface">
+<section id="self-hosted" class="scroll-mt-24 border-t border-line bg-surface">
   <div
     class="mx-auto grid max-w-[1200px] gap-10 px-6 py-20 md:grid-cols-2 md:items-start md:gap-16 md:py-28"
   >
@@ -1235,28 +1240,72 @@ const repos = [
 
 ```astro
 ---
+import { ArrowUpRight } from '@phosphor-icons/react';
 import InstallCommand from '../download/InstallCommand.astro';
+
+const platforms = [
+  {
+    name: 'Windows',
+    detail: 'x64 and ARM64 installers',
+    href: '/download#platform-windows',
+  },
+  {
+    name: 'macOS',
+    detail: 'Apple Silicon and Intel .dmg',
+    href: '/download#platform-macos',
+  },
+  {
+    name: 'Linux',
+    detail: 'AppImage and .deb for x64 and ARM64',
+    href: '/download#platform-linux',
+  },
+];
 ---
 
 <section class="border-t border-line bg-surface">
   <div class="mx-auto max-w-[1200px] px-6 py-20 md:py-28">
     <div class="mx-auto max-w-2xl text-center">
       <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
-        Install
+        Download
       </p>
       <h2
         class="mt-3 text-balance text-4xl font-medium tracking-[-0.04em] md:text-5xl"
       >
-        Install in one line.
+        Download Terra.
       </h2>
       <p class="mt-4 text-lg leading-relaxed text-muted">
-        The install script picks the right build for your OS and architecture.
-        Prefer a direct download? Every build is on the download page.
+        Pick your platform, or use the install script. Every build is on the
+        download page.
       </p>
     </div>
 
-    <div class="mx-auto mt-10 max-w-3xl">
-      <InstallCommand />
+    <div class="mt-10 grid gap-3 sm:grid-cols-3">
+      {platforms.map((platform) => (
+        <a
+          href={platform.href}
+          class="group flex items-start justify-between gap-4 rounded-xl border border-line bg-paper p-5 transition-colors duration-150 hover:border-accent/40"
+        >
+          <div>
+            <p class="text-base font-medium">{platform.name}</p>
+            <p class="mt-1 text-sm text-muted">{platform.detail}</p>
+          </div>
+          <ArrowUpRight
+            size={14}
+            weight="bold"
+            class="mt-1 text-muted transition-colors group-hover:text-accent"
+          />
+        </a>
+      ))}
+    </div>
+
+    <div class="mx-auto mt-12 max-w-3xl">
+      <h3 class="text-center text-lg font-medium">Install in one line.</h3>
+      <p class="mt-2 text-center text-sm text-muted">
+        The script picks the right build for your OS and architecture.
+      </p>
+      <div class="mt-5">
+        <InstallCommand />
+      </div>
     </div>
 
     <p class="mt-6 text-center text-sm text-muted">
@@ -1271,7 +1320,86 @@ import InstallCommand from '../download/InstallCommand.astro';
 </section>
 ```
 
-**Step 6: Rewrite `src/components/marketing/ClosingCta.astro`**
+**Step 6: Create `src/components/marketing/FaqSection.astro`**
+
+```astro
+---
+import { ArrowUpRight } from '@phosphor-icons/react';
+
+const faqs = [
+  {
+    question: 'Is Terra open source?',
+    answer:
+      'Yes. The desktop client, the sync server, and this site are MIT licensed.',
+  },
+  {
+    question: 'Do I need a Terra server?',
+    answer:
+      'No for direct SSH. Sync and shared vaults require a Terra server you run.',
+  },
+  {
+    question: 'Why does macOS or Windows warn me?',
+    answer:
+      'Terra is not signed by Apple or Microsoft yet. Follow the first-launch steps in the docs.',
+    href: '/docs/troubleshooting',
+    linkLabel: 'First-launch steps',
+  },
+];
+---
+
+<section class="border-t border-line">
+  <div class="mx-auto max-w-[1200px] px-6 py-20 md:py-28">
+    <div class="max-w-2xl">
+      <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
+        Before you install
+      </p>
+      <h2
+        class="mt-3 text-balance text-4xl font-medium tracking-[-0.04em] md:text-5xl"
+      >
+        A few things to know.
+      </h2>
+    </div>
+
+    <div class="mt-10 max-w-3xl">
+      {faqs.map((faq) => (
+        <details class="group border-b border-line py-5">
+          <summary
+            class="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-medium"
+          >
+            {faq.question}
+            <span
+              class="font-mono text-lg text-accent group-open:hidden"
+              aria-hidden="true"
+            >
+              +
+            </span>
+            <span
+              class="hidden font-mono text-lg text-accent group-open:inline"
+              aria-hidden="true"
+            >
+              −
+            </span>
+          </summary>
+          <p class="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
+            {faq.answer}
+            {faq.href && (
+              <a
+                href={faq.href}
+                class="ml-1 inline-flex items-center gap-1 font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent"
+              >
+                {faq.linkLabel}
+                <ArrowUpRight size={12} weight="bold" />
+              </a>
+            )}
+          </p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+```
+
+**Step 7: Rewrite `src/components/marketing/ClosingCta.astro`**
 
 ```astro
 <section class="mx-auto max-w-[1200px] px-6 py-20 md:py-28">
@@ -1309,7 +1437,7 @@ import InstallCommand from '../download/InstallCommand.astro';
 </section>
 ```
 
-**Step 7: Rewrite `src/pages/index.astro`**
+**Step 8: Rewrite `src/pages/index.astro`**
 
 ```astro
 ---
@@ -1319,6 +1447,8 @@ import teamVault from '../assets/app/team-vault.webp';
 import terminal from '../assets/app/terminal.webp';
 import themes from '../assets/app/themes.webp';
 import ClosingCta from '../components/marketing/ClosingCta.astro';
+import FactStrip from '../components/marketing/FactStrip.astro';
+import FaqSection from '../components/marketing/FaqSection.astro';
 import FeatureGrid from '../components/marketing/FeatureGrid.astro';
 import FeatureShowcase from '../components/marketing/FeatureShowcase.astro';
 import Hero from '../components/marketing/Hero.astro';
@@ -1349,6 +1479,7 @@ const jsonLd = {
   jsonLd={jsonLd}
 >
   <Hero />
+  <FactStrip />
   <FeatureGrid />
 
   <FeatureShowcase
@@ -1377,7 +1508,7 @@ const jsonLd = {
       'Local and remote shells',
     ]}
     image={terminal}
-    alt="Terra terminal with tabs and a connected host"
+    alt="Terra terminal with split panes, tabs, and a connected host"
     imageSide="left"
   />
 
@@ -1423,11 +1554,12 @@ const jsonLd = {
   <SelfHostSection />
   <OpenSourceSection />
   <InstallSection />
+  <FaqSection />
   <ClosingCta />
 </BaseLayout>
 ```
 
-**Step 8: Delete the unused marketing components**
+**Step 9: Delete the unused marketing components**
 
 ```sh
 rm src/components/marketing/FactRibbon.astro
@@ -1437,7 +1569,7 @@ rm src/components/marketing/SelfHostPanel.astro
 rm src/components/marketing/OpenSource.astro
 ```
 
-**Step 9: Build and check**
+**Step 10: Build and check**
 
 ```sh
 pnpm build
@@ -1455,7 +1587,8 @@ grep -c "Reach the services behind the firewall." dist/index.html
 grep -c "The server never sees the keys." dist/index.html
 grep -c "Run the sync server yourself." dist/index.html
 grep -c "Yours to run, read, and change." dist/index.html
-grep -c "Install in one line." dist/index.html
+grep -c "Download Terra." dist/index.html
+grep -c "A few things to know." dist/index.html
 grep -c "Your servers are waiting." dist/index.html
 ```
 
@@ -1468,7 +1601,7 @@ grep -c "irm https://raw.githubusercontent.com/nhridoy/terra-client/main/install
 
 Both should be 1.
 
-**Step 10: Commit**
+**Step 11: Commit**
 
 ```sh
 git add -A src/components/marketing src/pages/index.astro
@@ -1701,7 +1834,11 @@ git commit -m "style: re-skin docs"
 
 **Step 1: Update `src/components/marketing/SecurityFlow.astro`**
 
-Change the step cards from `bg-paper` to `bg-elevated`:
+Add `id="security"` and `scroll-mt-24` to the section, and change the step cards from `bg-paper` to `bg-elevated`:
+
+```astro
+<section id="security" class="scroll-mt-24 bg-surface">
+```
 
 ```astro
         <div class="flex gap-4 rounded-xl border border-line bg-elevated p-4">
@@ -1847,7 +1984,7 @@ Expected: 1, 1, 8.
 
 **Step 6: Check screenshot redactions visually**
 
-Open every file in `src/assets/app/` with the `read` tool again. Confirm no `nahidujjaman`, `hridoyboss`, `telehack`, `/run/media`, `Binary Tech`, `Claude`, or `CLAUDE.md` is visible. This is a visual check because the assets are binary.
+Open every file in `src/assets/app/` with the `read` tool again. Confirm no `nahidujjaman`, `hridoyboss`, `telehack`, `/run/media`, `Binary Tech`, `Claude`, or `CLAUDE.md` is readable. This is a visual check because the assets are binary.
 
 **Step 7: Check the diff for whitespace errors**
 
@@ -1887,7 +2024,7 @@ If no changes were required, do not create an empty commit.
 
 ## Completion checklist
 
-- [ ] Seven redacted WebP assets in `src/assets/app/`, no originals or script committed.
+- [ ] Seven blurred WebP assets in `src/assets/app/`, no originals or script committed.
 - [ ] Dark tokens and shell applied to every page.
 - [ ] Homepage has hero, feature grid, hosts, terminal, files, teams, themes, port forwarding, security, self-host, open source, install, and closing sections.
 - [ ] All eight feature cards present.

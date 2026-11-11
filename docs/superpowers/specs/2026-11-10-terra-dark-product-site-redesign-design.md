@@ -141,12 +141,19 @@ Primary buttons are white (`#F5F7F6`) with near-black text. Secondary buttons ar
 - Visual: large hosts screenshot in an app frame, with a terminal inset on desktop.
 - Background: mint radial glow and faint grid.
 
+After the hero, a four-column fact strip inspired by Mister Download Manager’s fact table:
+
+- `License` — `MIT`
+- `Systems` — `Windows, macOS, Linux`
+- `Connections` — `Direct SSH`
+- `Sync` — `Self-hosted`
+
 ### 8.2 Feature grid — `#features`
 
 - Eyebrow: `Features`
 - H2: **Everything between you and the server.**
 - Subhead: “Organize hosts, keep credentials encrypted, and move between terminals and files without switching apps.”
-- Eight cards, each with a Phosphor icon, title, and one or two sentences:
+- Eight cards, each with a Phosphor icon, title, one or two sentences, and a link to its section below. The card is the link, with an arrow in the corner.
   1. **Hosts & groups** — “Keep production, staging, and home-lab machines organized with groups, tags, and colors.”
   2. **Encrypted vault** — “Hosts, keys, and snippets are encrypted on your device with Argon2id and XChaCha20-Poly1305.”
   3. **Terminal workspace** — “Tabs, split panes, and saved workspaces for local and remote shells.”
@@ -244,15 +251,32 @@ Primary buttons are white (`#F5F7F6`) with near-black text. Secondary buttons ar
 - CTAs: `View on GitHub` → monorepo, `Read the docs` → `/docs`.
 - No star counts, contributor counts, or customer logos.
 
-### 8.12 Install
+### 8.12 Download and install
 
-- Eyebrow: `Install`
-- H2: **Install in one line.**
-- Body: “The install script picks the right build for your OS and architecture. Prefer a direct download? Every build is on the download page.”
+Inspired by Mister Download Manager’s platform-first download block.
+
+- Eyebrow: `Download`
+- H2: **Download Terra.**
+- Body: “Pick your platform, or use the install script. Every build is on the download page.”
+- Three platform cards linking to the matching download matrix:
+  - `Windows` — “x64 and ARM64 installers” → `/download#platform-windows`
+  - `macOS` — “Apple Silicon and Intel .dmg” → `/download#platform-macos`
+  - `Linux` — “AppImage and .deb for x64 and ARM64” → `/download#platform-linux`
+- Subheading: **Install in one line.**
 - Static `InstallCommand` with both Unix and Windows commands.
 - Link: `All downloads` → `/download`.
 
-### 8.13 Closing CTA
+### 8.13 Before you install
+
+A compact native `<details>` FAQ. No JavaScript. Three items:
+
+1. **Is Terra open source?** — “Yes. The desktop client, the sync server, and this site are MIT licensed.”
+2. **Do I need a Terra server?** — “No for direct SSH. Sync and shared vaults require a Terra server you run.”
+3. **Why does macOS or Windows warn me?** — “Terra is not signed by Apple or Microsoft yet. Follow the first-launch steps in the docs.” Link to `/docs/troubleshooting`.
+
+No pricing, plan, or “free” claim.
+
+### 8.14 Closing CTA
 
 - H2: **Your servers are waiting.**
 - Body: “Download Terra, connect your first host, and keep the rest of your setup where it belongs.”
@@ -269,12 +293,12 @@ Use six full screenshots, not all fourteen:
 |---|---|---|
 | `hosts.webp` | 13:57:06 hosts list | Hero |
 | `edit-host.webp` | 13:57:26 edit-host modal | Hosts showcase |
-| `terminal.webp` | 13:59:32 terminal `ls` | Terminal showcase |
+| `terminal.webp` | 14:00:25 terminal split | Terminal showcase |
 | `editor.webp` | 14:05:10 editor + explorer | Files showcase |
 | `team-vault.webp` | 13:58:27 team detail | Teams showcase |
 | `themes.webp` | 14:05:35 settings/themes | Themes showcase |
 
-An additional crop, `terminal-inset.webp`, may be derived from the terminal screenshot for the hero inset.
+An additional crop, `terminal-inset.webp`, comes from the clean 13:59:48 `whoami` capture for the hero inset. The split capture shows tabs and panes; the inset keeps the hero terminal readable without a personal prompt.
 
 Do not use the six-pane OpenCode screenshot, the save-preset modal, the SFTP empty split, or the create-team modal. They either contain third-party product names, too much personal context, or are not compelling enough.
 
@@ -282,20 +306,19 @@ Do not use the six-pane OpenCode screenshot, the save-preset modal, the SFTP emp
 
 The originals live in `~/Pictures/Screenshots` and are not committed. Processed assets go in `src/assets/app/`.
 
-Replace all real data before publishing:
+Blur only the sensitive text; do not paint over UI or draw replacement values.
 
-- Name/email in the sidebar footer → `Alex Morgan` / `alex@example.com`.
-- `telehack.com` → `acme-prod-01`.
-- `Binary Tech` → `Acme`.
-- Terminal prompt `nahidujjaman-hridoy@...` → `alex@studio`.
-- Local paths such as `/run/media/.../terra/terra-web` → `/home/alex/projects/terra-web`.
-- `NaN ago` → `2m ago`.
-- The `Claude` theme label → `Mist`.
-- Any other personal, local, or third-party text → neutral demo values or crop it out.
+- Sidebar footer name/email.
+- Host card name and subtitle, including `telehack.com` and `NaN ago`.
+- Edit-host modal name and address values.
+- Terminal tab label `telehack.com`, the split-pane host label, the left-pane prompt and directory listing, and the lower-pane prompt.
+- Editor path bar and the `CLAUDE.md` explorer entry.
+- Team card name and detail title, including `Binary Tech`.
+- The `Claude` theme label.
 
-Crop the macOS menu bar and desktop chrome. Keep the app’s own title bar and tabs. Do not leave the macOS date/time, battery, or Wi-Fi indicators in the final assets.
+Apply a Gaussian blur strong enough that the text is unreadable. Leave the surrounding UI, icons, borders, and layout intact. The split capture’s right-pane `whoami` output stays readable; its personal prompt and listing are blurred. Crop the macOS menu bar and desktop chrome. Keep the app’s own title bar and tabs. Do not leave the macOS date/time, battery, or Wi-Fi indicators in the final assets.
 
-Verification: run OCR (if available) or a visual inspection over each processed asset and confirm none of `nahidujjaman`, `hridoyboss`, `telehack`, `/run/media`, `Binary Tech`, or `Claude` remain.
+Verification: run OCR (if available) or a visual inspection over each processed asset and confirm none of `nahidujjaman`, `hridoyboss`, `telehack`, `/run/media`, `Binary Tech`, or `Claude` remain readable.
 
 ### 9.3 Image handling
 
@@ -323,13 +346,15 @@ All pages adopt the dark tokens and shell. Copy stays mostly unchanged.
 New or rewritten marketing components:
 
 - `src/components/marketing/Hero.astro` — rewritten.
-- `src/components/marketing/FeatureGrid.astro` — new.
+- `src/components/marketing/FactStrip.astro` — new; four-column facts under the hero.
+- `src/components/marketing/FeatureGrid.astro` — new; cards link to their sections.
 - `src/components/marketing/FeatureShowcase.astro` — new; props for eyebrow, title, body, bullets, image, alt, and image side.
 - `src/components/marketing/AppWindow.astro` — new; frame around a screenshot, optional inset.
 - `src/components/marketing/SelfHostSection.astro` — new; replaces `SelfHostPanel.astro`.
 - `src/components/marketing/PortForwardingSection.astro` — new; text plus code block.
 - `src/components/marketing/OpenSourceSection.astro` — new; replaces `OpenSource.astro`.
-- `src/components/marketing/InstallSection.astro` — new.
+- `src/components/marketing/InstallSection.astro` — new; platform cards plus install commands.
+- `src/components/marketing/FaqSection.astro` — new; native `<details>` before the closing CTA.
 - `src/components/marketing/ClosingCta.astro` — rewritten.
 - `src/components/marketing/SecurityFlow.astro` — retained for `/security` and reused on the homepage, restyled.
 - Delete `FactRibbon.astro`, `ValueCards.astro`, and `WorkspaceMock.astro` once unused.
