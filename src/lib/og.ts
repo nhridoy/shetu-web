@@ -29,9 +29,14 @@ async function fetchSatoshi(fetchImpl: typeof fetch): Promise<OgFont[]> {
           { signal: AbortSignal.timeout(10_000) },
         )
       ).text();
-      const url = css.match(/url\('([^']+\.ttf)'\)/)?.[1];
-      if (!url) throw new Error('Satoshi TTF not found');
-      const res = await fetchImpl(url.startsWith('//') ? `https:${url}` : url, {
+      const found = css.match(/url\('([^']+\.ttf)'\)/)?.[1];
+      if (!found) throw new Error('Satoshi TTF not found');
+      // Only fetch from the Fontshare CDN, whatever the stylesheet says.
+      const url = new URL(found, 'https://cdn.fontshare.com');
+      if (url.protocol !== 'https:' || url.hostname !== 'cdn.fontshare.com') {
+        throw new Error(`Unexpected font host: ${url.hostname}`);
+      }
+      const res = await fetchImpl(url.toString(), {
         signal: AbortSignal.timeout(10_000),
       });
       if (!res.ok) throw new Error(`Satoshi download failed: ${res.status}`);

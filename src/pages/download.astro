@@ -4,9 +4,8 @@ import DownloadPanel from '../components/download/DownloadPanel';
 import InstallCommand from '../components/download/InstallCommand.astro';
 import Callout from '../components/ui/Callout.astro';
 import PageHeader from '../components/ui/PageHeader.astro';
-import releases from '../data/releases.json';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import type { Release } from '../lib/releases';
+import { latestRelease, loadReleases } from '../lib/changelog';
 import { PAGES, softwareJsonLd } from '../lib/seo';
 
 const requirements = [
@@ -29,11 +28,12 @@ const requirements = [
     text: 'x64 or ARM64. Use the AppImage (needs libfuse2), or the .deb on Debian and Ubuntu.',
   },
 ];
+const latest = latestRelease(await loadReleases());
 ---
 
 <BaseLayout
   {...PAGES['/download']}
-  jsonLd={softwareJsonLd(releases.latest as Release)}
+  jsonLd={softwareJsonLd(latest)}
 >
   <PageHeader
     eyebrow="Download"

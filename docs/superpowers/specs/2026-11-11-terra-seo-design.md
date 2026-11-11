@@ -95,7 +95,7 @@ Set on all four repos: `homepage = https://terra.iamnahid.com`, a one-line descr
 ## User actions (checklist delivered at the end)
 
 - Cloudflare: turn on Always Use HTTPS.
-- Google Search Console and Bing Webmaster Tools: verify `terra.iamnahid.com` (DNS TXT via Cloudflare), submit `/sitemap-index.xml`.
+- Google Search Console and Bing Webmaster Tools: verify `terra.iamnahid.com` (DNS TXT via Cloudflare), submit `/sitemap.xml`.
 - Optional listings: AlternativeTo (as a Termius alternative), awesome-selfhosted, awesome-ssh style lists, Product Hunt when ready.
 - Later: Cloudflare deploy hook called from terra-client's release workflow once GitHub Actions works.
 

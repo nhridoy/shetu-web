@@ -15,10 +15,22 @@ export function loadReleases(fetchImpl?: typeof fetch): Promise<Release[]> {
       fallback,
       fetchImpl,
       token: process.env.GITHUB_TOKEN,
-    }).then((result) => result.releases);
+    }).then((result) => {
+      if (result.source === 'fallback') {
+        console.warn(
+          '[terra-web] GitHub releases unavailable; using src/data/releases.json',
+        );
+      }
+      return result.releases;
+    });
   if (fetchImpl) return load();
   buildReleases ??= load();
   return buildReleases;
+}
+
+/** Newest non-prerelease, or the newest release when all are prereleases. */
+export function latestRelease(releases: Release[]): Release {
+  return releases.find((release) => !release.prerelease) ?? releases[0];
 }
 
 /**
@@ -28,23 +40,20 @@ export function loadReleases(fetchImpl?: typeof fetch): Promise<Release[]> {
 export function cleanNotes(body: string): string {
   const kept: string[] = [];
   let skipping = false;
+  let inFence = false;
   for (const line of body.split('\n')) {
-    if (/^## /.test(line)) skipping = /^## Install\b/.test(line);
-    if (!skipping && !/^## What's Changed\s*$/.test(line)) kept.push(line);
+    if (/^\s*(```|~~~)/.test(line)) inFence = !inFence;
+    // Headings inside code samples are text, not sections.
+    if (!inFence && /^## /.test(line)) skipping = /^## Install\b/.test(line);
+    const repeatedHeading = !inFence && /^## What's Changed\s*$/.test(line);
+    if (!skipping && !repeatedHeading) kept.push(line);
   }
   return kept.join('\n').trim();
 }
 
-/** False when only the "What's Changed" heading or "Full Changelog" link is left. */
+/** True when something visible is left besides the "Full Changelog" link. */
 export function hasNotes(body: string): boolean {
-  return cleanNotes(body)
-    .split('\n')
-    .some(
-      (line) =>
-        line.trim() !== '' &&
-        !/^## What's Changed\s*$/.test(line) &&
-        !/^\*\*Full Changelog\*\*:/.test(line),
-    );
+  return notesExcerpt(body, Number.POSITIVE_INFINITY) !== '';
 }
 
 /** Release notes are untrusted: render GitHub-flavoured Markdown, then sanitize. */
@@ -91,6 +100,14 @@ export function releasePageMeta(
   };
 }
 
+const ENTITIES: Record<string, string> = {
+  amp: '&',
+  lt: '<',
+  gt: '>',
+  quot: '"',
+  '#39': "'",
+};
+
 /** Plain-text summary for the changelog index: no links to tab into, no "Full Changelog" line. */
 export function notesExcerpt(body: string, max = 180): string {
   const notes = cleanNotes(body)
@@ -101,6 +118,8 @@ export function notesExcerpt(body: string, max = 180): string {
     allowedTags: [],
     allowedAttributes: {},
   })
+    // sanitize-html escapes text; Astro escapes again when it renders this.
+    .replace(/&(amp|lt|gt|quot|#39);/g, (_, entity: string) => ENTITIES[entity])
     .replace(/\s+/g, ' ')
     .trim();
   if (text.length <= max) return text;

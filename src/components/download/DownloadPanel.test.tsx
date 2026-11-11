@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import type { ReleaseResult } from '../../lib/github';
 import type { DetectedPlatform } from '../../lib/platform';
 import type { Release } from '../../lib/releases';
@@ -151,6 +151,49 @@ describe('DownloadPanel', () => {
       );
       fireEvent.pointerDown(document.body);
       expect(screen.queryByTestId('hero-build-menu')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('on an OS guide page', () => {
+    const mac: Release = {
+      ...release,
+      assets: [
+        ...release.assets,
+        {
+          name: 'Terra-9.9.9-macOS-Apple-Silicon.dmg',
+          browser_download_url: 'https://example.com/mac-arm.dmg',
+          size: 1024,
+        },
+      ],
+    };
+
+    it('keeps the button on the page OS when the visitor uses another OS', async () => {
+      render(
+        <DownloadPanel
+          variant="hero"
+          targetOs="macos"
+          detect={async () => ({ os: 'windows', arch: 'x64' })}
+          load={async () => ({ release: mac, source: 'live' })}
+        />,
+      );
+      const link = await screen.findByTestId('hero-download');
+      await screen.findByText('Download for macOS');
+      expect(link).toHaveAttribute('href', '#builds');
+    });
+
+    it('links the matching build when the visitor is on that OS', async () => {
+      render(
+        <DownloadPanel
+          variant="hero"
+          targetOs="macos"
+          detect={async () => ({ os: 'macos', arch: 'arm64' })}
+          load={async () => ({ release: mac, source: 'live' })}
+        />,
+      );
+      const link = await screen.findByTestId('hero-download');
+      await vi.waitFor(() =>
+        expect(link).toHaveAttribute('href', 'https://example.com/mac-arm.dmg'),
+      );
     });
   });
 });

@@ -133,17 +133,23 @@ export async function getReleases(
   if (cached) return { releases: cached, source: 'live' };
 
   try {
-    // shortcut: one page of 100 releases; paginate once there are more.
-    const payload = await request(
-      `${apiBase}/releases?per_page=100`,
-      fetchImpl,
-      token,
-    );
-    if (!Array.isArray(payload)) throw new Error('Invalid releases payload');
-    const releases = payload
+    const items: unknown[] = [];
+    for (let page = 1; ; page++) {
+      const payload = await request(
+        `${apiBase}/releases?per_page=100&page=${page}`,
+        fetchImpl,
+        token,
+      );
+      if (!Array.isArray(payload)) throw new Error('Invalid releases payload');
+      items.push(...payload);
+      if (payload.length < 100) break;
+    }
+    const releases = items
       .filter((raw) => !(raw as { draft?: boolean }).draft)
       .map(parseRelease)
-      .filter((release) => release.tag_name);
+      .filter((release) => release.tag_name)
+      // GitHub lists by creation date; pages read newest-published first.
+      .sort((a, b) => b.published_at.localeCompare(a.published_at));
     writeCache(cache, key, releases, now);
     return { releases, source: 'live' };
   } catch {

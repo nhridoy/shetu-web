@@ -50,6 +50,31 @@ describe('release notes', () => {
   });
 });
 
+describe('sanitized links', () => {
+  it('leaves no executable URL, whatever the encoding', () => {
+    const html = renderNotes(
+      [
+        '[a](javascript&#58;alert(1))',
+        '[b](JAVASCRIPT:alert(1))',
+        '<a href="jav&#x09;ascript:alert(1)">c</a>',
+        '<a href="data:text/html,x">d</a>',
+        '[ok](https://github.com/nhridoy)',
+      ].join('\n\n'),
+    );
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    for (const a of doc.querySelectorAll('a')) {
+      const href = a.getAttribute('href') ?? '';
+      if (!href) continue;
+      expect(new URL(href, 'https://base.test').protocol).toMatch(
+        /^(https?|mailto):$/,
+      );
+    }
+    expect(
+      doc.querySelector('a[href="https://github.com/nhridoy"]'),
+    ).not.toBeNull();
+  });
+});
+
 describe('loadReleases', () => {
   it('falls back to the committed snapshot when GitHub fails', async () => {
     const releases = await loadReleases(async () => {

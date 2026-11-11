@@ -1,6 +1,6 @@
 // Refreshes src/data/releases.json, the fallback used when GitHub is unreachable.
 // Usage: pnpm releases:snapshot   (set GITHUB_TOKEN for a higher rate limit)
-import { writeFileSync } from 'node:fs';
+import { renameSync, writeFileSync } from 'node:fs';
 
 const API = 'https://api.github.com/repos/nhridoy/terra-client';
 const headers = {
@@ -11,7 +11,10 @@ const headers = {
 };
 
 async function get(path) {
-  const res = await fetch(`${API}${path}`, { headers });
+  const res = await fetch(`${API}${path}`, {
+    headers,
+    signal: AbortSignal.timeout(15_000),
+  });
   if (!res.ok) throw new Error(`GitHub ${path}: ${res.status}`);
   return res.json();
 }
@@ -31,19 +34,26 @@ const pick = (r) => ({
   })),
 });
 
-const [latest, all] = await Promise.all([
-  get('/releases/latest'),
-  get('/releases?per_page=100'),
-]);
+// One list, all pages, so `latest` can never disagree with `releases`.
+const all = [];
+for (let page = 1; ; page++) {
+  const batch = await get(`/releases?per_page=100&page=${page}`);
+  all.push(...batch);
+  if (batch.length < 100) break;
+}
+const releases = all
+  .filter((r) => !r.draft)
+  .map(pick)
+  .sort((a, b) => b.published_at.localeCompare(a.published_at));
 const snapshot = {
   fetched_at: new Date().toISOString(),
-  latest: pick(latest),
-  releases: all.filter((r) => !r.draft).map(pick),
+  latest: releases.find((r) => !r.prerelease) ?? releases[0],
+  releases,
 };
-writeFileSync(
-  'src/data/releases.json',
-  `${JSON.stringify(snapshot, null, 2)}\n`,
-);
+// Write then rename, so an interrupted run never leaves broken JSON behind.
+const target = 'src/data/releases.json';
+writeFileSync(`${target}.tmp`, `${JSON.stringify(snapshot, null, 2)}\n`);
+renameSync(`${target}.tmp`, target);
 console.log(
-  `Saved ${snapshot.releases.length} releases (latest ${snapshot.latest.tag_name}).`,
+  `Saved ${releases.length} releases (latest ${snapshot.latest.tag_name}).`,
 );

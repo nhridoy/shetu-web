@@ -4,10 +4,10 @@ import DownloadPanel from '../../components/download/DownloadPanel';
 import Callout from '../../components/ui/Callout.astro';
 import CodeBlock from '../../components/ui/CodeBlock.astro';
 import PageHeader from '../../components/ui/PageHeader.astro';
-import releases from '../../data/releases.json';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { latestRelease, loadReleases } from '../../lib/changelog';
 import { type GuideOs, OS_GUIDES } from '../../lib/os-guides';
-import { formatBytes, mapAssets, type Release } from '../../lib/releases';
+import { formatBytes, mapAssets } from '../../lib/releases';
 import { breadcrumbJsonLd, PAGES, softwareJsonLd } from '../../lib/seo';
 
 export function getStaticPaths() {
@@ -19,7 +19,7 @@ export function getStaticPaths() {
 
 const { os } = Astro.props as { os: GuideOs };
 const guide = OS_GUIDES[os];
-const latest = releases.latest as Release;
+const latest = latestRelease(await loadReleases());
 const builds = mapAssets(latest).filter((asset) => asset.os === os);
 const others = (Object.keys(OS_GUIDES) as GuideOs[]).filter((o) => o !== os);
 const path = `/download/${os}` as const;
@@ -41,7 +41,7 @@ const path = `/download/${os}` as const;
     lede={`Terra runs on ${guide.label} (${guide.archs}) with split terminals, SFTP, port forwarding and an encrypted vault. Free, MIT licensed, no account tiers.`}
   >
     <div class="mt-8 flex flex-wrap items-center gap-3">
-      <DownloadPanel client:load variant="hero" />
+      <DownloadPanel client:load variant="hero" targetOs={os} />
       <a href="/download" class="btn-ghost px-5 py-3">All platforms</a>
     </div>
   </PageHeader>
@@ -58,7 +58,7 @@ const path = `/download/${os}` as const;
       <p class="mt-3 text-sm leading-relaxed text-muted">{guide.installNote}</p>
     </div>
     <div>
-      <h2 class="text-3xl font-bold">Or download {latest.tag_name}</h2>
+      <h2 id="builds" class="scroll-mt-24 text-3xl font-bold">Or download {latest.tag_name}</h2>
       <p class="mt-3 text-muted">Available as: {guide.formats.join(', ')}.</p>
       <ul class="panel mt-5 divide-y divide-line p-2">
         {builds.map((asset) => (

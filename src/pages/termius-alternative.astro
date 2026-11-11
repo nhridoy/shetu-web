@@ -4,9 +4,8 @@ import DownloadPanel from '../components/download/DownloadPanel';
 import Comparison from '../components/marketing/Comparison.astro';
 import FaqSection from '../components/marketing/FaqSection.astro';
 import PageHeader from '../components/ui/PageHeader.astro';
-import releases from '../data/releases.json';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import type { Release } from '../lib/releases';
+import { latestRelease, loadReleases } from '../lib/changelog';
 import { PAGES, softwareJsonLd } from '../lib/seo';
 
 const reasons = [
@@ -32,11 +31,12 @@ const gaps = [
   'Mosh and Telnet: Terra speaks SSH, SFTP and port forwarding today.',
   'Importing from Termius: add your hosts in Terra by hand for now.',
 ];
+const latest = latestRelease(await loadReleases());
 ---
 
 <BaseLayout
   {...PAGES['/termius-alternative']}
-  jsonLd={softwareJsonLd(releases.latest as Release)}
+  jsonLd={softwareJsonLd(latest)}
 >
   <PageHeader
     eyebrow="Termius alternative"

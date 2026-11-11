@@ -13,9 +13,8 @@ import SelfHostSection from '../components/marketing/SelfHostSection.astro';
 import SftpPanes from '../components/mockups/SftpPanes.astro';
 import TerminalPane from '../components/mockups/TerminalPane.astro';
 import TerraWindow from '../components/mockups/TerraWindow.astro';
-import releases from '../data/releases.json';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import type { Release } from '../lib/releases';
+import { latestRelease, loadReleases } from '../lib/changelog';
 import { PAGES, softwareJsonLd } from '../lib/seo';
 
 const members = [
@@ -34,11 +33,12 @@ const members = [
   { name: 'Lin W.', email: 'lin@acme.dev', role: 'Member', color: '#7ee2a8' },
   { name: 'Sam T.', email: 'sam@acme.dev', role: 'Member', color: '#f5a524' },
 ];
+const latest = latestRelease(await loadReleases());
 ---
 
 <BaseLayout
   {...PAGES['/']}
-  jsonLd={softwareJsonLd(releases.latest as Release)}
+  jsonLd={softwareJsonLd(latest)}
 >
   <Hero />
   <FactStrip />
