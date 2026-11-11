@@ -89,3 +89,13 @@ describe('Rich Results Test: Article', () => {
     expect(data.dateModified).toBe('2026-11-11T00:00:00.000Z');
   });
 });
+
+describe('scrollbar', () => {
+  // Live, HTML streams in; the scrollbar appears mid-load and every centred
+  // block jumps sideways (desktop CLS 0.109). Reserve its space up front.
+  it('reserves the scrollbar gutter so centred content never jumps', () => {
+    expect(read('src/styles/global.css')).toMatch(
+      /html \{[^}]*scrollbar-gutter: stable/,
+    );
+  });
+});
