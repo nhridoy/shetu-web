@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import type { ReleaseResult } from '../../lib/github';
 import type { DetectedPlatform } from '../../lib/platform';
@@ -77,5 +77,66 @@ describe('DownloadPanel', () => {
       />,
     );
     expect(await screen.findByTestId('fallback-notice')).toBeInTheDocument();
+  });
+
+  describe('hero build menu', () => {
+    const renderHero = () =>
+      render(
+        <DownloadPanel
+          variant="hero"
+          detect={async () => ({ os: 'linux', arch: 'x64' })}
+          load={async () => ({ release, source: 'live' })}
+        />,
+      );
+
+    it('keeps the main button pointing at the detected build', async () => {
+      renderHero();
+      expect(await screen.findByTestId('hero-download')).toHaveAttribute(
+        'href',
+        'https://example.com/linux-x64.AppImage',
+      );
+    });
+
+    it('opens a list of every build in the release', async () => {
+      renderHero();
+      const toggle = await screen.findByRole('button', {
+        name: /other downloads/i,
+      });
+      expect(toggle).toHaveAttribute('aria-expanded', 'false');
+      fireEvent.click(toggle);
+      expect(toggle).toHaveAttribute('aria-expanded', 'true');
+      const menu = screen.getByTestId('hero-build-menu');
+      expect(
+        within(menu).getByRole('link', { name: /windows x64/i }),
+      ).toHaveAttribute('href', 'https://example.com/windows-x64.exe');
+      expect(
+        within(menu).getByRole('link', { name: /linux x64/i }),
+      ).toHaveAttribute('href', 'https://example.com/linux-x64.AppImage');
+      expect(
+        within(menu).getByRole('link', { name: /older releases/i }),
+      ).toHaveAttribute('href', '/releases');
+    });
+
+    it('closes on Escape and returns focus to the toggle', async () => {
+      renderHero();
+      const toggle = await screen.findByRole('button', {
+        name: /other downloads/i,
+      });
+      fireEvent.click(toggle);
+      fireEvent.keyDown(screen.getByTestId('hero-build-menu'), {
+        key: 'Escape',
+      });
+      expect(screen.queryByTestId('hero-build-menu')).not.toBeInTheDocument();
+      expect(toggle).toHaveFocus();
+    });
+
+    it('closes when clicking outside', async () => {
+      renderHero();
+      fireEvent.click(
+        await screen.findByRole('button', { name: /other downloads/i }),
+      );
+      fireEvent.pointerDown(document.body);
+      expect(screen.queryByTestId('hero-build-menu')).not.toBeInTheDocument();
+    });
   });
 });

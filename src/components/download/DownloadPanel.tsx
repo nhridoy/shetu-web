@@ -1,10 +1,11 @@
 import {
   AppleLogo,
+  CaretDown,
   DownloadSimple,
   LinuxLogo,
   WindowsLogo,
 } from '@phosphor-icons/react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import fallbackData from '../../data/releases.json';
 import { sessionCache } from '../../lib/browser';
 import { getLatestRelease, type ReleaseResult } from '../../lib/github';
@@ -41,6 +42,123 @@ function osLabel(os: string): string {
   if (os === 'windows') return 'Windows';
   if (os === 'linux') return 'Linux';
   return 'your system';
+}
+
+interface HeroDownloadProps {
+  href: string;
+  label: string;
+  groups: { os: string; items: ReturnType<typeof mapAssets> }[];
+  recommendedUrl?: string;
+}
+
+function HeroDownload({
+  href,
+  label,
+  groups,
+  recommendedUrl,
+}: HeroDownloadProps) {
+  const [open, setOpen] = useState(false);
+  const root = useRef<HTMLDivElement>(null);
+  const toggle = useRef<HTMLButtonElement>(null);
+  const menuId = useId();
+
+  useEffect(() => {
+    if (!open) return;
+    const onPointerDown = (event: PointerEvent) => {
+      if (!root.current?.contains(event.target as Node)) setOpen(false);
+    };
+    document.addEventListener('pointerdown', onPointerDown);
+    return () => document.removeEventListener('pointerdown', onPointerDown);
+  }, [open]);
+
+  const close = () => {
+    setOpen(false);
+    toggle.current?.focus();
+  };
+
+  return (
+    <div ref={root} className="relative inline-flex">
+      <a
+        href={href}
+        data-testid="hero-download"
+        className="btn-primary rounded-r-none px-5 py-3"
+      >
+        {label}
+      </a>
+      <button
+        ref={toggle}
+        type="button"
+        aria-label="Other downloads"
+        aria-expanded={open}
+        aria-controls={menuId}
+        onClick={() => setOpen((value) => !value)}
+        className="btn-primary rounded-l-none border-l border-paper/15 px-3 py-3"
+      >
+        <CaretDown
+          size={14}
+          weight="bold"
+          aria-hidden="true"
+          className={`transition-transform ${open ? 'rotate-180' : ''}`}
+        />
+      </button>
+      {open && (
+        // biome-ignore lint/a11y/noStaticElementInteractions: Escape closes the disclosure from any link inside it
+        <div
+          id={menuId}
+          data-testid="hero-build-menu"
+          onKeyDown={(event) => {
+            if (event.key === 'Escape') close();
+          }}
+          className="panel absolute top-full left-1/2 z-30 mt-2 w-[min(20rem,calc(100vw-2.5rem))] -translate-x-1/2 p-2 text-left shadow-2xl shadow-black/60"
+        >
+          {groups.map(({ os, items }) => (
+            <div key={os} className="py-1">
+              <p className="flex items-center gap-2 px-2.5 py-1.5 font-mono text-[11px] tracking-[0.14em] text-muted uppercase">
+                <OsIcon os={os} size={13} />
+                {osLabel(os)}
+              </p>
+              <ul>
+                {items.map((asset) => (
+                  <li key={asset.url}>
+                    <a
+                      href={asset.url}
+                      className="flex items-center justify-between gap-3 rounded-lg px-2.5 py-2 text-sm text-ink transition-colors hover:bg-white/[0.06] focus-visible:bg-white/[0.06]"
+                    >
+                      <span>
+                        {asset.label}
+                        {asset.url === recommendedUrl && (
+                          <span className="ml-2 rounded-full bg-accent-wash px-1.5 py-0.5 font-mono text-[10px] text-accent">
+                            your system
+                          </span>
+                        )}
+                      </span>
+                      <span className="shrink-0 font-mono text-[11px] text-muted">
+                        {formatBytes(asset.size)}
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+          <div className="mt-1 flex gap-1 border-t border-line pt-2">
+            <a
+              href="/download"
+              className="flex-1 rounded-lg px-2.5 py-2 text-center text-xs font-semibold text-muted hover:bg-white/[0.06] hover:text-ink"
+            >
+              All downloads
+            </a>
+            <a
+              href="/releases"
+              className="flex-1 rounded-lg px-2.5 py-2 text-center text-xs font-semibold text-muted hover:bg-white/[0.06] hover:text-ink"
+            >
+              Older releases
+            </a>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default function DownloadPanel({
@@ -91,26 +209,27 @@ export default function DownloadPanel({
     [assets, platform],
   );
 
-  if (variant === 'hero') {
-    return (
-      <a
-        href={recommended?.url ?? '/download'}
-        data-testid="hero-download"
-        className="btn-primary px-5 py-3"
-      >
-        {recommended
-          ? `Download for ${osLabel(platform?.os ?? '')}`
-          : 'Download Terra'}
-      </a>
-    );
-  }
-
   const grouped = ['macos', 'windows', 'linux']
     .map((os) => ({
       os,
       items: assets.filter((asset) => asset.os === os),
     }))
     .filter((group) => group.items.length > 0);
+
+  if (variant === 'hero') {
+    return (
+      <HeroDownload
+        href={recommended?.url ?? '/download'}
+        label={
+          recommended
+            ? `Download for ${osLabel(platform?.os ?? '')}`
+            : 'Download Terra'
+        }
+        groups={grouped}
+        recommendedUrl={recommended?.url}
+      />
+    );
+  }
 
   return (
     <div className="space-y-8">
