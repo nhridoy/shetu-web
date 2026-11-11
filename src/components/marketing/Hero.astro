@@ -1,0 +1,87 @@
+---
+import { ArrowRight, GithubLogo } from '@phosphor-icons/react';
+import { INSTALL_COMMANDS, REPOS } from '../../lib/site';
+import DownloadPanel from '../download/DownloadPanel';
+import ReleaseTag from '../download/ReleaseTag';
+import { HERO_SESSION } from '../mockups/demo';
+import HostSidebar from '../mockups/HostSidebar.astro';
+import TerminalPane from '../mockups/TerminalPane.astro';
+import TerraWindow from '../mockups/TerraWindow.astro';
+---
+
+<section class="relative overflow-hidden">
+  <div class="dot-grid pointer-events-none absolute inset-0" aria-hidden="true"></div>
+
+  <div class="relative mx-auto max-w-[1200px] px-5 pt-16 pb-20 sm:px-6 md:pt-24 md:pb-28">
+    <div class="mx-auto max-w-3xl text-center">
+      <a
+        href="/releases"
+        class="group inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-line-strong bg-white/[0.03] py-1 pr-3 pl-1.5 font-mono text-[11px] tracking-[0.06em] text-muted transition-colors hover:border-accent/40 hover:text-ink"
+      >
+        <span class="rounded-full bg-accent-wash px-2 py-0.5 text-accent"><ReleaseTag client:load /></span>
+        Open-source Termius alternative
+        <ArrowRight size={12} className="transition-transform group-hover:translate-x-0.5" />
+      </a>
+
+      <h1 class="mt-7 text-balance text-[clamp(2.6rem,7vw,5.4rem)] leading-[1] font-bold tracking-[-0.045em]">
+        SSH, without the <span class="text-gradient">subscription.</span>
+      </h1>
+      <p class="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-muted md:text-xl">
+        Terra is a free, open-source SSH client with split terminals, SFTP, port
+        forwarding and an encrypted vault you can sync through your own server.
+      </p>
+
+      <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
+        <DownloadPanel client:load variant="hero" />
+        <a href={REPOS.monorepo} class="btn-ghost px-5 py-3">
+          <GithubLogo size={16} weight="fill" /> Star on GitHub
+        </a>
+      </div>
+
+      <div class="mx-auto mt-6 flex max-w-xl items-center gap-2 rounded-xl border border-line bg-surface/80 py-1.5 pr-1.5 pl-4 font-mono text-[12px] text-muted">
+        <span class="text-accent" aria-hidden="true">$</span>
+        <code class="min-w-0 flex-1 truncate text-left">{INSTALL_COMMANDS.unix}</code>
+        <button
+          type="button"
+          data-copy={INSTALL_COMMANDS.unix}
+          aria-label="Copy install command"
+          class="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-line px-2.5 py-1.5 text-[11px] text-ink transition-colors hover:border-accent/40"
+        >
+          Copy
+        </button>
+      </div>
+      <p class="mt-2.5 text-xs text-muted">
+        macOS and Linux. For Windows and every other build, use the arrow next
+        to Download or the{" "}
+        <a href="/download" class="link">download page</a>.
+      </p>
+    </div>
+
+    <div class="relative mx-auto mt-16 max-w-[1080px] md:mt-20">
+      <div class="glow-beam pointer-events-none absolute -inset-x-10 -top-10 bottom-0" aria-hidden="true"></div>
+      <p class="sr-only">
+        Terra window showing a host list grouped into Production, Staging and
+        Homelab, and a split terminal connected to prod-api.
+      </p>
+      <TerraWindow class="relative">
+        <div class="flex h-[280px] sm:h-[360px] md:h-[420px]">
+          <HostSidebar class="hidden md:flex" />
+          <div class="flex min-w-0 flex-1">
+            <TerminalPane
+              title="deploy@prod-api"
+              lines={HERO_SESSION}
+              animate
+              class="flex-[1.4]"
+            />
+            <TerminalPane
+              title="Local"
+              lines={[{ prompt: 'me@laptop:~$', cmd: 'git pull --rebase', out: ['Already up to date.'] }]}
+              class="hidden flex-1 border-l border-line lg:flex"
+            />
+          </div>
+        </div>
+      </TerraWindow>
+      <div class="pointer-events-none absolute inset-x-0 -bottom-px h-24 bg-gradient-to-t from-paper to-transparent" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>

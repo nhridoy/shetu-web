@@ -1,0 +1,65 @@
+---
+import { INSTALL_COMMANDS } from '../../lib/site';
+
+const commands = [
+  {
+    id: 'unix',
+    label: 'macOS / Linux',
+    command: INSTALL_COMMANDS.unix,
+    hint: 'On Debian or Ubuntu this installs the .deb. Elsewhere it places the AppImage at ~/.local/bin/terra, which needs libfuse2.',
+  },
+  {
+    id: 'windows',
+    label: 'Windows',
+    command: INSTALL_COMMANDS.windows,
+    hint: 'Installs the NSIS setup for your architecture.',
+  },
+];
+---
+
+<fieldset class="install-command min-w-0 border-0 p-0">
+  <legend class="sr-only">Install command by operating system</legend>
+
+  {commands.map((item, index) => (
+    <input
+      type="radio"
+      name="install-os"
+      id={`install-${item.id}`}
+      class="install-radio sr-only"
+      checked={index === 0}
+    />
+  ))}
+
+  <div class="install-tabs flex flex-wrap gap-2">
+    {commands.map((item) => (
+      <label
+        for={`install-${item.id}`}
+        class="cursor-pointer rounded-lg border border-line px-3.5 py-1.5 text-sm font-semibold text-muted transition-colors hover:text-ink"
+      >
+        {item.label}
+      </label>
+    ))}
+  </div>
+
+  {commands.map((item) => (
+    <div class="install-panel mt-3" data-panel={item.id}>
+      <div class="overflow-hidden rounded-xl border border-line-strong bg-terminal shadow-2xl shadow-black/50">
+        <div class="flex items-center justify-between border-b border-line px-4 py-2.5">
+          <span class="flex items-center gap-2 font-mono text-[11px] text-muted">
+            <span class="h-1.5 w-1.5 rounded-full bg-terminal-text"></span>
+            {item.label}
+          </span>
+          <button
+            type="button"
+            data-copy={item.command}
+            class="rounded-md border border-line px-2.5 py-1 font-mono text-[11px] text-muted transition-colors duration-150 hover:border-accent/40 hover:text-ink"
+          >
+            Copy
+          </button>
+        </div>
+        <pre class="overflow-x-auto p-4 font-mono text-[12.5px] leading-relaxed text-ink"><code><span class="text-accent select-none">$ </span>{item.command}</code></pre>
+      </div>
+      <p class="mt-2 text-xs leading-relaxed text-muted">{item.hint}</p>
+    </div>
+  ))}
+</fieldset>

@@ -1,0 +1,76 @@
+---
+import { NAV_ITEMS, REPOS, SITE_DESCRIPTION } from '../../lib/site';
+import Logo from '../brand/Logo.astro';
+
+const year = new Date().getFullYear();
+const columns = [
+  {
+    title: 'Product',
+    links: NAV_ITEMS.map((item) => ({ label: item.label, href: item.href })),
+  },
+  {
+    title: 'Source',
+    links: [
+      { label: 'terra', href: REPOS.monorepo },
+      { label: 'terra-client', href: REPOS.client },
+      { label: 'terra-server', href: REPOS.server },
+      { label: 'terra-web', href: REPOS.web },
+    ],
+  },
+  {
+    title: 'Project',
+    links: [
+      { label: 'MIT license', href: `${REPOS.monorepo}/blob/main/LICENSE` },
+      { label: 'Report an issue', href: `${REPOS.monorepo}/issues` },
+      { label: 'Self-host the server', href: '/docs/server' },
+      { label: 'Contribute', href: '/community' },
+    ],
+  },
+];
+---
+
+<footer class="relative border-t border-line">
+  <div
+    class="mx-auto grid max-w-[1200px] gap-12 px-5 py-16 sm:px-6 md:grid-cols-[1.5fr_1fr_1fr_1fr]"
+  >
+    <div>
+      <a href="/" aria-label="Terra home" class="inline-block rounded-lg">
+        <Logo wordmark />
+      </a>
+      <p class="mt-4 max-w-xs text-sm leading-relaxed text-muted">
+        {SITE_DESCRIPTION}
+      </p>
+    </div>
+
+    {
+      columns.map((column) => (
+        <div>
+          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
+            {column.title}
+          </p>
+          <ul class="mt-4 space-y-2.5">
+            {column.links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class="text-sm text-muted transition-colors duration-150 hover:text-ink"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="border-t border-line">
+    <div
+      class="mx-auto flex max-w-[1200px] flex-col gap-2 px-5 py-6 font-mono text-[11px] uppercase tracking-[0.16em] text-muted sm:flex-row sm:items-center sm:justify-between sm:px-6"
+    >
+      <span>MIT licensed · Built in the open</span>
+      <span>© {year} Terra</span>
+    </div>
+  </div>
+</footer>

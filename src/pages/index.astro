@@ -1,135 +1,163 @@
 ---
-import {
-  ArrowDown,
-  ArrowRight,
-  ArrowUpRight,
-  Check,
-  Cloud,
-  Code,
-  Command,
-  Desktop,
-  FileArrowUp,
-  FolderSimple,
-  GithubLogo,
-  HardDrives,
-  Key,
-  Laptop,
-  LinuxLogo,
-  LockKey,
-  Plus,
-  ShieldCheck,
-  TerminalWindow,
-  WindowsLogo,
-} from '@phosphor-icons/react/dist/ssr';
-import PlanSelector from '../components/landing/PlanSelector';
-import WorkspaceDemo from '../components/landing/WorkspaceDemo';
-import Layout from '../layouts/Layout.astro';
+import ClosingCta from '../components/marketing/ClosingCta.astro';
+import CloudTeaser from '../components/marketing/CloudTeaser.astro';
+import Comparison from '../components/marketing/Comparison.astro';
+import FactStrip from '../components/marketing/FactStrip.astro';
+import FaqSection from '../components/marketing/FaqSection.astro';
+import FeatureBento from '../components/marketing/FeatureBento.astro';
+import FeatureShowcase from '../components/marketing/FeatureShowcase.astro';
+import Hero from '../components/marketing/Hero.astro';
+import OpenSourceSection from '../components/marketing/OpenSourceSection.astro';
+import SecurityFlow from '../components/marketing/SecurityFlow.astro';
+import SelfHostSection from '../components/marketing/SelfHostSection.astro';
+import SftpPanes from '../components/mockups/SftpPanes.astro';
+import TerminalPane from '../components/mockups/TerminalPane.astro';
+import TerraWindow from '../components/mockups/TerraWindow.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_DESCRIPTION } from '../lib/site';
 
-const source = 'https://github.com/nhridoy/terra';
-const faqs = [
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Terra',
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'Windows, macOS, Linux',
+  license: 'https://opensource.org/licenses/MIT',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  codeRepository: 'https://github.com/nhridoy/terra',
+  downloadUrl: 'https://github.com/nhridoy/terra-client/releases/latest',
+  description: SITE_DESCRIPTION,
+};
+
+const members = [
   {
-    q: 'What is Terra?',
-    a: 'Terra is an open-source, self-hostable Termius alternative. It brings SSH terminals, host management, SFTP, and file transfers into one desktop workspace for developers and DevOps teams.',
+    name: 'Aisha K.',
+    email: 'aisha@acme.dev',
+    role: 'Owner',
+    color: '#8b7cff',
   },
   {
-    q: 'Do I need to use Terra Cloud?',
-    a: 'No. You can run your own Terra server and choose where your configuration is stored. Terra Cloud is an optional managed path with a free tier and paid plans for teams.',
+    name: 'Marco R.',
+    email: 'marco@acme.dev',
+    role: 'Admin',
+    color: '#5b8cff',
   },
-  {
-    q: 'Can the server read my credentials?',
-    a: 'Sensitive data is encrypted on your device before it is stored or synced. The server receives encrypted data, not your plaintext credentials. SSH connections go directly from your client to the remote machine.',
-  },
-  {
-    q: 'Does Terra support file transfers?',
-    a: 'Yes. Terra includes an SFTP browser for navigating remote directories and transferring files between your computer and your servers, alongside your terminal sessions.',
-  },
-  {
-    q: 'How can I contribute?',
-    a: 'Explore the source, report a bug, or propose a change on GitHub. The client and server live in dedicated repositories linked from the main project. The setup instructions explain how to run the project locally.',
-  },
+  { name: 'Lin W.', email: 'lin@acme.dev', role: 'Member', color: '#7ee2a8' },
+  { name: 'Sam T.', email: 'sam@acme.dev', role: 'Member', color: '#f5a524' },
 ];
 ---
 
-<Layout title="Terra | Your servers. Your rules." description="The open-source, self-hostable Termius alternative. SSH terminals, host management, and SFTP in one focused workspace.">
-  <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header">
-    <div class="shell header-inner">
-      <a class="wordmark" href="#" aria-label="Terra home"><TerminalWindow size={29} weight="regular" /><span>terra</span></a>
-      <nav class="desktop-nav" aria-label="Main navigation">
-        <a href="#workspace">Product</a><a href="#security">Security</a><a href="#deployment">Self-hosting</a><a href="#plans">Plans</a>
-      </nav>
-      <div class="header-actions"><a class="source-link" href={source} aria-label="View source on GitHub"><GithubLogo size={21} /><span>View source</span></a><a class="button button-small button-primary" href="#get-terra">Get Terra<ArrowUpRight size={15} /></a></div>
-      <details class="mobile-menu"><summary aria-label="Open menu"><span>Menu</span><Plus size={18} /></summary><nav aria-label="Mobile navigation"><a href="#workspace">Product</a><a href="#security">Security</a><a href="#deployment">Self-hosting</a><a href="#plans">Plans</a><a href={source}>View source</a></nav></details>
-    </div>
-  </header>
+<BaseLayout
+  title="Terra · Open-source SSH client and Termius alternative"
+  description={SITE_DESCRIPTION}
+  jsonLd={jsonLd}
+>
+  <Hero />
+  <FactStrip />
+  <FeatureBento />
 
-  <main id="main">
-    <section class="hero shell" aria-labelledby="hero-heading" data-layout="asymmetric-hero">
-      <div class="hero-copy">
-        <h1 id="hero-heading">Your servers.<br /><span>Your rules.</span></h1>
-        <p>The open-source, self-hostable Termius alternative. SSH, terminals, and file transfers in one workspace. Built for the way you work.</p>
-        <div class="hero-actions"><a class="button button-primary" href="#get-terra">Get Terra<ArrowUpRight size={18} /></a><a class="text-link" href="#workspace">Explore workspace<ArrowDown size={17} /></a></div>
+  <FeatureShowcase
+    id="files"
+    eyebrow="Files"
+    title="Files without a second app."
+    body="Open an SFTP browser next to your terminal, drag files across, and edit remote config in place. Saving writes straight back to the server."
+    bullets={[
+      'Local and remote panes with drag and drop',
+      'Rename, chmod, chown, symlinks and search',
+      'Edit remote files in the built-in editor',
+    ]}
+  >
+    <p class="sr-only">Terra SFTP view with a local folder on the left and the prod-api server on the right.</p>
+    <TerraWindow tab="SFTP" title="prod-api · /srv/api">
+      <SftpPanes />
+    </TerraWindow>
+  </FeatureShowcase>
+
+  <FeatureShowcase
+    id="workspaces"
+    eyebrow="Workspaces"
+    title="Pick up where you left off."
+    body="Save a layout of tabs and split panes once, then bring the whole set back with one click when you return to the task."
+    bullets={[
+      'Save and restore tab and pane layouts',
+      'Mix remote hosts and local shells',
+      'Focus mode on F11',
+    ]}
+    side="left"
+  >
+    <p class="sr-only">A saved workspace with three terminals: two servers and a local shell.</p>
+    <TerraWindow title="release-day">
+      <div class="grid h-[300px] grid-cols-2 grid-rows-2">
+        <TerminalPane
+          title="deploy@prod-api"
+          lines={[{ prompt: 'prod-api$', cmd: 'systemctl status api', out: ['● api.service: active (running)'] }]}
+          class="row-span-2 border-r border-line"
+        />
+        <TerminalPane
+          title="postgres@prod-db-01"
+          lines={[{ prompt: 'db-01$', cmd: 'pg_isready', out: ['accepting connections'] }]}
+          class="border-b border-line"
+        />
+        <TerminalPane
+          title="Local"
+          lines={[{ prompt: 'me$', cmd: 'make release', out: ['tagged v2.4.0'] }]}
+        />
       </div>
-      <div class="hero-visual"><img src="/images/terra-servers.webp" width="1200" height="800" alt="Three graphite server modules with subtle mint indicators" fetchpriority="high" loading="eager" /></div>
-    </section>
+    </TerraWindow>
+  </FeatureShowcase>
 
-    <section class="platforms shell" aria-label="Desktop platforms" data-layout="compatibility-ribbon">
-      <p>One workspace.<br /><strong>At home on your desktop.</strong></p>
-      <div class="platform-list"><span><Command size={24} />macOS</span><span><WindowsLogo size={24} />Windows</span><span><LinuxLogo size={25} />Linux</span></div>
-      <span class="platform-note">Built for the terminal.<br />Designed for everything around it.</span>
-    </section>
-
-    <section class="section shell workspace-section" id="workspace" aria-labelledby="workspace-heading" data-layout="full-width-interactive-stage">
-      <div class="section-heading"><h2 id="workspace-heading">Less switching.<br /><span>More shipping.</span></h2><p>Your hosts, keys, and terminal sessions, together. Pick up where you left off and get straight to the work.</p></div>
-      <WorkspaceDemo client:visible />
-      <div class="workspace-footnotes"><span><TerminalWindow size={18} />SSH terminals</span><span><HardDrives size={18} />Organized hosts</span><span><Key size={18} />Encrypted vaults</span><span><FolderSimple size={18} />SFTP file browser</span></div>
-    </section>
-
-    <section class="section shell" id="features" aria-labelledby="features-heading" data-layout="asymmetric-feature-mosaic">
-      <div class="section-heading"><h2 id="features-heading">Everything within reach.</h2><p>From the first connection to the last file transfer, keep your workflow in one place.</p></div>
-      <div class="feature-mosaic">
-        <article class="feature-transfer"><div class="feature-copy"><FileArrowUp size={25} /><h3>Files move.<br />You stay focused.</h3><p>Browse remote directories and transfer files with SFTP, right alongside your terminal.</p></div><img src="/images/terra-transfer.webp" width="1200" height="800" alt="Two graphite storage drives connected by a braided cable" loading="lazy" decoding="async" /></article>
-        <article class="feature-hosts"><HardDrives size={26} /><div><h3>A place for every host.</h3><p>Keep connection details organized. Find the right machine without digging through notes or shell history.</p></div><div class="feature-detail"><FolderSimple size={20} /><span>Hosts, keys, and snippets.<br /><strong>One personal vault.</strong></span></div></article>
-        <article class="feature-shortcuts"><Command size={26} /><div><h3>Stay in your flow.</h3><p>Move between terminal tabs, split your workspace, and keep the context that matters.</p></div><div class="key-composition" aria-hidden="true"><span><Command size={27} /></span><span><TerminalWindow size={27} /></span><span><ArrowRight size={27} /></span></div></article>
+  <FeatureShowcase
+    id="teams"
+    eyebrow="Teams"
+    title="Share a vault, not a password."
+    body="Create a team on your Terra server, invite people, and share the hosts they need. Each shared vault has its own key, sealed to every member."
+    bullets={[
+      'Owner, admin and member roles',
+      'Shared vaults with their own keys',
+      'Keys rotate when someone leaves',
+    ]}
+  >
+    <p class="sr-only">Terra team view listing four members with owner, admin and member roles.</p>
+    <TerraWindow title="Team · Platform">
+      <div class="p-4 text-[12px]">
+        <div class="flex items-center justify-between">
+          <p class="font-semibold text-ink">Platform team</p>
+          <span class="rounded-md border border-line px-2 py-1 text-[11px] text-muted">+ Invite</span>
+        </div>
+        <div class="mt-3 space-y-1.5">
+          {members.map((m) => (
+            <div class="flex items-center gap-3 rounded-lg border border-line bg-white/[0.02] px-3 py-2">
+              <span class="grid h-7 w-7 place-items-center rounded-full text-[11px] font-bold text-paper" style={`background:${m.color}`}>
+                {m.name[0]}
+              </span>
+              <div class="min-w-0">
+                <p class="text-ink">{m.name}</p>
+                <p class="truncate font-mono text-[10px] text-muted">{m.email}</p>
+              </div>
+              <span
+                class:list={[
+                  'ml-auto rounded-full border px-2 py-0.5 font-mono text-[10px]',
+                  m.role === 'Owner' ? 'border-accent/40 bg-accent-wash text-ink' : 'border-line text-muted',
+                ]}
+              >
+                {m.role}
+              </span>
+            </div>
+          ))}
+        </div>
+        <p class="mt-3 flex items-center gap-2 font-mono text-[10.5px] text-muted">
+          <span class="h-1.5 w-1.5 rounded-full bg-terminal-text"></span>
+          Vault key sealed to 4 members
+        </p>
       </div>
-    </section>
+    </TerraWindow>
+  </FeatureShowcase>
 
-    <section class="section security-section" id="security" aria-labelledby="security-heading" data-layout="security-flow-and-principles">
-      <div class="shell">
-        <div class="security-heading"><ShieldCheck size={34} /><h2 id="security-heading">Your credentials.<br /><span>Only yours.</span></h2><p>Security starts on your device. Sensitive data is encrypted before it ever reaches a sync server.</p></div>
-        <div class="connection-flow" aria-label="SSH connects directly from your device to your remote server"><div><Laptop size={32} /><span>Your device</span></div><div class="connection-line"><span>Direct SSH connection</span><ArrowRight size={22} /></div><div><HardDrives size={32} /><span>Your server</span></div></div>
-        <div class="security-principles"><article><LockKey size={22} /><h3>Encrypted before sync</h3><p>Your server stores encrypted data. Plaintext credentials stay out of its reach.</p></article><article><Key size={22} /><h3>Keys stay with you</h3><p>Argon2id key derivation and ChaCha20Poly1305 protect sensitive data on the client.</p></article><article><Code size={22} /><h3>Open to inspection</h3><p>Read the code. Understand the architecture. Decide what you trust.</p></article></div>
-      </div>
-    </section>
-
-    <section class="section shell" id="deployment" aria-labelledby="deployment-heading" data-layout="deployment-comparison">
-      <div class="section-heading"><h2 id="deployment-heading">Choose where Terra lives.</h2><p>Run it on your infrastructure, or choose the cloud. Your workspace stays yours.</p></div>
-      <div class="deployment-grid">
-        <article class="deployment-own"><HardDrives size={38} /><h3>On your terms.</h3><p>Self-host Terra and keep control of your sync server, your configuration, and where your data lives.</p><ul><li><Check size={18} />Your infrastructure</li><li><Check size={18} />Open-source client and server</li><li><Check size={18} />No cloud account required</li></ul><a class="text-link" href={`${source}#quick-start`}>Self-host Terra<ArrowUpRight size={18} /></a></article>
-        <article class="deployment-cloud"><Cloud size={38} /><h3>Without the upkeep.</h3><p>Choose Terra Cloud for a managed experience. Start with the free tier, with paid plans for your team.</p><ul><li><Check size={18} />Managed infrastructure</li><li><Check size={18} />Free tier for individuals</li><li><Check size={18} />Team plans as you grow</li></ul><a class="text-link" href="#plans">Compare plans<ArrowRight size={18} /></a></article>
-      </div>
-    </section>
-
-    <section class="section shell plans-section" id="plans" aria-labelledby="plans-heading" data-layout="tabbed-plan-selector">
-      <div class="section-heading"><h2 id="plans-heading">Start your way.</h2><p>For your personal setup, your own infrastructure, or the whole team.</p></div>
-      <PlanSelector client:visible />
-    </section>
-
-    <section class="section shell faq-section" id="faq" aria-labelledby="faq-heading" data-layout="offset-native-disclosures">
-      <div class="faq-heading"><h2 id="faq-heading">Good questions.<br /><span>Straight answers.</span></h2><p>A little more context before you connect.</p><a class="text-link" href={`${source}/discussions`}>Join the discussion<ArrowUpRight size={18} /></a></div>
-      <div class="faq-list">{faqs.map((faq) => <details><summary>{faq.q}<Plus size={20} /></summary><p>{faq.a}</p></details>)}</div>
-    </section>
-
-    <section class="section shell get-section" id="get-terra" aria-labelledby="get-heading" data-layout="typographic-closing-invitation">
-      <TerminalWindow size={38} /><h2 id="get-heading">Make yourself<br /><span>at home.</span></h2><p>Your next terminal workspace is open source.<br />Take a look inside, or make it your own.</p><div class="closing-actions"><a class="button button-primary" href={`${source}#quick-start`}>Self-host Terra<ArrowUpRight size={18} /></a><a class="button button-outline" href={source}><GithubLogo size={19} />View source</a></div>
-    </section>
-  </main>
-
-  <footer class="site-footer shell"><div class="footer-top"><a class="wordmark" href="#" aria-label="Terra home"><TerminalWindow size={27} /><span>terra</span></a><p>An open-source home for your servers.</p><nav aria-label="Footer navigation"><a href="#workspace">Product</a><a href="#security">Security</a><a href={`${source}/issues`}>Report an issue</a></nav></div><div class="footer-bottom"><span>Terra. Built in the open.</span><span>SSH. SFTP. Your infrastructure.</span></div></footer>
-</Layout>
-
-<script>
-  const menu = document.querySelector<HTMLDetailsElement>('.mobile-menu');
-  menu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => { menu.open = false; }));
-  document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && menu?.open) { menu.open = false; menu.querySelector('summary')?.focus(); } });
-</script>
+  <SecurityFlow />
+  <SelfHostSection />
+  <Comparison />
+  <CloudTeaser />
+  <OpenSourceSection />
+  <FaqSection />
+  <ClosingCta />
+</BaseLayout>

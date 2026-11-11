@@ -1,0 +1,118 @@
+import { useEffect, useState } from 'react';
+import fallbackData from '../../data/releases.json';
+import { sessionCache } from '../../lib/browser';
+import { getReleases, type ReleasesResult } from '../../lib/github';
+import { formatReleaseDate, type Release } from '../../lib/releases';
+
+const fallbackReleases = fallbackData.releases as Release[];
+
+export interface ReleaseListProps {
+  load?: () => Promise<ReleasesResult>;
+}
+
+export default function ReleaseList({ load }: ReleaseListProps) {
+  const [releases, setReleases] = useState<Release[]>(fallbackReleases);
+  const [source, setSource] = useState<'live' | 'fallback'>('fallback');
+  const [checked, setChecked] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+
+    const run = async () => {
+      try {
+        const result = load
+          ? await load()
+          : await getReleases({
+              fallback: fallbackReleases,
+              cache: sessionCache(),
+            });
+        if (!active) return;
+        setReleases(result.releases);
+        setSource(result.source);
+      } catch {
+        // Keep the committed snapshot.
+      } finally {
+        if (active) setChecked(true);
+      }
+    };
+
+    run();
+    return () => {
+      active = false;
+    };
+  }, [load]);
+
+  if (releases.length === 0) {
+    return (
+      <div className="panel p-6">
+        <p className="text-sm text-muted">
+          {checked
+            ? 'Release history is unavailable right now.'
+            : 'Release history loads from GitHub.'}
+        </p>
+        <a
+          href="https://github.com/nhridoy/terra-client/releases"
+          className="link mt-3 inline-flex text-sm font-medium"
+        >
+          View releases on GitHub
+        </a>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      {checked && source === 'fallback' && (
+        <p data-testid="release-fallback-notice" className="text-sm text-muted">
+          Live release data is unavailable. Showing the last known release.
+        </p>
+      )}
+      <ol className="relative space-y-6 border-l border-line pl-6 sm:pl-8">
+        {releases.map((release) => (
+          <li key={release.tag_name} className="relative">
+            <span
+              aria-hidden="true"
+              className="absolute top-7 -left-[29px] h-2.5 w-2.5 rounded-full bg-accent ring-4 ring-paper sm:-left-[37px]"
+            />
+            <article className="panel p-6">
+              <div className="flex flex-wrap items-center gap-3">
+                <h2 className="font-mono text-lg font-semibold text-ink">
+                  {release.tag_name}
+                </h2>
+                {release.prerelease && (
+                  <span className="rounded-full border border-amber-400/30 bg-amber-400/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.14em] text-amber-300">
+                    Pre-release
+                  </span>
+                )}
+                <time
+                  className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted"
+                  dateTime={release.published_at}
+                >
+                  {formatReleaseDate(release.published_at)}
+                </time>
+              </div>
+              {release.name && release.name !== release.tag_name && (
+                <p className="mt-2 text-sm text-muted">{release.name}</p>
+              )}
+              {release.body && (
+                <p className="mt-3 line-clamp-3 whitespace-pre-line text-sm leading-relaxed text-muted">
+                  {release.body}
+                </p>
+              )}
+              <div className="mt-4 flex flex-wrap gap-4 text-sm">
+                <a href={release.html_url} className="link font-medium">
+                  Release notes
+                </a>
+                {release.assets.length > 0 && (
+                  <span className="text-muted">
+                    {release.assets.length} assets
+                  </span>
+                )}
+              </div>
+            </article>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}

@@ -1,0 +1,64 @@
+---
+title: Security reference
+description: How Terra derives keys, encrypts the vault, wraps team keys, and what the sync server can see.
+section: server
+order: 3
+updated: "2026-11-11"
+---
+
+Terra is designed so the sync server never needs your plaintext secrets. This page is the technical reference. For the shorter trust page, see [Security](/security).
+
+## Key hierarchy
+
+1. **Account password.** You choose it. It never leaves your device in plaintext.
+2. **Key-encryption key.** Terra derives it from your account password with Argon2id (32 MiB memory, 2 passes) on your device.
+3. **Data key.** A random per-account key, wrapped by the key-encryption key. It encrypts vault records with XChaCha20-Poly1305 before they are stored or synced.
+4. **Identity key.** Each account has an X25519 key pair used to seal team vault keys.
+5. **Team vault keys.** Each shared vault has its own key, sealed to every member's public key with X25519, HKDF-SHA256 and XChaCha20-Poly1305. The key rotates when a member is removed.
+
+Sign-in uses a separate verifier derived from the same key with a server salt, answered with an HMAC-SHA256 challenge proof. The server never receives the password itself.
+
+## What the server can see
+
+The server needs some fields in the clear to sync records. It can see:
+
+- Every record's name, IDs, timestamps and sort order.
+- Host OS, auth type, tags, color, group and key IDs.
+- Key description, type, fingerprint and public key.
+- Snippet description and tags.
+- Port-forward mode and host ID.
+
+These stay encrypted on your device and the server cannot read them:
+
+- Host address, port and username.
+- Passwords and private keys.
+- Snippet commands and terminal recordings.
+
+The server never receives SSH traffic. Connections go directly from the client to the remote host.
+
+## Threat model
+
+**Compromised sync server.** An attacker can read the visible fields above, read ciphertext and wrapped keys, and delete or withhold records. They cannot decrypt the vault without your password or recovery kit.
+
+**Removed team member.** Removing a member rotates the vault key, so they cannot read new changes. Data already cached on their device cannot be wiped remotely.
+
+**Malicious sync response.** Encrypted records are authenticated with XChaCha20-Poly1305. Tampered ciphertext fails to decrypt.
+
+**Network attacker.** Use TLS for the sync server. SSH traffic is protected by SSH itself, and Terra warns when a host key changes.
+
+## Recovery kit
+
+Terra gives you a recovery kit when you create your account. It holds a recovery code that can unwrap your data key. Store it offline. If you forget your password, the recovery kit is the only way back into your vault. The server cannot reset it, and the maintainers cannot recover it for you.
+
+## Reporting a vulnerability
+
+Open a private advisory:
+
+[Report a vulnerability](https://github.com/nhridoy/terra/security/advisories/new)
+
+Do not open a public issue for a vulnerability. Include the affected version, your OS, reproduction steps, and impact.
+
+## Source
+
+- [terra-client](https://github.com/nhridoy/terra-client)
+- [terra-server](https://github.com/nhridoy/terra-server)

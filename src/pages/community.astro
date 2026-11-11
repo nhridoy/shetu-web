@@ -1,0 +1,127 @@
+---
+import { ArrowUpRight, GithubLogo } from '@phosphor-icons/react';
+import PageHeader from '../components/ui/PageHeader.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { REPOS } from '../lib/site';
+
+const repos = [
+  {
+    name: 'terra',
+    href: REPOS.monorepo,
+    description:
+      'Project home, documentation, and cross-cutting issues. Start here if you are new.',
+  },
+  {
+    name: 'terra-client',
+    href: REPOS.client,
+    description:
+      'The Tauri v2 desktop client. Rust for the native layer, React and TypeScript for the interface.',
+  },
+  {
+    name: 'terra-server',
+    href: REPOS.server,
+    description:
+      'The Go sync and auth server. Gin, GORM, PostgreSQL, and optional Redis.',
+  },
+  {
+    name: 'terra-web',
+    href: REPOS.web,
+    description:
+      'This site. Astro, React islands, Tailwind, and MDX documentation.',
+  },
+];
+const groups = [
+  {
+    title: 'Issues and help',
+    body: 'Use GitHub Issues for bug reports and questions. GitHub Discussions is not enabled on these repositories, so issues are the public support channel.',
+    links: [
+      {
+        label: 'Project issues',
+        href: 'https://github.com/nhridoy/terra/issues',
+      },
+      {
+        label: 'Desktop client issues',
+        href: 'https://github.com/nhridoy/terra-client/issues',
+      },
+      {
+        label: 'Server issues',
+        href: 'https://github.com/nhridoy/terra-server/issues',
+      },
+    ],
+  },
+  {
+    title: 'Contributing',
+    body: 'Read the contributing guide, fork the repository, create a focused branch, run the tests, and open a pull request. For a first contribution, look for good first issues.',
+    links: [
+      {
+        label: 'Contributing guide',
+        href: 'https://github.com/nhridoy/terra/blob/main/CONTRIBUTING.md',
+      },
+      {
+        label: 'Good first issues',
+        href: 'https://github.com/nhridoy/terra/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22',
+      },
+      {
+        label: 'MIT license',
+        href: 'https://github.com/nhridoy/terra/blob/main/LICENSE',
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Community · Terra"
+  description="Contribute to Terra, report issues, and read the MIT license."
+>
+  <PageHeader
+    eyebrow="Community"
+    title="Built in the open."
+    lede="Terra is MIT licensed and developed in public. Read the code, report a bug, or send a pull request. The project is small enough that a focused contribution makes a visible difference."
+  />
+
+  <section class="mx-auto max-w-[1200px] px-5 py-16 sm:px-6 md:py-20">
+    <h2 class="text-3xl font-bold">Repositories</h2>
+    <div class="mt-8 grid gap-4 sm:grid-cols-2">
+      {repos.map((repo) => (
+        <a href={repo.href} class="panel lift group flex flex-col p-6">
+          <div class="flex items-center gap-2.5">
+            <GithubLogo size={18} weight="fill" className="text-muted" />
+            <span class="font-mono text-sm text-muted">nhridoy/<span class="font-semibold text-ink">{repo.name}</span></span>
+            <ArrowUpRight size={15} className="ml-auto text-muted transition-colors group-hover:text-accent" />
+          </div>
+          <p class="mt-3 text-[15px] leading-relaxed text-muted">{repo.description}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="border-y border-line bg-surface/40">
+    <div class="mx-auto grid max-w-[1200px] gap-6 px-5 py-16 sm:px-6 md:grid-cols-2 md:py-20">
+      {groups.map((group) => (
+        <div class="panel p-7">
+          <h2 class="text-2xl font-bold">{group.title}</h2>
+          <p class="mt-3 text-[15px] leading-relaxed text-muted">{group.body}</p>
+          <ul class="mt-6 space-y-1">
+            {group.links.map((link) => (
+              <li>
+                <a href={link.href} class="group flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium transition-colors hover:bg-white/[0.04]">
+                  {link.label}
+                  <ArrowUpRight size={14} className="text-muted transition-colors group-hover:text-accent" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-[1200px] px-5 py-16 sm:px-6">
+    <p class="max-w-2xl text-sm leading-relaxed text-muted">
+      Terra is distributed under the MIT license. The client, server and
+      website are separate repositories so each part can be built, tested and
+      released on its own.
+    </p>
+  </section>
+</BaseLayout>

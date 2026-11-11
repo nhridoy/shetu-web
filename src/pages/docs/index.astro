@@ -1,0 +1,106 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const docs = (await getCollection('docs')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const desktop = docs.filter((entry) => entry.data.section === 'desktop');
+const server = docs.filter((entry) => entry.data.section === 'server');
+---
+
+<BaseLayout
+  title="Terra docs"
+  description="Install Terra, self-host the sync server, and read the security reference."
+>
+  <section class="mx-auto max-w-[1200px] px-5 sm:px-6 py-16 md:py-20">
+    <p class="eyebrow">
+      Documentation
+    </p>
+    <h1
+      class="mt-4 text-balance text-5xl font-bold md:text-6xl"
+    >
+      Run Terra your way.
+    </h1>
+    <p class="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
+      Install the desktop app, self-host sync, and read the security model.
+      Every guide is written for users and links to the source when you need
+      the details.
+    </p>
+
+    <div class="mt-10 grid gap-4 md:grid-cols-2">
+      <a
+        href="/docs/desktop"
+        class="panel lift p-6"
+      >
+        <p class="eyebrow">
+          Track 01
+        </p>
+        <h2 class="mt-3 text-2xl font-bold">
+          Desktop app
+        </h2>
+        <p class="mt-2 text-sm leading-relaxed text-muted">
+          Install, connect your first host, manage the vault, update, and
+          uninstall.
+        </p>
+      </a>
+      <a
+        href="/docs/server"
+        class="panel lift p-6"
+      >
+        <p class="eyebrow">
+          Track 02
+        </p>
+        <h2 class="mt-3 text-2xl font-bold">
+          Self-hosted server
+        </h2>
+        <p class="mt-2 text-sm leading-relaxed text-muted">
+          Docker Compose, PostgreSQL, environment variables, TLS, OAuth, email
+          verification, and upgrades.
+        </p>
+      </a>
+    </div>
+
+    <div class="mt-4 grid gap-4 md:grid-cols-2">
+      <a
+        href="/docs/security"
+        class="panel lift p-6"
+      >
+        <h2 class="text-lg font-bold">Security reference</h2>
+        <p class="mt-2 text-sm text-muted">
+          Key hierarchy, server visibility, threat model, and disclosure.
+        </p>
+      </a>
+      <a
+        href="/docs/troubleshooting"
+        class="panel lift p-6"
+      >
+        <h2 class="text-lg font-bold">Troubleshooting</h2>
+        <p class="mt-2 text-sm text-muted">
+          First-launch warnings, connection failures, sync problems, and logs.
+        </p>
+      </a>
+    </div>
+
+    <div class="mt-12">
+      <h2 class="text-2xl font-bold">All guides</h2>
+      <ul class="mt-4 panel divide-y divide-line overflow-hidden">
+        {docs.map((entry) => (
+          <li>
+            <a
+              href={`/docs/${entry.id}`}
+              class="flex flex-col gap-1 px-4 py-3 hover:bg-white/[0.03] sm:flex-row sm:items-center sm:justify-between"
+            >
+              <span class="text-sm font-medium">{entry.data.title}</span>
+              <span class="text-sm text-muted">{entry.data.description}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="mt-4 text-sm text-muted">
+        {desktop.length} desktop {desktop.length === 1 ? 'guide' : 'guides'} ·{' '}
+        {server.length} server {server.length === 1 ? 'guide' : 'guides'}
+      </p>
+    </div>
+  </section>
+</BaseLayout>

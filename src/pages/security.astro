@@ -1,0 +1,151 @@
+---
+import {
+  ArrowRight,
+  Eye,
+  EyeSlash,
+  ShieldWarning,
+} from '@phosphor-icons/react';
+import SecurityFlow from '../components/marketing/SecurityFlow.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const visible = [
+  'Record names, IDs, timestamps and sort order',
+  'Host OS, auth type, tags, color, group and key IDs',
+  'Key description, type, fingerprint and public key',
+  'Snippet description and tags',
+  'Port-forward mode and host ID',
+];
+const hidden = [
+  'Host address, port and username',
+  'Passwords and private keys',
+  'Snippet commands and terminal recordings',
+  'Your account password',
+  'Your SSH traffic, which never touches the server',
+];
+const keys = [
+  {
+    step: 'Account password',
+    body: 'Argon2id (32 MiB, 2 passes) turns it into a key-encryption key on your device.',
+  },
+  {
+    step: 'Data key',
+    body: 'A random per-account key, wrapped by that key. It encrypts your vault with XChaCha20-Poly1305.',
+  },
+  {
+    step: 'X25519 identity',
+    body: 'Each account has a key pair used to seal team vault keys to its members.',
+  },
+  {
+    step: 'Team vault keys',
+    body: 'Every shared vault has its own key, sealed to each member and rotated when someone is removed.',
+  },
+];
+const limits = [
+  'Removing a team member rotates the vault key, but data already cached on their device cannot be wiped remotely.',
+  'Builds are not notarized by Apple or signed by Microsoft yet, so your OS warns on first launch.',
+  'If you lose both your password and your recovery kit, nobody can decrypt your vault. That includes us.',
+];
+---
+
+<BaseLayout
+  title="Security · Terra"
+  description="Terra encrypts your vault on your device with Argon2id and XChaCha20-Poly1305. The sync server stores ciphertext, and SSH connects directly to your hosts."
+>
+  <PageHeader
+    eyebrow="Security"
+    title="Your keys never leave your device unencrypted."
+    lede="Terra connects straight to your servers and encrypts your vault before anything is synced. Here is exactly what the server can and cannot see."
+  />
+
+  <SecurityFlow compact />
+
+  <section class="mx-auto max-w-[1200px] px-5 py-20 sm:px-6 md:py-28">
+    <h2 class="reveal text-3xl font-bold md:text-4xl">What the server can see.</h2>
+    <p class="reveal mt-4 max-w-2xl text-lg text-muted">
+      Sync needs a few fields in the clear. Everything that would let someone
+      log in to your machines stays encrypted.
+    </p>
+    <div class="mt-10 grid gap-4 md:grid-cols-2">
+      <div class="panel reveal p-6">
+        <h3 class="flex items-center gap-2.5 text-lg font-bold">
+          <Eye size={20} className="text-muted" /> Visible to the server
+        </h3>
+        <ul class="mt-5 space-y-2.5 text-[15px] text-muted">
+          {visible.map((item) => <li class="flex gap-3"><span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-muted" aria-hidden="true"></span>{item}</li>)}
+        </ul>
+      </div>
+      <div class="panel reveal border-accent/30 p-6">
+        <h3 class="flex items-center gap-2.5 text-lg font-bold">
+          <EyeSlash size={20} className="text-accent" /> Encrypted on your device
+        </h3>
+        <ul class="mt-5 space-y-2.5 text-[15px] text-ink/90">
+          {hidden.map((item) => <li class="flex gap-3"><span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" aria-hidden="true"></span>{item}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-y border-line bg-surface/40">
+    <div class="mx-auto grid max-w-[1200px] gap-12 px-5 py-20 sm:px-6 md:py-28 lg:grid-cols-[0.8fr_1.2fr]">
+      <div class="reveal">
+        <p class="eyebrow">Key hierarchy</p>
+        <h2 class="mt-4 text-3xl font-bold md:text-4xl">One password, layered keys.</h2>
+        <p class="mt-4 text-lg leading-relaxed text-muted">
+          Your password never travels in plaintext. Sign-in uses a separate
+          verifier and an HMAC-SHA256 challenge, so the server can check you
+          without learning the password.
+        </p>
+      </div>
+      <ol class="space-y-3">
+        {keys.map((key, i) => (
+          <li class="panel reveal flex gap-4 p-5">
+            <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-accent/30 bg-accent-wash font-mono text-[11px] text-accent">
+              {i + 1}
+            </span>
+            <div>
+              <p class="font-bold">{key.step}</p>
+              <p class="mt-1 text-sm leading-relaxed text-muted">{key.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="mx-auto grid max-w-[1200px] gap-12 px-5 py-20 sm:px-6 md:py-28 lg:grid-cols-2">
+    <div class="reveal">
+      <h2 class="text-3xl font-bold">Recovery kit</h2>
+      <p class="mt-4 leading-relaxed text-muted">
+        Terra gives you a recovery kit when you create your account. Its code
+        can unwrap your data key. Store it offline: it is the only way back in
+        if you forget your password. The server cannot reset it.
+      </p>
+      <h2 class="mt-12 text-3xl font-bold">Known limits</h2>
+      <ul class="mt-4 space-y-3">
+        {limits.map((limit) => (
+          <li class="flex gap-3 text-muted">
+            <ShieldWarning size={18} className="mt-0.5 shrink-0 text-amber-300" />
+            {limit}
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div class="panel reveal self-start p-7">
+      <h2 class="text-2xl font-bold">Found a vulnerability?</h2>
+      <p class="mt-3 leading-relaxed text-muted">
+        Report it privately through GitHub Security Advisories, not a public
+        issue. Include the affected version, your OS, reproduction steps and
+        impact.
+      </p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="https://github.com/nhridoy/terra/security/advisories/new" class="btn-primary">
+          Report a vulnerability
+        </a>
+        <a href="/docs/security" class="btn-ghost">
+          Technical reference <ArrowRight size={14} />
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

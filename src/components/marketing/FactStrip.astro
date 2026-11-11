@@ -1,0 +1,26 @@
+---
+import {
+  Broadcast,
+  CloudArrowUp,
+  Desktop,
+  Scales,
+} from '@phosphor-icons/react';
+
+const facts = [
+  { Icon: Scales, label: 'MIT licensed' },
+  { Icon: Desktop, label: 'macOS, Windows, Linux · x64 and ARM64' },
+  { Icon: Broadcast, label: 'Direct SSH, no relay' },
+  { Icon: CloudArrowUp, label: 'Self-hostable sync' },
+];
+---
+
+<section class="border-y border-line bg-surface/50">
+  <ul class="mx-auto flex max-w-[1200px] flex-wrap items-center justify-center gap-x-10 gap-y-3 px-5 py-6 sm:px-6">
+    {facts.map(({ Icon, label }) => (
+      <li class="flex items-center gap-2 font-mono text-[12px] text-muted">
+        <Icon size={15} className="text-accent" />
+        {label}
+      </li>
+    ))}
+  </ul>
+</section>

@@ -1,0 +1,59 @@
+---
+import { Plus } from '@phosphor-icons/react';
+
+const faqs = [
+  {
+    q: 'Is Terra really free?',
+    a: 'Yes. The desktop app and the sync server are MIT licensed, and there is no paid tier today. Every feature on this page is in the free download.',
+  },
+  {
+    q: 'Do I need a server?',
+    a: 'Sign-in and sync go through a Terra server. You can run your own with Docker in a few minutes, and a hosted option is on the way. Your SSH connections never pass through it.',
+    href: '/docs/server',
+    link: 'Self-host the server',
+  },
+  {
+    q: 'What can the server see?',
+    a: 'Record names, tags and timestamps, so it can sync them. Addresses, usernames, passwords, private keys and commands are encrypted on your device with XChaCha20-Poly1305 before they are sent.',
+    href: '/security',
+    link: 'Read the security model',
+  },
+  {
+    q: 'Can I import my hosts from Termius?',
+    a: 'Not yet. Today you add hosts in the app.',
+  },
+  {
+    q: 'Why does macOS or Windows warn me when I open it?',
+    a: 'Builds are not notarized by Apple or signed by Microsoft yet. The download page walks you through the one-time prompt on each system.',
+    href: '/download',
+    link: 'Open the download page',
+  },
+  {
+    q: 'Is there a mobile app?',
+    a: 'Not today. Terra is a desktop app for macOS, Windows and Linux, on x64 and ARM64.',
+  },
+];
+---
+
+<section id="faq" class="scroll-mt-20 border-t border-line">
+  <div class="mx-auto grid max-w-[1200px] gap-12 px-5 py-20 sm:px-6 md:py-28 lg:grid-cols-[0.8fr_1.2fr]">
+    <div class="reveal">
+      <p class="eyebrow">FAQ</p>
+      <h2 class="mt-4 text-balance text-4xl leading-[1.05] font-bold md:text-5xl">Questions, answered.</h2>
+    </div>
+    <div class="reveal divide-y divide-line border-y border-line">
+      {faqs.map((faq) => (
+        <details class="group py-1">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-4 text-left text-[17px] font-semibold [&::-webkit-details-marker]:hidden">
+            {faq.q}
+            <Plus size={16} className="shrink-0 text-muted transition-transform duration-200 group-open:rotate-45" />
+          </summary>
+          <div class="pb-5 text-[15px] leading-relaxed text-muted">
+            <p>{faq.a}</p>
+            {faq.href && <a href={faq.href} class="link mt-3 inline-block text-sm">{faq.link}</a>}
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

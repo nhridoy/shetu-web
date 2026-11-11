@@ -1,0 +1,29 @@
+---
+import { ArrowUpRight, DownloadSimple } from '@phosphor-icons/react';
+import ReleaseList from '../components/download/ReleaseList';
+import PageHeader from '../components/ui/PageHeader.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Terra releases"
+  description="Terra release history, tags, dates, and download assets."
+>
+  <PageHeader
+    eyebrow="Releases"
+    title="Every release, in the open."
+    lede="Terra ships from GitHub Releases. This list loads live, and links you to GitHub if the API is unavailable."
+  >
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href="/download" class="btn-primary">
+        <DownloadSimple size={16} weight="bold" /> Download the latest
+      </a>
+      <a href="https://github.com/nhridoy/terra-client/releases" class="btn-ghost">
+        All releases on GitHub <ArrowUpRight size={14} />
+      </a>
+    </div>
+  </PageHeader>
+  <section class="mx-auto max-w-[900px] px-5 py-14 sm:px-6 md:py-20">
+    <ReleaseList client:visible />
+  </section>
+</BaseLayout>
