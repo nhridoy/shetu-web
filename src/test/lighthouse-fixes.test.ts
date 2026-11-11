@@ -94,8 +94,11 @@ describe('scrollbar', () => {
   // Live, HTML streams in; the scrollbar appears mid-load and every centred
   // block jumps sideways (desktop CLS 0.109). Reserve its space up front.
   it('reserves the scrollbar gutter so centred content never jumps', () => {
-    expect(read('src/styles/global.css')).toMatch(
-      /html \{[^}]*scrollbar-gutter: stable/,
-    );
+    // Ignore comments, and allow no other value anywhere that could override it.
+    const css = read('src/styles/global.css').replace(/\/\*[\s\S]*?\*\//g, '');
+    expect(css).toMatch(/html \{[^}]*scrollbar-gutter: stable;/);
+    expect(css.match(/scrollbar-gutter:\s*[^;]+/g)).toEqual([
+      'scrollbar-gutter: stable',
+    ]);
   });
 });
