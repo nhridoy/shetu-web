@@ -67,7 +67,7 @@ describe('final review fixes', () => {
 
   it('keeps the hero version live', () => {
     expect(read('src/components/marketing/Hero.astro')).toContain(
-      '<ReleaseTag client:load',
+      '<ReleaseTag client:idle',
     );
   });
 });

@@ -18,7 +18,7 @@ import TerraWindow from '../mockups/TerraWindow.astro';
         href="/changelog"
         class="group inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-line-strong bg-white/[0.03] py-1 pr-3 pl-1.5 font-mono text-[11px] tracking-[0.06em] text-muted transition-colors hover:border-accent/40 hover:text-ink"
       >
-        <span class="rounded-full bg-accent-wash px-2 py-0.5 text-accent"><ReleaseTag client:load /></span>
+        <span class="rounded-full bg-accent-wash px-2 py-0.5 text-accent"><ReleaseTag client:idle /></span>
         Open-source Termius alternative
         <ArrowRight size={12} className="transition-transform group-hover:translate-x-0.5" />
       </a>
@@ -32,7 +32,7 @@ import TerraWindow from '../mockups/TerraWindow.astro';
       </p>
 
       <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
-        <DownloadPanel client:load variant="hero" />
+        <DownloadPanel client:idle variant="hero" />
         <a href={REPOS.monorepo} class="btn-ghost px-5 py-3">
           <GithubLogo size={16} weight="fill" /> Star on GitHub
         </a>
