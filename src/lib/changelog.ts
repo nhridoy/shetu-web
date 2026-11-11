@@ -18,7 +18,7 @@ export function loadReleases(fetchImpl?: typeof fetch): Promise<Release[]> {
     }).then((result) => {
       if (result.source === 'fallback') {
         console.warn(
-          '[terra-web] GitHub releases unavailable; using src/data/releases.json',
+          '[shetu-web] GitHub releases unavailable; using src/data/releases.json',
         );
       }
       return result.releases;
@@ -99,8 +99,8 @@ export function releasePageMeta(
 ): PageMeta & { noindex: boolean } {
   const tag = release.tag_name;
   return {
-    title: `Terra ${tag} release notes and downloads · Changelog`,
-    description: `What changed in Terra ${tag}, released ${formatReleaseDate(release.published_at)}: release notes and downloads for macOS, Windows and Linux, x64 and ARM64.`,
+    title: `Shetu ${tag} release notes and downloads · Changelog`,
+    description: `What changed in Shetu ${tag}, released ${formatReleaseDate(release.published_at)}: release notes and downloads for macOS, Windows and Linux, x64 and ARM64.`,
     noindex: !hasNotes(release.body),
   };
 }

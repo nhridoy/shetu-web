@@ -4,12 +4,19 @@ import {
   breadcrumbJsonLd,
   ogImagePath,
   PAGES,
+  SITE_URL,
   siteJsonLd,
   softwareJsonLd,
 } from './seo';
 import { REPOS } from './site';
 
 const release = { tag_name: 'v0.0.15' } as Release;
+
+describe('site URL', () => {
+  it('serves from shetu.iamnahid.com', () => {
+    expect(SITE_URL).toBe('https://shetu.iamnahid.com');
+  });
+});
 
 describe('page metadata', () => {
   it('keeps every title within 30 to 60 characters', () => {
@@ -40,7 +47,7 @@ describe('structured data', () => {
     ]) as unknown as { itemListElement: { position: number; item: string }[] };
     expect(crumbs.itemListElement.map((c) => c.position)).toEqual([1, 2, 3]);
     for (const c of crumbs.itemListElement) {
-      expect(c.item.startsWith('https://terra.iamnahid.com/')).toBe(true);
+      expect(c.item.startsWith('https://shetu.iamnahid.com/')).toBe(true);
     }
   });
 

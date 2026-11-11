@@ -1,13 +1,13 @@
-# Terra Distribution and Marketing Site — Design Spec
+# Shetu Distribution and Marketing Site — Design Spec
 
 **Date:** 2026-11-09
 **Status:** Approved for planning
-**Scope:** `terra-web` only
+**Scope:** `shetu-web` only
 **Supersedes:** the existing single-page landing design in `src/pages/index.astro`
 
 ## 1. Context
 
-Terra is an open-source, self-hostable SSH client and Termius alternative. It has three parts: a Tauri v2 desktop client, a Go sync/auth server that never proxies SSH, and this web presence. Today `terra-web` is a single marketing page whose "Get Terra" action links to the GitHub quick-start. There is no real download experience, no documentation surface, and no release history.
+Shetu is an open-source, self-hostable SSH client and Termius alternative. It has three parts: a Tauri v2 desktop client, a Go sync/auth server that never proxies SSH, and this web presence. Today `shetu-web` is a single marketing page whose "Get Shetu" action links to the GitHub quick-start. There is no real download experience, no documentation surface, and no release history.
 
 This spec defines a fresh, multi-page distribution and marketing site. The current page and its visual design are discarded. The repo, Astro stack, and brand name are retained.
 
@@ -16,9 +16,9 @@ This spec defines a fresh, multi-page distribution and marketing site. The curre
 - Desktop app for Windows, macOS, and Linux, version `0.0.15` at the time of writing.
 - Direct client-to-remote SSH and SFTP. The server never proxies connections.
 - Client-side encryption: Argon2id key derivation, XChaCha20-Poly1305, X25519 identity keys. The server stores ciphertext and wrapped keys, never plaintext credentials.
-- Optional self-hosted Go server (Docker image `ghcr.io/nhridoy/terra-server`) for sync and auth.
-- MIT licensed, source on GitHub under `nhridoy/terra`, `terra-client`, `terra-server`, and `terra-web`.
-- Releases are published on GitHub Releases for `nhridoy/terra-client`, with one-line installers `install.sh` and `install.ps1`.
+- Optional self-hosted Go server (Docker image `ghcr.io/nhridoy/shetu-server`) for sync and auth.
+- MIT licensed, source on GitHub under `nhridoy/shetu`, `shetu-client`, `shetu-server`, and `shetu-web`.
+- Releases are published on GitHub Releases for `nhridoy/shetu-client`, with one-line installers `install.sh` and `install.ps1`.
 - Builds are not yet signed by Apple or Microsoft, so first launch shows Gatekeeper or SmartScreen warnings.
 
 ### Accuracy rules
@@ -29,7 +29,7 @@ Every technical claim must map to behavior that exists in the code. The site mus
 
 ### Goals
 
-1. Let a visitor understand Terra and trust it within the first viewport.
+1. Let a visitor understand Shetu and trust it within the first viewport.
 2. Let a visitor download the correct build for their OS and architecture in a few seconds.
 3. Explain installation, self-hosting, and the security model honestly and completely.
 4. Present the project as a credible open-source product, not a prototype.
@@ -38,10 +38,10 @@ Every technical claim must map to behavior that exists in the code. The site mus
 ### Non-goals
 
 - No authentication, accounts, or server-side runtime.
-- No pricing or Terra Cloud page. There is no real plan data, so none is invented.
+- No pricing or Shetu Cloud page. There is no real plan data, so none is invented.
 - No blog, changelog authoring UI, analytics, or search.
 - No mobile app marketing. The mobile app is not in this repo.
-- No changes outside `terra-web`.
+- No changes outside `shetu-web`.
 
 ## 3. Audience and success
 
@@ -51,7 +51,7 @@ Every technical claim must map to behavior that exists in the code. The site mus
 
 **Success is qualitative and testable:**
 
-- A first-time visitor can state what Terra is and that it is open source after one screen.
+- A first-time visitor can state what Shetu is and that it is open source after one screen.
 - A visitor on a supported OS reaches a direct download in two actions or fewer.
 - A visitor can find install, self-host, and security answers without leaving the site.
 - Every page works with JavaScript disabled except the live release metadata upgrade.
@@ -272,8 +272,8 @@ The existing `PlanSelector` and `WorkspaceDemo` components are retired. UI primi
 
 ### 9.2 Release fetch
 
-- `GET https://api.github.com/repos/nhridoy/terra-client/releases/latest`.
-- `GET https://api.github.com/repos/nhridoy/terra-client/releases?per_page=20` for `/releases`.
+- `GET https://api.github.com/repos/nhridoy/shetu-client/releases/latest`.
+- `GET https://api.github.com/repos/nhridoy/shetu-client/releases?per_page=20` for `/releases`.
 - Public, CORS-enabled, no token.
 - Responses cached in `sessionStorage` for 10 minutes.
 - Only the fields the site needs are retained.
@@ -299,11 +299,11 @@ Shape:
     "tag_name": "v0.0.15",
     "name": "v0.0.15",
     "published_at": "2026-11-05T00:00:00Z",
-    "html_url": "https://github.com/nhridoy/terra-client/releases/tag/v0.0.15",
+    "html_url": "https://github.com/nhridoy/shetu-client/releases/tag/v0.0.15",
     "prerelease": false,
     "assets": [
       {
-        "name": "Terra_0.0.15_x64.dmg",
+        "name": "Shetu_0.0.15_x64.dmg",
         "browser_download_url": "https://github.com/...",
         "size": 12345678
       }
@@ -401,8 +401,8 @@ Shape:
 
 ## 16. Out of scope
 
-- Pricing, Terra Cloud signup, and plan comparison.
+- Pricing, Shetu Cloud signup, and plan comparison.
 - Blog, changelog authoring, analytics, search.
 - Mobile app pages.
 - Authentication and user accounts.
-- Changes to `terra-client` or `terra-server`.
+- Changes to `shetu-client` or `shetu-server`.

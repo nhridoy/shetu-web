@@ -11,7 +11,7 @@ import { PAGES, softwareJsonLd } from '../lib/seo';
 const reasons = [
   {
     title: 'Free, with nothing held back',
-    body: 'Terra is MIT licensed. Sync, team vaults, SFTP and port forwarding are in the free download. There is no paid tier today.',
+    body: 'Shetu is MIT licensed. Sync, team vaults, SFTP and port forwarding are in the free download. There is no paid tier today.',
   },
   {
     title: 'Open source, end to end',
@@ -27,9 +27,9 @@ const reasons = [
   },
 ];
 const gaps = [
-  'Mobile apps: Terra is desktop only (macOS, Windows, Linux) for now.',
-  'Mosh and Telnet: Terra speaks SSH, SFTP and port forwarding today.',
-  'Importing from Termius: add your hosts in Terra by hand for now.',
+  'Mobile apps: Shetu is desktop only (macOS, Windows, Linux) for now.',
+  'Mosh and Telnet: Shetu speaks SSH, SFTP and port forwarding today.',
+  'Importing from Termius: add your hosts in Shetu by hand for now.',
 ];
 const latest = latestRelease(await loadReleases());
 ---
@@ -41,7 +41,7 @@ const latest = latestRelease(await loadReleases());
   <PageHeader
     eyebrow="Termius alternative"
     title="The open-source Termius alternative."
-    lede="Terra gives you the SSH client you use every day, split terminals, SFTP, port forwarding and synced hosts, without a subscription and with sync you can host yourself."
+    lede="Shetu gives you the SSH client you use every day, split terminals, SFTP, port forwarding and synced hosts, without a subscription and with sync you can host yourself."
   >
     <div class="mt-8 flex flex-wrap items-center gap-3">
       <DownloadPanel client:idle={{ timeout: 1000 }} variant="hero" />
@@ -50,7 +50,7 @@ const latest = latestRelease(await loadReleases());
   </PageHeader>
 
   <section class="mx-auto max-w-[1200px] px-5 py-16 sm:px-6 md:py-24">
-    <h2 class="text-3xl font-bold md:text-4xl">Why people switch to Terra</h2>
+    <h2 class="text-3xl font-bold md:text-4xl">Why people switch to Shetu</h2>
     <div class="mt-10 grid gap-4 md:grid-cols-2">
       {reasons.map((reason) => (
         <article class="panel p-6">
@@ -70,9 +70,9 @@ const latest = latestRelease(await loadReleases());
 
   <section class="mx-auto grid max-w-[1200px] gap-10 px-5 py-16 sm:px-6 md:py-24 lg:grid-cols-2">
     <div>
-      <h2 class="text-3xl font-bold">What Terra doesn't do yet</h2>
+      <h2 class="text-3xl font-bold">What Shetu doesn't do yet</h2>
       <p class="mt-4 text-muted">
-        Termius has had years of polish. If you rely on one of these, Terra is
+        Termius has had years of polish. If you rely on one of these, Shetu is
         not a full replacement yet:
       </p>
       <ul class="mt-5 space-y-3">
@@ -87,7 +87,7 @@ const latest = latestRelease(await loadReleases());
     <div class="panel self-start p-7">
       <h2 class="text-2xl font-bold">Bring your own sync server</h2>
       <p class="mt-3 leading-relaxed text-muted">
-        Terra syncs through a Terra server. Run the open-source server yourself
+        Shetu syncs through a Shetu server. Run the open-source server yourself
         and keep your encrypted vault and team vaults on hardware you trust.
       </p>
       <a href="/self-hosted" class="link mt-5 inline-flex items-center gap-1.5 text-sm font-medium">

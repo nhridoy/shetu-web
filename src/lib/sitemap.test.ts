@@ -4,7 +4,7 @@ import { buildSitemap } from './sitemap';
 describe('buildSitemap', () => {
   it('writes absolute, escaped locations', () => {
     expect(buildSitemap([{ path: '/a&b' }])).toContain(
-      '<loc>https://terra.iamnahid.com/a&amp;b</loc>',
+      '<loc>https://shetu.iamnahid.com/a&amp;b</loc>',
     );
   });
 

@@ -11,8 +11,8 @@ export function renderIcon(size: number): Promise<Buffer> {
 
 export function buildManifest() {
   return {
-    name: 'Terra',
-    short_name: 'Terra',
+    name: 'Shetu',
+    short_name: 'Shetu',
     description: PAGES['/'].description,
     start_url: '/',
     display: 'browser',

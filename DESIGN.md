@@ -1,6 +1,6 @@
 ---
 
-name: Terra
+name: Shetu
 description: SSH, without the subscription. A free, open-source Termius alternative.
 colors:
 paper: "#07070A"
@@ -51,13 +51,13 @@ btn-ghost: "hairline border, faint white fill, violet border on hover"
 panel: "surface gradient, hairline border, inset top highlight"
 ---
 
-# Design System: Terra
+# Design System: Shetu
 
 ## North star
 
-"SSH, without the subscription." A Raycast-style dark product site for solo developers leaving Termius. Near-black surfaces, crisp Satoshi headlines, JetBrains Mono for anything technical, and violet/blue used as an accent, never a wash. The product is shown with coded HTML/CSS mockups of the real Terra window, not screenshots.
+"SSH, without the subscription." A Raycast-style dark product site for solo developers leaving Termius. Near-black surfaces, crisp Satoshi headlines, JetBrains Mono for anything technical, and violet/blue used as an accent, never a wash. The product is shown with coded HTML/CSS mockups of the real Shetu window, not screenshots.
 
-Spec: `docs/superpowers/specs/2026-11-11-terra-violet-redesign-design.md`.
+Spec: `docs/superpowers/specs/2026-11-11-shetu-violet-redesign-design.md`.
 
 ## Color
 
@@ -69,11 +69,11 @@ Satoshi loads from the Fontshare CDN (its license forbids redistributing the fil
 
 ## Components
 
-- **Logo** `src/components/brand/Logo.astro`: the desktop app icon (terra-client `src-tauri/icons/icon.svg`, margin trimmed) served from `public/favicon.svg`, plus `public/favicon.ico`. Update both when the app icon changes.
-- **Mockups** `src/components/mockups/`: `TerraWindow` (app chrome, container-query responsive), `HostSidebar`, `TerminalPane` (optional typing animation), `SftpPanes`, demo data in `demo.ts`. All are `aria-hidden` with an `sr-only` sentence beside them.
+- **Logo** `src/components/brand/Logo.astro`: the desktop app icon (shetu-client `src-tauri/icons/icon.svg`, margin trimmed) served from `public/favicon.svg`, plus `public/favicon.ico`. Update both when the app icon changes.
+- **Mockups** `src/components/mockups/`: `ShetuWindow` (app chrome, container-query responsive), `HostSidebar`, `TerminalPane` (optional typing animation), `SftpPanes`, demo data in `demo.ts`. All are `aria-hidden` with an `sr-only` sentence beside them.
 - **Panels** `.panel`, hover lift `.lift`, buttons `.btn-primary` / `.btn-ghost`, links `.link`.
 - **PageHeader** `src/components/ui/PageHeader.astro`: shared header for inner pages.
-- **Share images** `src/lib/og.ts`: 1200x630, near-black with violet/blue glows, app icon and "Terra" top left, page title (brand suffix removed) and description below, `terra.iamnahid.com` in accent. One per page, generated at build.
+- **Share images** `src/lib/og.ts`: 1200x630, near-black with violet/blue glows, app icon and "Shetu" top left, page title (brand suffix removed) and description below, `shetu.iamnahid.com` in accent. One per page, generated at build.
 
 ## Motion
 

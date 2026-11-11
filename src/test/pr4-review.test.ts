@@ -117,7 +117,7 @@ describe('build safety', () => {
   it('defines the public origin once', () => {
     const config = read('astro.config.mjs');
     expect(config).toContain('site: SITE_URL');
-    expect(config).not.toContain("'https://terra.iamnahid.com'");
+    expect(config).not.toContain("'https://shetu.iamnahid.com'");
   });
 });
 
@@ -148,15 +148,15 @@ describe('llms.txt', () => {
   });
 
   it('starts with the project name and a summary', () => {
-    expect(txt.startsWith('# Terra\n\n> ')).toBe(true);
+    expect(txt.startsWith('# Shetu\n\n> ')).toBe(true);
   });
 
   it('links pages and docs with absolute URLs and descriptions', () => {
     expect(txt).toContain(
-      '- [Download](https://terra.iamnahid.com/download): Get it.',
+      '- [Download](https://shetu.iamnahid.com/download): Get it.',
     );
     expect(txt).toContain(
-      '- [Server](https://terra.iamnahid.com/docs/server): Host it.',
+      '- [Server](https://shetu.iamnahid.com/docs/server): Host it.',
     );
   });
 });

@@ -1,3 +1,4 @@
+import { execFileSync } from 'node:child_process';
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -49,6 +50,21 @@ describe('copy guard', () => {
 
   it('has no en or em dashes', () => {
     const hits = files.filter((f) => /[–—]/.test(f.text)).map((f) => f.path);
+    expect(hits).toEqual([]);
+  });
+
+  it('uses only the Shetu name in every tracked file', () => {
+    // Split so this file does not match its own pattern.
+    const oldName = new RegExp(['ter', 'ra'].join(''), 'i');
+    const tracked = execFileSync('git', ['ls-files'], { encoding: 'utf8' })
+      .split('\n')
+      .filter((path) => path && !/\.(png|ico|jpe?g|webp|woff2?)$/.test(path))
+      // shortcut: mirrors GitHub releases published under the old name; drop this
+      // exception once they are replaced by Shetu releases and the snapshot is refreshed.
+      .filter((path) => path !== 'src/data/releases.json');
+    const hits = tracked.filter((path) =>
+      oldName.test(`${path}\n${readFileSync(path, 'utf8')}`),
+    );
     expect(hits).toEqual([]);
   });
 

@@ -5,8 +5,8 @@ import DownloadPanel from '../download/DownloadPanel';
 import ReleaseTag from '../download/ReleaseTag';
 import { HERO_SESSION } from '../mockups/demo';
 import HostSidebar from '../mockups/HostSidebar.astro';
+import ShetuWindow from '../mockups/ShetuWindow.astro';
 import TerminalPane from '../mockups/TerminalPane.astro';
-import TerraWindow from '../mockups/TerraWindow.astro';
 ---
 
 <section class="relative overflow-hidden">
@@ -27,7 +27,7 @@ import TerraWindow from '../mockups/TerraWindow.astro';
         SSH, without the <span class="text-gradient">subscription.</span>
       </h1>
       <p class="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-muted md:text-xl">
-        Terra is a free, open-source SSH client with split terminals, SFTP, port
+        Shetu is a free, open-source SSH client with split terminals, SFTP, port
         forwarding and an encrypted vault you can sync through your own server.
       </p>
 
@@ -62,10 +62,10 @@ import TerraWindow from '../mockups/TerraWindow.astro';
     <div class="relative mx-auto mt-16 max-w-[1080px] md:mt-20">
       <div class="glow-beam pointer-events-none absolute -inset-x-10 -top-10 bottom-0" aria-hidden="true"></div>
       <p class="sr-only">
-        Terra window showing a host list grouped into Production, Staging and
+        Shetu window showing a host list grouped into Production, Staging and
         Homelab, and a split terminal connected to prod-api.
       </p>
-      <TerraWindow class="relative">
+      <ShetuWindow class="relative">
         <div class="flex h-[280px] sm:h-[360px] md:h-[420px]">
           <HostSidebar class="hidden md:flex" />
           <div class="flex min-w-0 flex-1">
@@ -82,7 +82,7 @@ import TerraWindow from '../mockups/TerraWindow.astro';
             />
           </div>
         </div>
-      </TerraWindow>
+      </ShetuWindow>
       <div class="pointer-events-none absolute inset-x-0 -bottom-px h-24 bg-gradient-to-t from-paper to-transparent" aria-hidden="true"></div>
     </div>
   </div>

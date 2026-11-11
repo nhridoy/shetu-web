@@ -35,9 +35,9 @@ async function ogEntries(): Promise<
 export const getStaticPaths = (async () =>
   (await ogEntries()).map(({ path, title, description }) => ({
     params: { path: path === '/' ? 'index' : path.slice(1) },
-    // The logo already says Terra, so drop the brand part of the page title.
+    // The logo already says Shetu, so drop the brand part of the page title.
     props: {
-      title: title.replace(/^Terra · | · Terra( Docs)?$/g, ''),
+      title: title.replace(/^Shetu · | · Shetu( Docs)?$/g, ''),
       subtitle: short(description),
     },
   }))) satisfies GetStaticPaths;

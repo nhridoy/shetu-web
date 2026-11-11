@@ -27,7 +27,7 @@ describe('home-screen icons', () => {
 
   it('describes the site in a web app manifest', () => {
     const manifest = buildManifest();
-    expect(manifest.name).toBe('Terra');
+    expect(manifest.name).toBe('Shetu');
     expect(manifest.start_url).toBe('/');
     expect(manifest.icons.map((i) => i.sizes)).toEqual(['192x192', '512x512']);
   });
@@ -61,7 +61,7 @@ describe('changelog feed', () => {
   it('lists every release with a link, date and guid', () => {
     expect((xml.match(/<item>/g) ?? []).length).toBe(releases.length);
     expect(xml).toContain(
-      '<link>https://terra.iamnahid.com/changelog/v0-0-15</link>',
+      '<link>https://shetu.iamnahid.com/changelog/v0-0-15</link>',
     );
     expect(xml).toMatch(
       /<pubDate>\w{3}, \d{2} \w{3} \d{4} \d{2}:\d{2}:\d{2} GMT<\/pubDate>/,

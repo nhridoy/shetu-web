@@ -12,11 +12,11 @@
     "images": [
       {
         "loaded": true,
-        "src": "/images/terra-servers.webp"
+        "src": "/images/shetu-servers.webp"
       },
       {
         "loaded": true,
-        "src": "/images/terra-transfer.webp"
+        "src": "/images/shetu-transfer.webp"
       }
     ],
     "dashes": false,
@@ -37,11 +37,11 @@
     "images": [
       {
         "loaded": true,
-        "src": "/images/terra-servers.webp"
+        "src": "/images/shetu-servers.webp"
       },
       {
         "loaded": true,
-        "src": "/images/terra-transfer.webp"
+        "src": "/images/shetu-transfer.webp"
       }
     ],
     "dashes": false,
@@ -62,11 +62,11 @@
     "images": [
       {
         "loaded": true,
-        "src": "/images/terra-servers.webp"
+        "src": "/images/shetu-servers.webp"
       },
       {
         "loaded": true,
-        "src": "/images/terra-transfer.webp"
+        "src": "/images/shetu-transfer.webp"
       }
     ],
     "dashes": false,
@@ -87,11 +87,11 @@
     "images": [
       {
         "loaded": true,
-        "src": "/images/terra-servers.webp"
+        "src": "/images/shetu-servers.webp"
       },
       {
         "loaded": true,
-        "src": "/images/terra-transfer.webp"
+        "src": "/images/shetu-transfer.webp"
       }
     ],
     "dashes": false,

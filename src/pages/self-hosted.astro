@@ -20,7 +20,7 @@ const teams = [
 ];
 const steps = `openssl rand -base64 48    # JWT_SECRET
 docker compose up -d
-docker compose logs -f terra-server`;
+docker compose logs -f shetu-server`;
 ---
 
 <BaseLayout
@@ -30,11 +30,11 @@ docker compose logs -f terra-server`;
   <PageHeader
     eyebrow="Self-hosted"
     title="Self-hosted SSH sync."
-    lede="Terra's sync server is open source. Run it on your own box and your vault and team vaults sync through infrastructure you control. Addresses, usernames, passwords and private keys are encrypted before they leave each device."
+    lede="Shetu's sync server is open source. Run it on your own box and your vault and team vaults sync through infrastructure you control. Addresses, usernames, passwords and private keys are encrypted before they leave each device."
   >
     <div class="mt-8 flex flex-wrap items-center gap-3">
       <a href="/docs/server" class="btn-primary px-5 py-3">Read the server guide</a>
-      <a href="https://github.com/nhridoy/terra-server" class="btn-ghost px-5 py-3">terra-server on GitHub</a>
+      <a href="https://github.com/nhridoy/shetu-server" class="btn-ghost px-5 py-3">shetu-server on GitHub</a>
     </div>
   </PageHeader>
 
@@ -82,7 +82,7 @@ docker compose logs -f terra-server`;
       ))}
       <p class="text-sm leading-relaxed text-muted">
         Want the details on what the server can and cannot read? See
-        <a href="/security" class="link">how Terra handles your keys</a>.
+        <a href="/security" class="link">how Shetu handles your keys</a>.
       </p>
     </div>
   </section>

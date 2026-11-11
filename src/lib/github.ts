@@ -15,7 +15,7 @@ export interface ReleasesResult {
   source: 'live' | 'fallback';
 }
 
-const API_BASE = 'https://api.github.com/repos/nhridoy/terra-client';
+const API_BASE = 'https://api.github.com/repos/nhridoy/shetu-client';
 const TTL_MS = 10 * 60 * 1000;
 
 interface Options {
@@ -93,7 +93,7 @@ export async function getLatestRelease(
     apiBase = API_BASE,
     fallback,
   } = options;
-  const key = `terra:latest-release:${apiBase}`;
+  const key = `shetu:latest-release:${apiBase}`;
   const cached = readCache<Release>(cache, key, now, ttlMs);
   if (cached) return { release: cached, source: 'live' };
 
@@ -128,7 +128,7 @@ export async function getReleases(
     token,
     fallback,
   } = options;
-  const key = `terra:releases:${apiBase}`;
+  const key = `shetu:releases:${apiBase}`;
   const cached = readCache<Release[]>(cache, key, now, ttlMs);
   if (cached) return { releases: cached, source: 'live' };
 

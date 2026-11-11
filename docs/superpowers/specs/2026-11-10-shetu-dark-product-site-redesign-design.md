@@ -1,8 +1,8 @@
-# Terra dark product site redesign — design spec
+# Shetu dark product site redesign — design spec
 
 Date: 2026-11-10
 Status: Draft for review
-Scope: `terra-web` only
+Scope: `shetu-web` only
 
 ## 1. Context
 
@@ -29,7 +29,7 @@ The desktop app screenshots supplied on 2026-11-10 are the primary visual eviden
 - No pricing page, cloud signup, blog, analytics, search, or authentication.
 - No mobile-app marketing.
 - No new runtime dependency for animation, icons, or images.
-- No changes outside `terra-web`.
+- No changes outside `shetu-web`.
 - No rewrite of the docs content beyond what the dark theme requires.
 - No fake social proof, customer logos, testimonials, star counts, or benchmark numbers.
 
@@ -39,7 +39,7 @@ The desktop app screenshots supplied on 2026-11-10 are the primary visual eviden
 
 **Primary job:** get a developer to download the desktop app.
 
-**Secondary jobs:** understand that Terra is open source and self-hostable, see that it handles hosts, terminals, files, teams, and themes, and reach the docs or GitHub.
+**Secondary jobs:** understand that Shetu is open source and self-hostable, see that it handles hosts, terminals, files, teams, and themes, and reach the docs or GitHub.
 
 ## 5. Design principles
 
@@ -112,7 +112,7 @@ Primary buttons are white (`#F5F7F6`) with near-black text. Secondary buttons ar
 ### 7.1 Header
 
 - Sticky, translucent near-black with `backdrop-blur`.
-- Left: `terra` wordmark with a small mint `>_` glyph in a rounded square.
+- Left: `shetu` wordmark with a small mint `>_` glyph in a rounded square.
 - Center/right nav: `Features`, `Docs`, `Security`, `Releases`, `Community`.
 - GitHub icon link to the monorepo, with an accessible label.
 - `Download` button in white with black text.
@@ -124,8 +124,8 @@ Primary buttons are white (`#F5F7F6`) with near-black text. Secondary buttons ar
 
 - Wordmark and one-line description.
 - Product column: Features, Download, Docs, Security, Releases, Community.
-- Source column: `terra`, `terra-client`, `terra-server`, `terra-web`.
-- Bottom row: `MIT licensed · © 2026 Terra` and `Open source, self-hostable.`
+- Source column: `shetu`, `shetu-client`, `shetu-server`, `shetu-web`.
+- Bottom row: `MIT licensed · © 2026 Shetu` and `Open source, self-hostable.`
 - No invented social links. GitHub is the only social link.
 
 ## 8. Homepage
@@ -134,7 +134,7 @@ Primary buttons are white (`#F5F7F6`) with near-black text. Secondary buttons ar
 
 - Eyebrow: `Open source · MIT · Windows, macOS, Linux`
 - H1: **Every server. One window.**
-- Subhead: “Terra is an open-source SSH workspace with encrypted vaults, split terminals, SFTP, and team-shared hosts. Connect directly, and sync on your own terms.”
+- Subhead: “Shetu is an open-source SSH workspace with encrypted vaults, split terminals, SFTP, and team-shared hosts. Connect directly, and sync on your own terms.”
 - Primary CTA: OS-aware `DownloadPanel` (`variant="hero"`, `client:load`).
 - Secondary CTA: `View on GitHub` → `REPOS.monorepo`.
 - Trust line: `MIT licensed · Direct SSH · Self-hostable sync`.
@@ -161,7 +161,7 @@ After the hero, a four-column fact strip inspired by Mister Download Manager’s
   5. **Port forwarding** — “Local, remote, and dynamic tunnels for databases and internal services.”
   6. **Teams & shared vaults** — “Invite teammates, assign member roles, and share vaults from one workspace.”
   7. **Themes** — “Dark, light, and named themes, so the workspace fits the way you work.”
-  8. **Self-hosted sync** — “Run the Terra server on your own infrastructure when you want sync or shared vaults.”
+  8. **Self-hosted sync** — “Run the Shetu server on your own infrastructure when you want sync or shared vaults.”
 
 ### 8.3 Showcase: hosts
 
@@ -226,7 +226,7 @@ After the hero, a four-column fact strip inspired by Mister Download Manager’s
 
 - Eyebrow: `Self-hosted`
 - H2: **Run the sync server yourself.**
-- Body: “Terra’s sync server is open source. Run it on your own infrastructure with PostgreSQL, set `JWT_SECRET` and `BASE_URL`, and keep sync and shared vaults where you want them.”
+- Body: “Shetu’s sync server is open source. Run it on your own infrastructure with PostgreSQL, set `JWT_SECRET` and `BASE_URL`, and keep sync and shared vaults where you want them.”
 - Code block, label `server/`:
 
   ```sh
@@ -242,12 +242,12 @@ After the hero, a four-column fact strip inspired by Mister Download Manager’s
 
 - Eyebrow: `Open source`
 - H2: **Yours to run, read, and change.**
-- Body: “Terra is MIT licensed. The desktop client, the sync server, and this site are all public. Use it, fork it, or send a patch.”
+- Body: “Shetu is MIT licensed. The desktop client, the sync server, and this site are all public. Use it, fork it, or send a patch.”
 - Four repo cards:
-  - `terra` — “The monorepo: desktop client, server, and shared code.”
-  - `terra-client` — “The Tauri desktop app.”
-  - `terra-server` — “The Go sync server.”
-  - `terra-web` — “This site.”
+  - `shetu` — “The monorepo: desktop client, server, and shared code.”
+  - `shetu-client` — “The Tauri desktop app.”
+  - `shetu-server` — “The Go sync server.”
+  - `shetu-web` — “This site.”
 - CTAs: `View on GitHub` → monorepo, `Read the docs` → `/docs`.
 - No star counts, contributor counts, or customer logos.
 
@@ -256,7 +256,7 @@ After the hero, a four-column fact strip inspired by Mister Download Manager’s
 Inspired by Mister Download Manager’s platform-first download block.
 
 - Eyebrow: `Download`
-- H2: **Download Terra.**
+- H2: **Download Shetu.**
 - Body: “Pick your platform, or use the install script. Every build is on the download page.”
 - Three platform cards linking to the matching download matrix:
   - `Windows` — “x64 and ARM64 installers” → `/download#platform-windows`
@@ -270,17 +270,17 @@ Inspired by Mister Download Manager’s platform-first download block.
 
 A compact native `<details>` FAQ. No JavaScript. Three items:
 
-1. **Is Terra open source?** — “Yes. The desktop client, the sync server, and this site are MIT licensed.”
-2. **Do I need a Terra server?** — “No for direct SSH. Sync and shared vaults require a Terra server you run.”
-3. **Why does macOS or Windows warn me?** — “Terra is not signed by Apple or Microsoft yet. Follow the first-launch steps in the docs.” Link to `/docs/troubleshooting`.
+1. **Is Shetu open source?** — “Yes. The desktop client, the sync server, and this site are MIT licensed.”
+2. **Do I need a Shetu server?** — “No for direct SSH. Sync and shared vaults require a Shetu server you run.”
+3. **Why does macOS or Windows warn me?** — “Shetu is not signed by Apple or Microsoft yet. Follow the first-launch steps in the docs.” Link to `/docs/troubleshooting`.
 
 No pricing, plan, or “free” claim.
 
 ### 8.14 Closing CTA
 
 - H2: **Your servers are waiting.**
-- Body: “Download Terra, connect your first host, and keep the rest of your setup where it belongs.”
-- CTA: `Download Terra` → `/download`.
+- Body: “Download Shetu, connect your first host, and keep the rest of your setup where it belongs.”
+- CTA: `Download Shetu` → `/download`.
 - Secondary: `Read the docs` → `/docs`.
 
 ## 9. Screenshot plan
@@ -377,11 +377,11 @@ Unchanged:
 
 - Client-side OS/arch detection recommends a download but never hides alternatives.
 - The full download matrix and both install commands are in static HTML.
-- Latest release data is fetched from `https://api.github.com/repos/nhridoy/terra-client/releases/latest` at runtime, cached in `sessionStorage` for 10 minutes, and falls back to the committed `v0.0.15` snapshot.
+- Latest release data is fetched from `https://api.github.com/repos/nhridoy/shetu-client/releases/latest` at runtime, cached in `sessionStorage` for 10 minutes, and falls back to the committed `v0.0.15` snapshot.
 - Releases page fetches the latest 20 releases and falls back to a GitHub link.
 - Install commands:
-  - macOS/Linux: `curl -fsSL https://raw.githubusercontent.com/nhridoy/terra-client/main/install.sh | bash`
-  - Windows: `irm https://raw.githubusercontent.com/nhridoy/terra-client/main/install.ps1 | iex`
+  - macOS/Linux: `curl -fsSL https://raw.githubusercontent.com/nhridoy/shetu-client/main/install.sh | bash`
+  - Windows: `irm https://raw.githubusercontent.com/nhridoy/shetu-client/main/install.ps1 | iex`
 - No new runtime dependency.
 
 ## 13. Accessibility, responsive, and performance
@@ -403,7 +403,7 @@ Never claim:
 
 - SRP6a, XSalsa20, GitLab OAuth, Microsoft OAuth, or a mobile app.
 - Pricing, plans, customers, testimonials, benchmarks, star counts, or contributor counts.
-- A cloud signup URL or hosted Terra service.
+- A cloud signup URL or hosted Shetu service.
 - “Zero knowledge,” “end-to-end encrypted,” “no telemetry,” “no account,” “fastest,” “most secure,” or similar unverified claims.
 - Minimum OS versions or a support matrix.
 
@@ -443,7 +443,7 @@ Allowed:
 - Keep `SecurityFlow` for `/security` and the homepage.
 - Keep all existing routes.
 - Update `SITE_DESCRIPTION` and the homepage JSON-LD description to the new product description.
-- No changes outside `terra-web`.
+- No changes outside `shetu-web`.
 
 ## 17. Approval
 

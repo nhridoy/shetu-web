@@ -2,7 +2,7 @@
 // Usage: pnpm releases:snapshot   (set GITHUB_TOKEN for a higher rate limit)
 import { renameSync, writeFileSync } from 'node:fs';
 
-const API = 'https://api.github.com/repos/nhridoy/terra-client';
+const API = 'https://api.github.com/repos/nhridoy/shetu-client';
 const headers = {
   Accept: 'application/vnd.github+json',
   ...(process.env.GITHUB_TOKEN && {

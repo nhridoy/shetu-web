@@ -9,9 +9,9 @@ const { size = 28, wordmark = false, class: className = '' } = Astro.props;
 ---
 
 <span class:list={['inline-flex items-center gap-2.5', className]}>
-  <!-- Same mark as the desktop app icon (terra-client src-tauri/icons/icon.svg). -->
+  <!-- Same mark as the desktop app icon (shetu-client src-tauri/icons/icon.svg). -->
   <img src="/favicon.svg" width={size} height={size} alt="" decoding="async" />
   {wordmark && (
-    <span class="text-[17px] font-bold tracking-[-0.03em] text-ink">Terra</span>
+    <span class="text-[17px] font-bold tracking-[-0.03em] text-ink">Shetu</span>
   )}
 </span>

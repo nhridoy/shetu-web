@@ -1,18 +1,18 @@
 ---
 title: Security reference
-seoTitle: "Terra security reference: key derivation and encryption"
-description: "How Terra derives keys with Argon2id, encrypts the vault with XChaCha20-Poly1305, seals team vault keys, and exactly what the sync server can and cannot see."
+seoTitle: "Shetu security reference: key derivation and encryption"
+description: "How Shetu derives keys with Argon2id, encrypts the vault with XChaCha20-Poly1305, seals team vault keys, and exactly what the sync server can and cannot see."
 section: server
 order: 3
 updated: "2026-11-11"
 ---
 
-Terra is designed so the sync server never needs your plaintext secrets. This page is the technical reference. For the shorter trust page, see [Security](/security).
+Shetu is designed so the sync server never needs your plaintext secrets. This page is the technical reference. For the shorter trust page, see [Security](/security).
 
 ## Key hierarchy
 
 1. **Account password.** You choose it. It never leaves your device in plaintext.
-2. **Key-encryption key.** Terra derives it from your account password with Argon2id (32 MiB memory, 2 passes) on your device.
+2. **Key-encryption key.** Shetu derives it from your account password with Argon2id (32 MiB memory, 2 passes) on your device.
 3. **Data key.** A random per-account key, wrapped by the key-encryption key. It encrypts vault records with XChaCha20-Poly1305 before they are stored or synced.
 4. **Identity key.** Each account has an X25519 key pair used to seal team vault keys.
 5. **Team vault keys.** Each shared vault has its own key, sealed to every member's public key with X25519, HKDF-SHA256 and XChaCha20-Poly1305. Removing a member flags the vault for a key rotation, which an owner or admin completes with **Rotate keys**.
@@ -45,21 +45,21 @@ The server never receives SSH traffic. Connections go directly from the client t
 
 **Malicious sync response.** Encrypted records are authenticated with XChaCha20-Poly1305. Tampered ciphertext fails to decrypt.
 
-**Network attacker.** Use TLS for the sync server. SSH traffic is protected by SSH itself, and Terra warns when a host key changes.
+**Network attacker.** Use TLS for the sync server. SSH traffic is protected by SSH itself, and Shetu warns when a host key changes.
 
 ## Recovery kit
 
-Terra gives you a recovery kit when you create your account. It holds a recovery code that can unwrap your data key. Store it offline. If you forget your password, the recovery kit is the only way back into your vault. The server cannot reset it, and the maintainers cannot recover it for you.
+Shetu gives you a recovery kit when you create your account. It holds a recovery code that can unwrap your data key. Store it offline. If you forget your password, the recovery kit is the only way back into your vault. The server cannot reset it, and the maintainers cannot recover it for you.
 
 ## Reporting a vulnerability
 
 Open a private advisory:
 
-[Report a vulnerability](https://github.com/nhridoy/terra/security/advisories/new)
+[Report a vulnerability](https://github.com/nhridoy/shetu/security/advisories/new)
 
 Do not open a public issue for a vulnerability. Include the affected version, your OS, reproduction steps, and impact.
 
 ## Source
 
-- [terra-client](https://github.com/nhridoy/terra-client)
-- [terra-server](https://github.com/nhridoy/terra-server)
+- [shetu-client](https://github.com/nhridoy/shetu-client)
+- [shetu-server](https://github.com/nhridoy/shetu-server)

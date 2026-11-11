@@ -113,7 +113,7 @@ export async function renderOgPng(
           width: 88,
           height: 88,
         }),
-        el('div', { fontSize: 40, fontWeight: 700 }, 'Terra'),
+        el('div', { fontSize: 40, fontWeight: 700 }, 'Shetu'),
       ]),
       el('div', { display: 'flex', flexDirection: 'column', gap: 22 }, [
         el(
@@ -136,7 +136,7 @@ export async function renderOgPng(
       el(
         'div',
         { display: 'flex', fontSize: 24, color: '#8b7cff' },
-        'terra.iamnahid.com',
+        'shetu.iamnahid.com',
       ),
     ],
   );

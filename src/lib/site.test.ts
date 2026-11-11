@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { cleanPath, INSTALL_COMMANDS, NAV_ITEMS, REPOS } from './site';
+import {
+  cleanPath,
+  INSTALL_COMMANDS,
+  NAV_ITEMS,
+  REPOS,
+  SITE_NAME,
+} from './site';
 
 describe('site constants', () => {
   it('exposes the six primary routes in navigation order', () => {
@@ -14,8 +20,20 @@ describe('site constants', () => {
   });
 
   it('points both install commands at the client repository', () => {
-    expect(INSTALL_COMMANDS.unix).toContain('nhridoy/terra-client');
-    expect(INSTALL_COMMANDS.windows).toContain('nhridoy/terra-client');
+    expect(INSTALL_COMMANDS.unix).toContain('nhridoy/shetu-client');
+    expect(INSTALL_COMMANDS.windows).toContain('nhridoy/shetu-client');
+  });
+
+  it('is named Shetu', () => {
+    expect(SITE_NAME).toBe('Shetu');
+  });
+
+  it('points every repository link at the renamed Shetu repos', () => {
+    for (const url of Object.values(REPOS)) {
+      expect(url).toMatch(
+        /^https:\/\/github\.com\/nhridoy\/shetu(-client|-server|-web)?$/,
+      );
+    }
   });
 
   it('uses absolute GitHub URLs for every repository', () => {

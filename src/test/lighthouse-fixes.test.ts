@@ -81,10 +81,10 @@ describe('Rich Results Test: Article', () => {
       path: '/docs/server',
       updated: '2026-11-11',
     }) as unknown as Record<string, unknown>;
-    expect(data.image).toBe('https://terra.iamnahid.com/og/docs/server.png');
+    expect(data.image).toBe('https://shetu.iamnahid.com/og/docs/server.png');
     expect(data.author).toMatchObject({
       '@type': 'Organization',
-      name: 'Terra',
+      name: 'Shetu',
     });
     expect(data.dateModified).toBe('2026-11-11T00:00:00.000Z');
   });

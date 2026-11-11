@@ -9,17 +9,17 @@ const release: Release = {
   tag_name: 'v9.9.9',
   name: 'v9.9.9',
   published_at: '2026-01-01T00:00:00Z',
-  html_url: 'https://github.com/nhridoy/terra-client/releases/tag/v9.9.9',
+  html_url: 'https://github.com/nhridoy/shetu-client/releases/tag/v9.9.9',
   prerelease: false,
   body: '',
   assets: [
     {
-      name: 'Terra-9.9.9-Linux-x64.AppImage',
+      name: 'Shetu-9.9.9-Linux-x64.AppImage',
       browser_download_url: 'https://example.com/linux-x64.AppImage',
       size: 1024,
     },
     {
-      name: 'Terra-9.9.9-Windows-x64-Setup.exe',
+      name: 'Shetu-9.9.9-Windows-x64-Setup.exe',
       browser_download_url: 'https://example.com/windows-x64.exe',
       size: 1024,
     },
@@ -160,7 +160,7 @@ describe('DownloadPanel', () => {
       assets: [
         ...release.assets,
         {
-          name: 'Terra-9.9.9-macOS-Apple-Silicon.dmg',
+          name: 'Shetu-9.9.9-macOS-Apple-Silicon.dmg',
           browser_download_url: 'https://example.com/mac-arm.dmg',
           size: 1024,
         },

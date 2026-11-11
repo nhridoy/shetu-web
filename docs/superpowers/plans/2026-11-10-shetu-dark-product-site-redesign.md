@@ -1,4 +1,4 @@
-# Terra dark product site redesign — implementation plan
+# Shetu dark product site redesign — implementation plan
 
 > **For the implementer:** Follow this plan task by task. Each task ends with a build check and a commit. Do not deploy between Tasks 2 and 4; the homepage is mid-migration during that window.
 
@@ -8,15 +8,15 @@
 
 **Tech stack:** Astro 7, React 19 islands, Tailwind CSS 4, TypeScript strict, Biome, Vitest, pnpm.
 
-**Spec:** `docs/superpowers/specs/2026-11-10-terra-dark-product-site-redesign-design.md`
+**Spec:** `docs/superpowers/specs/2026-11-10-shetu-dark-product-site-redesign-design.md`
 
-**Worktree/branch:** Continue on `learn-terra-client-server`. Do not create a new worktree.
+**Worktree/branch:** Continue on `learn-shetu-client-server`. Do not create a new worktree.
 
 ---
 
 ## Constraints
 
-- Modify `terra-web` only.
+- Modify `shetu-web` only.
 - Do not commit the original screenshots or the redaction script.
 - Never claim SRP6a, XSalsa20, GitLab OAuth, Microsoft OAuth, a mobile app, pricing, customers, testimonials, benchmarks, star counts, or a cloud signup URL.
 - Allowed crypto/OAuth claims: Argon2id, XChaCha20-Poly1305, X25519, Google and GitHub OAuth.
@@ -38,12 +38,12 @@
 - Create: `src/assets/app/editor.webp`
 - Create: `src/assets/app/team-vault.webp`
 - Create: `src/assets/app/themes.webp`
-- Do not commit: `/tmp/process-terra-screenshots.py`
+- Do not commit: `/tmp/process-shetu-screenshots.py`
 - Do not commit: the source PNGs in `~/Pictures/Screenshots/`
 
 **Step 1: Write the one-off processing script to `/tmp`**
 
-Create `/tmp/process-terra-screenshots.py` with:
+Create `/tmp/process-shetu-screenshots.py` with:
 
 ```python
 from pathlib import Path
@@ -157,7 +157,7 @@ if __name__ == "__main__":
 **Step 2: Run the script from the repo root**
 
 ```sh
-python3 /tmp/process-terra-screenshots.py
+python3 /tmp/process-shetu-screenshots.py
 ```
 
 Expected: seven WebP files in `src/assets/app/`, no errors.
@@ -173,7 +173,7 @@ Open each file with the `read` tool and check:
 - The themes label is blurred.
 - The macOS menu bar, date/time, battery, and Wi-Fi are gone.
 
-If a blur box is misaligned, adjust the coordinates in `/tmp/process-terra-screenshots.py`, rerun, and inspect again. Do not commit until the images look clean.
+If a blur box is misaligned, adjust the coordinates in `/tmp/process-shetu-screenshots.py`, rerun, and inspect again. Do not commit until the images look clean.
 
 **Step 4: Verify dimensions and file sizes**
 
@@ -355,7 +355,7 @@ const headerNav = NAV_ITEMS.filter((item) => item.href !== '/download');
       >
         &gt;_
       </span>
-      <span>terra</span>
+      <span>shetu</span>
     </a>
 
     <nav class="hidden items-center gap-7 md:flex" aria-label="Primary">
@@ -376,7 +376,7 @@ const headerNav = NAV_ITEMS.filter((item) => item.href !== '/download');
     <div class="flex items-center gap-2">
       <a
         href={REPOS.monorepo}
-        aria-label="Terra on GitHub"
+        aria-label="Shetu on GitHub"
         class="hidden h-9 w-9 place-items-center rounded-lg border border-line text-muted transition-colors duration-150 hover:border-accent/40 hover:text-accent sm:grid"
       >
         <GithubLogo size={17} weight="fill" />
@@ -439,7 +439,7 @@ const year = new Date().getFullYear();
     class="mx-auto grid max-w-[1200px] gap-10 px-6 py-14 md:grid-cols-[1.6fr_1fr_1fr]"
   >
     <div>
-      <a href="/" class="font-mono text-sm font-medium">terra</a>
+      <a href="/" class="font-mono text-sm font-medium">shetu</a>
       <p class="mt-3 max-w-xs text-sm leading-relaxed text-muted">
         The open-source SSH workspace. Encrypted vaults, split terminals, SFTP,
         and team-shared hosts.
@@ -479,7 +479,7 @@ const year = new Date().getFullYear();
             href={REPOS.monorepo}
             class="text-sm text-muted transition-colors duration-150 hover:text-accent"
           >
-            terra
+            shetu
           </a>
         </li>
         <li>
@@ -487,7 +487,7 @@ const year = new Date().getFullYear();
             href={REPOS.client}
             class="text-sm text-muted transition-colors duration-150 hover:text-accent"
           >
-            terra-client
+            shetu-client
           </a>
         </li>
         <li>
@@ -495,7 +495,7 @@ const year = new Date().getFullYear();
             href={REPOS.server}
             class="text-sm text-muted transition-colors duration-150 hover:text-accent"
           >
-            terra-server
+            shetu-server
           </a>
         </li>
         <li>
@@ -503,7 +503,7 @@ const year = new Date().getFullYear();
             href={REPOS.web}
             class="text-sm text-muted transition-colors duration-150 hover:text-accent"
           >
-            terra-web
+            shetu-web
           </a>
         </li>
       </ul>
@@ -515,7 +515,7 @@ const year = new Date().getFullYear();
       class="mx-auto flex max-w-[1200px] flex-col gap-2 px-6 py-5 font-mono text-[10px] uppercase tracking-[0.16em] text-muted sm:flex-row sm:items-center sm:justify-between"
     >
       <span>Open source, self-hostable.</span>
-      <span>© {year} Terra</span>
+      <span>© {year} Shetu</span>
     </div>
   </div>
 </footer>
@@ -578,7 +578,7 @@ interface Props {
 const {
   image,
   alt,
-  title = 'Terra',
+  title = 'Shetu',
   widths = [640, 960, 1366],
   sizes = '(min-width: 1200px) 560px, 100vw',
   loading = 'lazy',
@@ -653,7 +653,7 @@ import AppWindow from './AppWindow.astro';
         Every server. One window.
       </h1>
       <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted md:text-xl">
-        Terra is an open-source SSH workspace with encrypted vaults, split
+        Shetu is an open-source SSH workspace with encrypted vaults, split
         terminals, SFTP, and team-shared hosts. Connect directly, and sync on
         your own terms.
       </p>
@@ -678,8 +678,8 @@ import AppWindow from './AppWindow.astro';
     <div class="relative mx-auto mt-14 max-w-[1060px] md:mt-20">
       <AppWindow
         image={hosts}
-        alt="Terra host list with groups, tags, and connection status"
-        title="Terra · Vaults"
+        alt="Shetu host list with groups, tags, and connection status"
+        title="Shetu · Vaults"
         widths={[640, 960, 1366]}
         sizes="(min-width: 1200px) 1060px, 100vw"
         loading="eager"
@@ -691,7 +691,7 @@ import AppWindow from './AppWindow.astro';
       >
         <Image
           src={terminalInset}
-          alt="Terra terminal connected to a host"
+          alt="Shetu terminal connected to a host"
           widths={[400, 640, 1000]}
           sizes="420px"
           loading="eager"
@@ -765,7 +765,7 @@ const features = [
   {
     icon: HardDrives,
     title: 'Self-hosted sync',
-    body: 'Run the Terra server on your own infrastructure when you want sync or shared vaults.',
+    body: 'Run the Shetu server on your own infrastructure when you want sync or shared vaults.',
     href: '#self-hosted',
   },
 ];
@@ -863,18 +863,18 @@ import { SITE_DESCRIPTION } from '../lib/site';
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
-  name: 'Terra',
+  name: 'Shetu',
   applicationCategory: 'DeveloperApplication',
   operatingSystem: 'Windows, macOS, Linux',
   license: 'https://opensource.org/licenses/MIT',
-  codeRepository: 'https://github.com/nhridoy/terra',
-  downloadUrl: 'https://github.com/nhridoy/terra-client/releases/latest',
+  codeRepository: 'https://github.com/nhridoy/shetu',
+  downloadUrl: 'https://github.com/nhridoy/shetu-client/releases/latest',
   description: SITE_DESCRIPTION,
 };
 ---
 
 <BaseLayout
-  title="Terra — Every server. One window."
+  title="Shetu — Every server. One window."
   description={SITE_DESCRIPTION}
   jsonLd={jsonLd}
 >
@@ -922,7 +922,7 @@ Expected: build succeeds. Check the built homepage contains:
 ```sh
 grep -c "Every server. One window." dist/index.html
 grep -c "Everything between you and the server." dist/index.html
-grep -c "Terra host list with groups" dist/index.html
+grep -c "Shetu host list with groups" dist/index.html
 ```
 
 Each should be at least 1.
@@ -1105,7 +1105,7 @@ docker compose -f docker-compose.prod.yml up -d`;
         Run the sync server yourself.
       </h2>
       <p class="mt-4 text-lg leading-relaxed text-muted">
-        Terra’s sync server is open source. Run it on your own infrastructure
+        Shetu’s sync server is open source. Run it on your own infrastructure
         with PostgreSQL, set
         <code
           class="rounded border border-line bg-elevated px-1.5 py-0.5 font-mono text-[0.85em] text-ink"
@@ -1156,22 +1156,22 @@ import { REPOS } from '../../lib/site';
 
 const repos = [
   {
-    name: 'terra',
+    name: 'shetu',
     href: REPOS.monorepo,
     description: 'The monorepo: desktop client, server, and shared code.',
   },
   {
-    name: 'terra-client',
+    name: 'shetu-client',
     href: REPOS.client,
     description: 'The Tauri desktop app.',
   },
   {
-    name: 'terra-server',
+    name: 'shetu-server',
     href: REPOS.server,
     description: 'The Go sync server.',
   },
   {
-    name: 'terra-web',
+    name: 'shetu-web',
     href: REPOS.web,
     description: 'This site.',
   },
@@ -1191,7 +1191,7 @@ const repos = [
           Yours to run, read, and change.
         </h2>
         <p class="mt-4 text-lg leading-relaxed text-muted">
-          Terra is MIT licensed. The desktop client, the sync server, and this
+          Shetu is MIT licensed. The desktop client, the sync server, and this
           site are all public. Use it, fork it, or send a patch.
         </p>
       </div>
@@ -1275,7 +1275,7 @@ const platforms = [
       <h2
         class="mt-3 text-balance text-4xl font-medium tracking-[-0.04em] md:text-5xl"
       >
-        Download Terra.
+        Download Shetu.
       </h2>
       <p class="mt-4 text-lg leading-relaxed text-muted">
         Pick your platform, or use the install script. Every build is on the
@@ -1332,19 +1332,19 @@ import { ArrowUpRight } from '@phosphor-icons/react';
 
 const faqs = [
   {
-    question: 'Is Terra open source?',
+    question: 'Is Shetu open source?',
     answer:
       'Yes. The desktop client, the sync server, and this site are MIT licensed.',
   },
   {
-    question: 'Do I need a Terra server?',
+    question: 'Do I need a Shetu server?',
     answer:
-      'No for direct SSH. Sync and shared vaults require a Terra server you run.',
+      'No for direct SSH. Sync and shared vaults require a Shetu server you run.',
   },
   {
     question: 'Why does macOS or Windows warn me?',
     answer:
-      'Terra is not signed by Apple or Microsoft yet. Follow the first-launch steps in the docs.',
+      'Shetu is not signed by Apple or Microsoft yet. Follow the first-launch steps in the docs.',
     href: '/docs/troubleshooting',
     linkLabel: 'First-launch steps',
   },
@@ -1419,7 +1419,7 @@ const faqs = [
         Your servers are waiting.
       </h2>
       <p class="mx-auto mt-4 max-w-xl text-base leading-relaxed text-muted">
-        Download Terra, connect your first host, and keep the rest of your
+        Download Shetu, connect your first host, and keep the rest of your
         setup where it belongs.
       </p>
       <div class="mt-8 flex flex-wrap justify-center gap-3">
@@ -1427,7 +1427,7 @@ const faqs = [
           href="/download"
           class="rounded-lg bg-ink px-5 py-3 text-sm font-medium text-paper transition-colors duration-150 hover:bg-ink/90"
         >
-          Download Terra
+          Download Shetu
         </a>
         <a
           href="/docs"
@@ -1467,18 +1467,18 @@ import { SITE_DESCRIPTION } from '../lib/site';
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
-  name: 'Terra',
+  name: 'Shetu',
   applicationCategory: 'DeveloperApplication',
   operatingSystem: 'Windows, macOS, Linux',
   license: 'https://opensource.org/licenses/MIT',
-  codeRepository: 'https://github.com/nhridoy/terra',
-  downloadUrl: 'https://github.com/nhridoy/terra-client/releases/latest',
+  codeRepository: 'https://github.com/nhridoy/shetu',
+  downloadUrl: 'https://github.com/nhridoy/shetu-client/releases/latest',
   description: SITE_DESCRIPTION,
 };
 ---
 
 <BaseLayout
-  title="Terra — Every server. One window."
+  title="Shetu — Every server. One window."
   description={SITE_DESCRIPTION}
   jsonLd={jsonLd}
 >
@@ -1497,7 +1497,7 @@ const jsonLd = {
       'Connection status at a glance',
     ]}
     image={editHost}
-    alt="Terra edit-host form with groups, tags, color, and authentication options"
+    alt="Shetu edit-host form with groups, tags, color, and authentication options"
     imageSide="right"
   />
 
@@ -1512,7 +1512,7 @@ const jsonLd = {
       'Local and remote shells',
     ]}
     image={terminal}
-    alt="Terra terminal with split panes, tabs, and a connected host"
+    alt="Shetu terminal with split panes, tabs, and a connected host"
     imageSide="left"
   />
 
@@ -1527,7 +1527,7 @@ const jsonLd = {
       'Transfers beside the terminal',
     ]}
     image={editor}
-    alt="Terra file editor with a project explorer open"
+    alt="Shetu file editor with a project explorer open"
     imageSide="right"
   />
 
@@ -1538,7 +1538,7 @@ const jsonLd = {
     body="Create a team, invite members, and share vaults with the people who need them. Member roles keep access organized."
     bullets={['Team invites', 'Shared vaults', 'Member roles']}
     image={teamVault}
-    alt="Terra team page with an invite dialog and member role controls"
+    alt="Shetu team page with an invite dialog and member role controls"
     imageSide="left"
   />
 
@@ -1549,7 +1549,7 @@ const jsonLd = {
     body="Choose a dark, light, or named theme. The whole workspace changes, not just the terminal."
     bullets={['Dark and light', 'Named themes', 'Workspace-wide']}
     image={themes}
-    alt="Terra appearance settings with a grid of themes"
+    alt="Shetu appearance settings with a grid of themes"
     imageSide="right"
   />
 
@@ -1591,7 +1591,7 @@ grep -c "Reach the services behind the firewall." dist/index.html
 grep -c "The server never sees the keys." dist/index.html
 grep -c "Run the sync server yourself." dist/index.html
 grep -c "Yours to run, read, and change." dist/index.html
-grep -c "Download Terra." dist/index.html
+grep -c "Download Shetu." dist/index.html
 grep -c "A few things to know." dist/index.html
 grep -c "Your servers are waiting." dist/index.html
 ```
@@ -1599,8 +1599,8 @@ grep -c "Your servers are waiting." dist/index.html
 Each should be at least 1. Check the install commands:
 
 ```sh
-grep -c "curl -fsSL https://raw.githubusercontent.com/nhridoy/terra-client/main/install.sh | bash" dist/index.html
-grep -c "irm https://raw.githubusercontent.com/nhridoy/terra-client/main/install.ps1 | iex" dist/index.html
+grep -c "curl -fsSL https://raw.githubusercontent.com/nhridoy/shetu-client/main/install.sh | bash" dist/index.html
+grep -c "irm https://raw.githubusercontent.com/nhridoy/shetu-client/main/install.ps1 | iex" dist/index.html
 ```
 
 Both should be 1.
@@ -1721,7 +1721,7 @@ The page already uses tokens. Make these small changes:
   ```astro
         <li>
           <strong class="text-ink">Network:</strong> direct SSH access to your
-          hosts. Sync and shared vaults require a Terra server.
+          hosts. Sync and shared vaults require a Shetu server.
         </li>
   ```
 
@@ -1745,7 +1745,7 @@ Expected: 35 tests pass; build succeeds.
 Check the download page still contains the full matrix and both commands:
 
 ```sh
-grep -o "Terra-[0-9.]*-[A-Za-z0-9-]*\.\(AppImage\|deb\|dmg\|exe\)" dist/download/index.html | sort -u | wc -l
+grep -o "Shetu-[0-9.]*-[A-Za-z0-9-]*\.\(AppImage\|deb\|dmg\|exe\)" dist/download/index.html | sort -u | wc -l
 ```
 
 Expected: 8. If the built filename pattern differs, inspect `dist/download/index.html` and confirm all eight assets are present.
@@ -1867,7 +1867,7 @@ Replace the section with:
 
 ```astro
 <BaseLayout
-  title="Not found — Terra"
+  title="Not found — Shetu"
   description="The page you requested does not exist."
 >
   <section class="mx-auto max-w-[1200px] px-6 py-24 md:py-32">
@@ -1962,7 +1962,7 @@ Expected: no output.
 **Step 3: Check for banned claims in the built HTML**
 
 ```sh
-grep -RIniE "srp6a|xsalsa20|gitlab|microsoft oauth|mobile app|pricing|customers|testimonials|benchmark|cloud signup|zero knowledge|end-to-end encrypted|no account|no terra account|telemetry" dist --include='*.html' || true
+grep -RIniE "srp6a|xsalsa20|gitlab|microsoft oauth|mobile app|pricing|customers|testimonials|benchmark|cloud signup|zero knowledge|end-to-end encrypted|no account|no shetu account|telemetry" dist --include='*.html' || true
 ```
 
 Expected: no output. If a word appears in an unrelated context, inspect it and remove the claim if needed.
@@ -1985,7 +1985,7 @@ Expected: no output. If `404.html` or a redirect page has zero, inspect and fix.
 ```sh
 grep -c "install.sh | bash" dist/download/index.html
 grep -c "install.ps1 | iex" dist/download/index.html
-grep -o "Terra-[0-9.]*-[A-Za-z0-9-]*\.\(AppImage\|deb\|dmg\|exe\)" dist/download/index.html | sort -u | wc -l
+grep -o "Shetu-[0-9.]*-[A-Za-z0-9-]*\.\(AppImage\|deb\|dmg\|exe\)" dist/download/index.html | sort -u | wc -l
 ```
 
 Expected: 1, 1, 8.

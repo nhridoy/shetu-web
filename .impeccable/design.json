@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "generatedAt": "2026-09-20T14:45:06.714303+00:00",
-  "title": "Design System: Terra",
+  "title": "Design System: Shetu",
   "extensions": {
     "colorMeta": {
       "mint": {
@@ -74,7 +74,7 @@
       "kind": "button",
       "refersTo": "button-primary",
       "description": "Mint primary conversion action.",
-      "html": "<a class=\"ds-button\" href=\"#get-terra\">Get Terra</a>",
+      "html": "<a class=\"ds-button\" href=\"#get-shetu\">Get Shetu</a>",
       "css": ".ds-button{display:inline-flex;align-items:center;justify-content:center;gap:13px;min-height:48px;padding:0 22px;border:1px solid transparent;border-radius:var(--radius-control);font-family:\"Geist Variable\",sans-serif;font-size:14px;font-weight:550;white-space:nowrap;cursor:pointer;text-decoration:none}.ds-button:focus-visible{outline:2px solid var(--mint);outline-offset:5px}@media(prefers-reduced-motion:no-preference){.ds-button{transition:background-color 160ms ease,transform 160ms ease}.ds-button:active{transform:scale(.98)}}.ds-button{background:var(--mint);color:var(--mint-ink)}.ds-button:hover{background:#bce8cd}"
     },
     {
@@ -82,7 +82,7 @@
       "kind": "button",
       "refersTo": "button-outline",
       "description": "Secondary source action.",
-      "html": "<a class=\"ds-button\" href=\"https://github.com/nhridoy/terra\">View source</a>",
+      "html": "<a class=\"ds-button\" href=\"https://github.com/nhridoy/shetu\">View source</a>",
       "css": ".ds-button{display:inline-flex;align-items:center;justify-content:center;gap:13px;min-height:48px;padding:0 22px;border:1px solid transparent;border-radius:var(--radius-control);font-family:\"Geist Variable\",sans-serif;font-size:14px;font-weight:550;white-space:nowrap;cursor:pointer;text-decoration:none}.ds-button:focus-visible{outline:2px solid var(--mint);outline-offset:5px}@media(prefers-reduced-motion:no-preference){.ds-button{transition:background-color 160ms ease,transform 160ms ease}.ds-button:active{transform:scale(.98)}}.ds-button{background:transparent;border-color:#607168;color:var(--ink)}.ds-button:hover{background:var(--raised)}"
     },
     {

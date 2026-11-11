@@ -1,9 +1,9 @@
 // Cloudflare Workers static-assets deploy. Without this file `wrangler deploy`
 // runs its auto-setup, which adds the Astro server adapter this static site does not use.
 {
-  "name": "terra-web",
+  "name": "shetu-web",
   "compatibility_date": "2026-11-01",
-  // Serve production only on terra.iamnahid.com, not a duplicate workers.dev host.
+  // Serve production only on shetu.iamnahid.com, not a duplicate workers.dev host.
   "workers_dev": false,
   // Branch and PR builds run `wrangler preview`, which needs this block (empty is fine).
   "previews": {},
