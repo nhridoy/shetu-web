@@ -31,11 +31,7 @@ pnpm build
 
 ## Build
 
-Set `SITE_URL` to the public origin before a production build so canonical URLs, Open Graph URLs, the sitemap, and robots point at the right host:
-
-```sh
-SITE_URL=https://example.com pnpm build
-```
+The public origin, `https://terra.iamnahid.com`, is set as `site` in `astro.config.mjs`; canonical URLs, Open Graph URLs, the sitemap and robots use it. Change it there if the domain moves.
 
 The output is a static `dist/` directory. No adapter or server runtime is required.
 
