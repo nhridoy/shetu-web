@@ -20,7 +20,7 @@ import {
   mapAssets,
   type Release,
 } from '../../lib/releases';
-import { breadcrumbJsonLd } from '../../lib/seo';
+import { breadcrumbJsonLd, techArticleJsonLd } from '../../lib/seo';
 
 export async function getStaticPaths() {
   const releases = await loadReleases();
@@ -56,10 +56,18 @@ const OS_NAMES = { macos: 'macOS', windows: 'Windows', linux: 'Linux' };
   description={meta.description}
   noindex={meta.noindex}
   type="article"
-  jsonLd={breadcrumbJsonLd([
-    { name: 'Changelog', path: '/changelog' },
-    { name: release.tag_name, path },
-  ])}
+  jsonLd={[
+    techArticleJsonLd({
+      title: meta.title,
+      description: meta.description,
+      path,
+      published: release.published_at,
+    }),
+    breadcrumbJsonLd([
+      { name: 'Changelog', path: '/changelog' },
+      { name: release.tag_name, path },
+    ]),
+  ]}
 >
   <PageHeader
     eyebrow={release.prerelease ? 'Pre-release' : 'Release'}

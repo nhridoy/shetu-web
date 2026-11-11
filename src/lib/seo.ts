@@ -158,6 +158,7 @@ export function techArticleJsonLd(input: {
   description: string;
   path: string;
   updated?: string;
+  published?: string;
 }): WithContext<TechArticle> {
   return {
     '@context': 'https://schema.org',
@@ -165,6 +166,7 @@ export function techArticleJsonLd(input: {
     headline: input.title,
     description: input.description,
     url: absoluteUrl(input.path),
+    ...(input.published && { datePublished: input.published }),
     ...(input.updated && { dateModified: input.updated }),
     publisher: { '@type': 'Organization', name: 'Terra', url: `${SITE_URL}/` },
   };
