@@ -1,14 +1,14 @@
 ---
 import InstallCommand from '../components/download/InstallCommand.astro';
 import ClosingCta from '../components/marketing/ClosingCta.astro';
-import FactRibbon from '../components/marketing/FactRibbon.astro';
+import FactStrip from '../components/marketing/FactStrip.astro';
+import FeatureGrid from '../components/marketing/FeatureGrid.astro';
 import Hero from '../components/marketing/Hero.astro';
 import OpenSource from '../components/marketing/OpenSource.astro';
 import SecurityFlow from '../components/marketing/SecurityFlow.astro';
 import SelfHostPanel from '../components/marketing/SelfHostPanel.astro';
-import ValueCards from '../components/marketing/ValueCards.astro';
-import WorkspaceMock from '../components/marketing/WorkspaceMock.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_DESCRIPTION } from '../lib/site';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -16,49 +16,21 @@ const jsonLd = {
   name: 'Terra',
   applicationCategory: 'DeveloperApplication',
   operatingSystem: 'Windows, macOS, Linux',
-  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
   license: 'https://opensource.org/licenses/MIT',
   codeRepository: 'https://github.com/nhridoy/terra',
   downloadUrl: 'https://github.com/nhridoy/terra-client/releases/latest',
-  description:
-    'The open-source, self-hostable SSH client. Direct SSH, encrypted vaults, SFTP, and port forwarding in one desktop workspace.',
+  description: SITE_DESCRIPTION,
 };
 ---
 
 <BaseLayout
-  title="Terra — Your servers. Your rules."
-  description="The open-source, self-hostable SSH client. Direct SSH, encrypted vaults, SFTP, and port forwarding in one desktop workspace."
+  title="Terra — Every server. One window."
+  description={SITE_DESCRIPTION}
   jsonLd={jsonLd}
 >
   <Hero />
-  <FactRibbon />
-  <ValueCards />
-
-  <section class="mx-auto max-w-[1200px] px-6 py-20 md:py-28">
-    <div class="grid gap-10 md:grid-cols-[1fr_1.2fr] md:items-center">
-      <div>
-        <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
-          One workspace
-        </p>
-        <h2 class="mt-3 text-4xl font-medium tracking-[-0.04em]">
-          Tabs, splits, hosts, and files in one window.
-        </h2>
-        <p class="mt-4 text-lg leading-relaxed text-muted">
-          Keep production, staging, and edge hosts in the same workspace. Open
-          an SFTP panel beside the terminal, split the view, and move between
-          sessions without losing context.
-        </p>
-        <ul class="mt-6 space-y-2 text-sm text-muted">
-          <li>Terminal tabs and split panes.</li>
-          <li>Host list with search and folders.</li>
-          <li>SFTP browser and remote file editor.</li>
-          <li>Local and remote port forwards.</li>
-        </ul>
-      </div>
-      <WorkspaceMock />
-    </div>
-  </section>
-
+  <FactStrip />
+  <FeatureGrid />
   <SecurityFlow />
   <SelfHostPanel />
 

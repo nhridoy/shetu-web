@@ -1,37 +1,83 @@
 ---
+import { Image } from 'astro:assets';
+import { ArrowUpRight } from '@phosphor-icons/react';
+import hosts from '../../assets/app/hosts.webp';
+import terminalInset from '../../assets/app/terminal-inset.webp';
+import { REPOS } from '../../lib/site';
 import DownloadPanel from '../download/DownloadPanel';
-import WorkspaceMock from './WorkspaceMock.astro';
+import AppWindow from './AppWindow.astro';
 ---
 
-<section class="mx-auto max-w-[1200px] px-6 pt-14 pb-20 md:pt-24 md:pb-28">
-  <div class="grid items-center gap-12 md:grid-cols-12">
-    <div class="md:col-span-7">
-      <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
-        Open source · Self-hostable
+<section class="relative overflow-hidden">
+  <div
+    class="hero-grid pointer-events-none absolute inset-0"
+    aria-hidden="true"
+  ></div>
+  <div
+    class="pointer-events-none absolute left-1/2 top-0 h-[560px] w-[900px] -translate-x-1/2 rounded-full bg-glow blur-[120px]"
+    aria-hidden="true"
+  ></div>
+
+  <div
+    class="relative mx-auto max-w-[1200px] px-6 pt-20 pb-20 md:pt-28 md:pb-28"
+  >
+    <div class="mx-auto max-w-3xl text-center">
+      <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-accent">
+        Open source · MIT · Windows, macOS, Linux
       </p>
-      <h1 class="mt-5 text-[clamp(2.75rem,7vw,4.75rem)] font-medium leading-[1.02] tracking-[-0.05em]">
-        Your servers.<br /><span class="text-accent">Your rules.</span>
+      <h1
+        class="mt-6 text-balance text-[clamp(2.75rem,6vw,5.25rem)] font-medium leading-[1.02] tracking-[-0.055em]"
+      >
+        Every server. One window.
       </h1>
-      <p class="mt-6 max-w-xl text-lg leading-relaxed text-muted">
-        A desktop SSH workspace that connects straight to your machines.
-        Encrypted vault, SFTP, split terminals, and optional sync you can host
-        yourself.
+      <p
+        class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted md:text-xl"
+      >
+        Terra is an open-source SSH workspace with encrypted vaults, split
+        terminals, SFTP, and team-shared hosts. Connect directly, and sync on
+        your own terms.
       </p>
-      <div class="mt-8 flex flex-wrap items-center gap-3">
+
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
         <DownloadPanel client:load variant="hero" />
         <a
-          href="/docs/server"
-          class="inline-flex items-center justify-center rounded-lg border border-line bg-surface px-5 py-3 text-sm font-medium transition-colors duration-150 hover:bg-accent-wash"
+          href={REPOS.monorepo}
+          class="inline-flex items-center justify-center gap-1.5 rounded-lg border border-line bg-surface/60 px-5 py-3 text-sm font-medium text-ink transition-colors duration-150 hover:border-accent/40 hover:text-accent"
         >
-          Self-host it
+          View on GitHub <ArrowUpRight size={14} weight="bold" />
         </a>
       </div>
-      <p class="mt-4 font-mono text-[10px] uppercase tracking-[0.14em] text-muted">
-        MIT licensed · Windows · macOS · Linux
+
+      <p
+        class="mt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-muted"
+      >
+        MIT licensed · Direct SSH · Self-hostable sync
       </p>
     </div>
-    <div class="md:col-span-5">
-      <WorkspaceMock />
+
+    <div class="relative mx-auto mt-14 max-w-[1060px] md:mt-20">
+      <AppWindow
+        image={hosts}
+        alt="Terra host list with groups, tags, and connection status"
+        title="Terra · Vaults"
+        widths={[640, 960, 1366]}
+        sizes="(min-width: 1200px) 1060px, 100vw"
+        loading="eager"
+        fetchpriority="high"
+      />
+
+      <div
+        class="absolute -bottom-10 -right-6 hidden w-[42%] overflow-hidden rounded-xl border border-line bg-surface shadow-2xl shadow-black/70 md:block"
+      >
+        <Image
+          src={terminalInset}
+          alt="Terra terminal connected to a host"
+          widths={[400, 640, 1000]}
+          sizes="420px"
+          loading="eager"
+          class="h-auto w-full"
+        />
+      </div>
     </div>
   </div>
 </section>
