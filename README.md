@@ -33,11 +33,17 @@ pnpm build
 
 The public origin, `https://terra.iamnahid.com`, is set as `site` in `astro.config.mjs`; canonical URLs, Open Graph URLs, the sitemap and robots use it. Change it there if the domain moves.
 
-The output is a static `dist/` directory. No adapter or server runtime is required.
+The output is a static `dist/` directory. No adapter or server runtime is required. Pages build as files with no trailing slash (`/download`).
+
+At build time the site fetches every terra-client release from GitHub for `/changelog` (set `GITHUB_TOKEN` for a higher rate limit). If GitHub is unreachable it uses `src/data/releases.json`; refresh that snapshot with `pnpm releases:snapshot` after a release. Share images (`/og/*.png`) are generated during the build; Satoshi is fetched from Fontshare and Inter is the offline fallback.
+
+Cloudflare deploys `dist` as static assets (`wrangler.jsonc`, `public/_headers`, `public/_redirects`).
 
 ## Content
 
-- `src/pages/`: marketing and distribution pages.
+- `src/pages/`: marketing, download (`/download/<os>`), changelog, docs, share-image (`og/`) and `sitemap.xml` routes.
+- `src/lib/seo.ts`: every page's title and description, share-image paths and JSON-LD builders.
+- `src/lib/changelog.ts`: build-time releases, notes cleanup and sanitized rendering.
 - `src/content/docs/`: MDX documentation.
 - `src/lib/`: platform detection, release mapping, and GitHub data.
 - `src/data/releases.json`: committed fallback snapshot.
