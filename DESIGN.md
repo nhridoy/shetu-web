@@ -69,7 +69,7 @@ Satoshi loads from the Fontshare CDN (its license forbids redistributing the fil
 
 ## Components
 
-- **Logo** `src/components/brand/Logo.astro`: rounded square, gradient orbit ring, `>_` prompt. Same mark in `public/favicon.svg`.
+- **Logo** `src/components/brand/Logo.astro`: the desktop app icon (terra-client `src-tauri/icons/icon.svg`, margin trimmed) served from `public/favicon.svg`, plus `public/favicon.ico`. Update both when the app icon changes.
 - **Mockups** `src/components/mockups/`: `TerraWindow` (app chrome, container-query responsive), `HostSidebar`, `TerminalPane` (optional typing animation), `SftpPanes`, demo data in `demo.ts`. All are `aria-hidden` with an `sr-only` sentence beside them.
 - **Panels** `.panel`, hover lift `.lift`, buttons `.btn-primary` / `.btn-ghost`, links `.link`.
 - **PageHeader** `src/components/ui/PageHeader.astro`: shared header for inner pages.

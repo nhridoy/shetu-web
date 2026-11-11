@@ -6,52 +6,11 @@ interface Props {
 }
 
 const { size = 28, wordmark = false, class: className = '' } = Astro.props;
-// Each instance needs its own gradient id; several logos render per page.
-const id = `terra-g-${Math.random().toString(36).slice(2, 8)}`;
 ---
 
 <span class:list={['inline-flex items-center gap-2.5', className]}>
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 32 32"
-    fill="none"
-    aria-hidden="true"
-  >
-    <defs>
-      <linearGradient id={id} x1="4" y1="6" x2="28" y2="26" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#A99DFF" />
-        <stop offset="0.5" stop-color="#8B7CFF" />
-        <stop offset="1" stop-color="#5B8CFF" />
-      </linearGradient>
-    </defs>
-    <rect
-      x="1"
-      y="1"
-      width="30"
-      height="30"
-      rx="8"
-      fill="#0D0D12"
-      stroke="rgba(255,255,255,0.14)"
-    />
-    <ellipse
-      cx="16"
-      cy="16"
-      rx="12.5"
-      ry="5.2"
-      transform="rotate(-28 16 16)"
-      stroke={`url(#${id})`}
-      stroke-width="1.7"
-    />
-    <path
-      d="M11.5 11.2 16.3 16l-4.8 4.8"
-      stroke="#F4F4F7"
-      stroke-width="2.3"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    />
-    <path d="M18 20.8h3.6" stroke={`url(#${id})`} stroke-width="2.3" stroke-linecap="round" />
-  </svg>
+  <!-- Same mark as the desktop app icon (terra-client src-tauri/icons/icon.svg). -->
+  <img src="/favicon.svg" width={size} height={size} alt="" decoding="async" />
   {wordmark && (
     <span class="text-[17px] font-bold tracking-[-0.03em] text-ink">Terra</span>
   )}
