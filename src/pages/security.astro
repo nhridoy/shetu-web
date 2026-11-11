@@ -38,11 +38,11 @@ const keys = [
   },
   {
     step: 'Team vault keys',
-    body: 'Every shared vault has its own key, sealed to each member and rotated when someone is removed.',
+    body: 'Every shared vault has its own key, sealed to each member. Removing someone flags the vault, and an owner or admin rotates the key.',
   },
 ];
 const limits = [
-  'Removing a team member rotates the vault key, but data already cached on their device cannot be wiped remotely.',
+  'Removing a team member flags each shared vault for a key rotation, which an owner or admin must complete with Rotate keys. Data already cached on their device cannot be wiped remotely.',
   'Builds are not notarized by Apple or signed by Microsoft yet, so your OS warns on first launch.',
   'If you lose both your password and your recovery kit, nobody can decrypt your vault. That includes us.',
 ];
