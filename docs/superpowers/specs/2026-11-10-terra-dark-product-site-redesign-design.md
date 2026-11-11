@@ -55,19 +55,19 @@ The desktop app screenshots supplied on 2026-11-10 are the primary visual eviden
 
 Keep the existing token names to avoid a risky rename, but change their values to dark semantics. Add two tokens.
 
-| Token | Value | Use |
-|---|---|---|
-| `--color-paper` | `#08090A` | Page background |
-| `--color-surface` | `#0E1012` | Cards, panels, header |
-| `--color-elevated` | `#14171A` | Raised cards, code headers, hover surfaces |
-| `--color-ink` | `#F5F7F6` | Primary text |
-| `--color-muted` | `#98A2A0` | Secondary text |
-| `--color-line` | `rgba(255, 255, 255, 0.08)` | Borders and dividers |
-| `--color-accent` | `#5EEAD4` | Links, focus, highlights, status |
-| `--color-accent-wash` | `rgba(94, 234, 212, 0.12)` | Active tabs, badges, soft fills |
-| `--color-terminal` | `#0A0C0D` | Code blocks, terminal surfaces |
-| `--color-terminal-text` | `#A7F3D0` | Code and terminal text |
-| `--color-glow` | `rgba(94, 234, 212, 0.14)` | Hero radial glow |
+| Token                   | Value                       | Use                                        |
+| ----------------------- | --------------------------- | ------------------------------------------ |
+| `--color-paper`         | `#08090A`                   | Page background                            |
+| `--color-surface`       | `#0E1012`                   | Cards, panels, header                      |
+| `--color-elevated`      | `#14171A`                   | Raised cards, code headers, hover surfaces |
+| `--color-ink`           | `#F5F7F6`                   | Primary text                               |
+| `--color-muted`         | `#98A2A0`                   | Secondary text                             |
+| `--color-line`          | `rgba(255, 255, 255, 0.08)` | Borders and dividers                       |
+| `--color-accent`        | `#5EEAD4`                   | Links, focus, highlights, status           |
+| `--color-accent-wash`   | `rgba(94, 234, 212, 0.12)`  | Active tabs, badges, soft fills            |
+| `--color-terminal`      | `#0A0C0D`                   | Code blocks, terminal surfaces             |
+| `--color-terminal-text` | `#A7F3D0`                   | Code and terminal text                     |
+| `--color-glow`          | `rgba(94, 234, 212, 0.14)`  | Hero radial glow                           |
 
 Primary buttons are white (`#F5F7F6`) with near-black text. Secondary buttons are transparent with a `line` border. Destructive/error states are not introduced on the marketing site.
 
@@ -289,14 +289,14 @@ No pricing, plan, or “free” claim.
 
 Use six full screenshots, not all fourteen:
 
-| Asset | Source (2026-11-10) | Use |
-|---|---|---|
-| `hosts.webp` | 13:57:06 hosts list | Hero |
-| `edit-host.webp` | 13:57:26 edit-host modal | Hosts showcase |
-| `terminal.webp` | 14:00:25 terminal split | Terminal showcase |
-| `editor.webp` | 14:05:10 editor + explorer | Files showcase |
-| `team-vault.webp` | 13:58:27 team detail | Teams showcase |
-| `themes.webp` | 14:05:35 settings/themes | Themes showcase |
+| Asset             | Source (2026-11-10)        | Use               |
+| ----------------- | -------------------------- | ----------------- |
+| `hosts.webp`      | 13:57:06 hosts list        | Hero              |
+| `edit-host.webp`  | 13:57:26 edit-host modal   | Hosts showcase    |
+| `terminal.webp`   | 14:00:25 terminal split    | Terminal showcase |
+| `editor.webp`     | 14:05:10 editor + explorer | Files showcase    |
+| `team-vault.webp` | 13:58:27 team detail       | Teams showcase    |
+| `themes.webp`     | 14:05:35 settings/themes   | Themes showcase   |
 
 An additional crop, `terminal-inset.webp`, comes from the clean 13:59:48 `whoami` capture for the hero inset. The split capture shows tabs and panes; the inset keeps the hero terminal readable without a personal prompt.
 

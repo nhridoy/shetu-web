@@ -45,4 +45,5 @@ The output is a static `dist/` directory. No adapter or server runtime is requir
 - `src/content/docs/`: MDX documentation.
 - `src/lib/`: platform detection, release mapping, and GitHub data.
 - `src/data/releases.json`: committed fallback snapshot.
-- `src/styles/global.css`: Field Manual tokens and prose styles.
+- `src/styles/global.css`: dark product tokens and prose styles.
+- `src/assets/app/`: blurred product screenshots used on the homepage.

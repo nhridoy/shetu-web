@@ -1,6 +1,6 @@
 export const SITE_NAME = 'Terra';
 export const SITE_DESCRIPTION =
-  'The open-source, self-hostable SSH client. Direct SSH, encrypted vaults, SFTP, and port forwarding in one desktop workspace.';
+  'The open-source SSH workspace. Encrypted vaults, split terminals, SFTP, and team-shared hosts. Windows, macOS, and Linux.';
 
 export const REPOS = {
   monorepo: 'https://github.com/nhridoy/terra',
@@ -10,6 +10,7 @@ export const REPOS = {
 } as const;
 
 export const NAV_ITEMS = [
+  { label: 'Features', href: '/#features' },
   { label: 'Download', href: '/download' },
   { label: 'Docs', href: '/docs' },
   { label: 'Security', href: '/security' },

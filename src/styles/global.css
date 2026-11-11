@@ -2,15 +2,17 @@
 @import "@fontsource-variable/geist";
 
 @theme {
-  --color-paper: #f7f5ef;
-  --color-surface: #ffffff;
-  --color-ink: #161816;
-  --color-muted: #646a63;
-  --color-line: rgba(22, 24, 22, 0.12);
-  --color-accent: #1c6b47;
-  --color-accent-wash: #e4efe7;
-  --color-terminal: #101413;
-  --color-terminal-text: #a8dbbd;
+  --color-paper: #08090a;
+  --color-surface: #0e1012;
+  --color-elevated: #14171a;
+  --color-ink: #f5f7f6;
+  --color-muted: #98a2a0;
+  --color-line: rgba(255, 255, 255, 0.08);
+  --color-accent: #5eead4;
+  --color-accent-wash: rgba(94, 234, 212, 0.12);
+  --color-terminal: #0a0c0d;
+  --color-terminal-text: #a7f3d0;
+  --color-glow: rgba(94, 234, 212, 0.14);
   --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
@@ -33,7 +35,7 @@
   }
 
   ::selection {
-    background: var(--color-accent-wash);
+    background: rgba(94, 234, 212, 0.25);
     color: var(--color-ink);
   }
 
@@ -56,6 +58,31 @@
   .skip-link:focus {
     top: 1rem;
   }
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 80% 60% at 50% 0%,
+    black 20%,
+    transparent 75%
+  );
+  mask-image: radial-gradient(
+    ellipse 80% 60% at 50% 0%,
+    black 20%,
+    transparent 75%
+  );
+}
+
+.cta-glow {
+  background: radial-gradient(
+    ellipse at center,
+    var(--color-glow),
+    transparent 70%
+  );
 }
 
 .install-panel {
@@ -140,7 +167,7 @@
 .docs-prose code:not(pre code) {
   border: 1px solid var(--color-line);
   border-radius: 0.3rem;
-  background: var(--color-surface);
+  background: var(--color-elevated);
   padding: 0.1rem 0.35rem;
   font-family: var(--font-mono);
   font-size: 0.85em;
@@ -149,7 +176,7 @@
 
 .docs-prose pre {
   overflow-x: auto;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--color-line);
   border-radius: 0.75rem;
   background: var(--color-terminal);
   padding: 1rem;
@@ -175,12 +202,25 @@
   text-align: left;
 }
 
+.docs-prose thead {
+  background: var(--color-elevated);
+}
+
 .docs-prose th {
   font-family: var(--font-mono);
   font-size: 0.65rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-muted);
+}
+
+.docs-prose h2,
+.docs-prose h3 {
+  color: var(--color-ink);
+}
+
+.docs-prose hr {
+  border-color: var(--color-line);
 }
 
 .docs-prose blockquote {

@@ -30,6 +30,7 @@
 ## Task 1: Process and add the redacted app screenshots
 
 **Files:**
+
 - Create: `src/assets/app/hosts.webp`
 - Create: `src/assets/app/edit-host.webp`
 - Create: `src/assets/app/terminal.webp`
@@ -200,6 +201,7 @@ git commit -m "chore: add blurred app screenshots"
 ## Task 2: Add the dark design system and global shell
 
 **Files:**
+
 - Modify: `src/styles/global.css`
 - Modify: `src/layouts/BaseLayout.astro`
 - Modify: `src/lib/site.ts`
@@ -234,10 +236,10 @@ Replace lines 4–16 with:
 In the same file, change `::selection` to:
 
 ```css
-  ::selection {
-    background: rgba(94, 234, 212, 0.25);
-    color: var(--color-ink);
-  }
+::selection {
+  background: rgba(94, 234, 212, 0.25);
+  color: var(--color-ink);
+}
 ```
 
 After the `@layer base` block, add:
@@ -525,7 +527,7 @@ Change the `global.css` bullet and add the assets bullet:
 
 ```md
 - `src/styles/global.css`: dark product tokens and prose styles.
-- `src/assets/app/`: redacted product screenshots used on the homepage.
+- `src/assets/app/`: blurred product screenshots used on the homepage.
 ```
 
 **Step 9: Build**
@@ -548,6 +550,7 @@ git commit -m "feat: add dark design system and shell"
 ## Task 3: Rebuild the homepage hero and feature grid
 
 **Files:**
+
 - Create: `src/components/marketing/AppWindow.astro`
 - Rewrite: `src/components/marketing/Hero.astro`
 - Create: `src/components/marketing/FeatureGrid.astro`
@@ -936,6 +939,7 @@ git commit -m "feat: rebuild homepage hero and feature grid"
 ## Task 4: Complete the product-led homepage
 
 **Files:**
+
 - Create: `src/components/marketing/FeatureShowcase.astro`
 - Create: `src/components/marketing/PortForwardingSection.astro`
 - Create: `src/components/marketing/SelfHostSection.astro`
@@ -1613,6 +1617,7 @@ git commit -m "feat: complete product-led homepage"
 ## Task 5: Re-skin download and releases
 
 **Files:**
+
 - Modify: `src/components/ui/CodeBlock.astro`
 - Modify: `src/components/ui/Callout.astro`
 - Modify: `src/components/download/InstallCommand.astro`
@@ -1764,6 +1769,7 @@ git commit -m "style: re-skin download and releases"
 ## Task 6: Re-skin the docs
 
 **Files:**
+
 - Modify: `src/layouts/DocsLayout.astro`
 - Modify: `src/components/docs/DocsNav.astro`
 - Modify: `src/pages/docs/index.astro`
@@ -1827,6 +1833,7 @@ git commit -m "style: re-skin docs"
 ## Task 7: Re-skin security, community, and 404
 
 **Files:**
+
 - Modify: `src/components/marketing/SecurityFlow.astro`
 - Modify: `src/pages/security.astro`
 - Modify: `src/pages/community.astro`
@@ -1929,6 +1936,7 @@ git commit -m "style: re-skin security community and 404"
 ## Task 8: Final verification and cleanup
 
 **Files:**
+
 - No new files expected.
 - Review the full diff.
 
