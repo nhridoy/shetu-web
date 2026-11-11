@@ -1,0 +1,142 @@
+---
+import PageHeader from '../components/ui/PageHeader.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { PAGES } from '../lib/seo';
+import { REPOS } from '../lib/site';
+
+const updated = 'November 11, 2026';
+---
+
+<BaseLayout {...PAGES['/privacy']}>
+  <PageHeader
+    eyebrow="Legal"
+    title="Privacy policy"
+    lede="What Shetu collects, why, and what it never sees. The short version: no tracking on this site, no telemetry in the app, and your secrets are encrypted before they reach the sync server."
+  />
+
+  <section class="mx-auto max-w-[760px] px-5 py-16 sm:px-6 md:py-20">
+    <article class="docs-prose">
+      <p class="text-sm text-muted">Last updated: {updated}</p>
+
+      <h2>Who this policy covers</h2>
+      <p>
+        Shetu is run by the Shetu maintainers ("we"). This policy covers this
+        website, the Shetu desktop app, and the Shetu sync server that release
+        builds of the app sign in to.
+      </p>
+      <p>
+        If you or your organization run your own Shetu server, whoever runs
+        that server decides what happens to the data on it. This policy does
+        not cover servers we do not operate.
+      </p>
+
+      <h2>This website</h2>
+      <ul>
+        <li>No cookies, no analytics and no third-party tracking scripts. Fonts are served from this site.</li>
+        <li>The site is hosted on Cloudflare, which processes standard request data such as your IP address to deliver pages and block abuse.</li>
+        <li>Download buttons point to GitHub Releases. GitHub's own privacy statement applies there.</li>
+      </ul>
+
+      <h2>The desktop app</h2>
+      <ul>
+        <li>The app sends no telemetry, analytics or crash reports.</li>
+        <li>SSH, SFTP and port forwarding connect straight from your device to your hosts. That traffic never passes through our servers.</li>
+        <li>Your local database is encrypted on your device. Sign-in secrets are kept in your operating system's keychain.</li>
+        <li>The app checks GitHub for updates, which shares your IP address and app version with GitHub.</li>
+      </ul>
+
+      <h2>What the sync server stores</h2>
+      <p>To create your account and sync your vault, the server stores:</p>
+      <ul>
+        <li><strong>Account details:</strong> your email address, your name, how you sign in (password, Google or GitHub), and the account ID from Google or GitHub if you use them.</li>
+        <li><strong>Sign-in material:</strong> a password verifier and salts derived on your device, never your password itself, plus your public key and a hash used for account recovery.</li>
+        <li><strong>Activity dates:</strong> when you created your account, verified your email and last signed in.</li>
+        <li><strong>Devices:</strong> a random ID for each device you sign in on, the app's user agent, and hashed refresh tokens.</li>
+        <li><strong>Your vault:</strong> encrypted records. A few fields stay readable so sync can work, such as record names, tags and timestamps. Host addresses, usernames, passwords, private keys and commands are encrypted on your device. See <a href="/security">Security</a> for the full list.</li>
+        <li><strong>Teams:</strong> the teams you belong to, your role, and invites, including the invited person's email address.</li>
+      </ul>
+      <p>
+        The server also keeps request logs (IP address, time, request path and
+        result) to run and secure the service, and holds IP addresses in memory
+        for up to a minute to apply rate limits.
+      </p>
+      <p>
+        If the server requires email verification, we send a one-time code to
+        your email address through an email delivery provider.
+      </p>
+
+      <h2>How we use it</h2>
+      <p>
+        Only to provide sign-in, sync and team sharing, to keep the service
+        secure, and to stop abuse. We do not sell your data, show ads, or
+        share your data with anyone except:
+      </p>
+      <ul>
+        <li>providers that host the service or deliver its email, only as needed to do that;</li>
+        <li>other members of a team you join, who can see your name, email and the vaults you share with them;</li>
+        <li>authorities, when the law requires it.</li>
+      </ul>
+      <p>
+        We cannot read your encrypted vault, so we cannot hand it over in
+        readable form to anyone.
+      </p>
+
+      <h2>How long we keep it</h2>
+      <p>
+        We keep your account data for as long as your account exists. When you
+        delete a record, the server keeps a small deletion marker so your other
+        devices learn about the change. Expired refresh tokens and request logs
+        are not kept longer than needed to run and secure the service.
+      </p>
+
+      <h2>Your choices and rights</h2>
+      <ul>
+        <li>You can edit or delete your hosts, keys, snippets and other records in the app at any time.</li>
+        <li>You can ask us to delete your account and everything stored with it, or for a copy of the account details we hold.</li>
+        <li>Depending on where you live, you may have further rights, such as to correct your data or object to how we use it. Ask and we will help.</li>
+      </ul>
+      <p>
+        The app does not have a self-service account deletion button yet. To
+        make a request, <a href={`${REPOS.monorepo}/issues/new`}>open an issue on GitHub</a>
+        titled "Privacy request". Do not put your email address or other
+        personal details in the issue, since issues are public. We will reply
+        there to confirm your identity privately.
+      </p>
+
+      <h2>Security</h2>
+      <p>
+        Your vault is encrypted on your device with a key derived from your
+        password. If you lose both your password and your recovery kit, nobody
+        can decrypt your vault, including us. Read <a href="/security">how Shetu protects your data</a>
+        and report vulnerabilities through
+        <a href={`${REPOS.monorepo}/security/advisories/new`}>GitHub Security Advisories</a>.
+      </p>
+
+      <h2>Children</h2>
+      <p>
+        Shetu is a tool for developers and system administrators. It is not
+        meant for children under 13, and we do not knowingly collect their data.
+      </p>
+
+      <h2>Where data is processed</h2>
+      <p>
+        Our service providers may process data in countries other than yours.
+        Your vault stays encrypted wherever it is stored.
+      </p>
+
+      <h2>Changes</h2>
+      <p>
+        We will update this page when our practices change and change the date
+        at the top. The full history of this page is public in the
+        <a href={REPOS.web}>shetu-web repository</a>.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        Questions about this policy go to
+        <a href={`${REPOS.monorepo}/issues`}>GitHub Issues</a>. Please keep
+        personal details out of public issues.
+      </p>
+    </article>
+  </section>
+</BaseLayout>
