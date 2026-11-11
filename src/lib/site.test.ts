@@ -2,8 +2,9 @@ import { describe, expect, it } from 'vitest';
 import { INSTALL_COMMANDS, NAV_ITEMS, REPOS } from './site';
 
 describe('site constants', () => {
-  it('exposes the five primary routes in navigation order', () => {
+  it('exposes the six primary routes in navigation order', () => {
     expect(NAV_ITEMS.map((item) => item.href)).toEqual([
+      '/#features',
       '/download',
       '/docs',
       '/security',

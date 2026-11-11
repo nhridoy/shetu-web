@@ -75,7 +75,7 @@ export default function ReleaseList({ load }: ReleaseListProps) {
           <div className="flex flex-wrap items-center gap-3">
             <h2 className="font-mono text-lg text-ink">{release.tag_name}</h2>
             {release.prerelease && (
-              <span className="rounded-full border border-amber-300 bg-amber-50 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.14em] text-amber-800">
+              <span className="rounded-full border border-amber-400/30 bg-amber-400/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.14em] text-amber-300">
                 Pre-release
               </span>
             )}

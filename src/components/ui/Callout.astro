@@ -11,11 +11,16 @@ const { tone = 'note', title } = Astro.props;
   class:list={[
     'rounded-xl border p-4',
     tone === 'warning'
-      ? 'border-amber-300 bg-amber-50'
+      ? 'border-amber-400/30 bg-amber-400/10'
       : 'border-line bg-surface',
   ]}
 >
-  <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
+  <p
+    class:list={[
+      'font-mono text-[10px] uppercase tracking-[0.18em]',
+      tone === 'warning' ? 'text-amber-300' : 'text-muted',
+    ]}
+  >
     {title}
   </p>
   <div class="mt-2 text-sm leading-relaxed text-ink"><slot /></div>

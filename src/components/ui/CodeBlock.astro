@@ -7,18 +7,21 @@ interface Props {
 const { code, label = 'shell' } = Astro.props;
 ---
 
-<div class="overflow-hidden rounded-xl border border-white/10 bg-terminal">
-  <div class="flex items-center justify-between border-b border-white/10 px-4 py-2.5">
-    <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-white/60">
+<div class="overflow-hidden rounded-xl border border-line bg-terminal">
+  <div class="flex items-center justify-between border-b border-line px-4 py-2.5">
+    <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
       {label}
     </span>
     <button
       type="button"
       data-copy={code}
-      class="rounded border border-white/15 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-white/70 transition-colors duration-150 hover:border-white/30 hover:text-white"
+      class="rounded border border-line px-2 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-muted transition-colors duration-150 hover:border-accent/40 hover:text-ink"
     >
       Copy
     </button>
   </div>
-  <pre class="overflow-x-auto p-4 text-[13px] leading-relaxed text-terminal-text"><code>{code}</code></pre>
+  <pre
+    class="overflow-x-auto p-4 text-[13px] leading-relaxed text-terminal-text"><code
+      >{code}</code
+    ></pre>
 </div>
