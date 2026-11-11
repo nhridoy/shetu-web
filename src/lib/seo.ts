@@ -77,6 +77,16 @@ export const PAGES = {
     description:
       'Shetu is MIT licensed and built in the open. Browse the client, server and website repositories, report issues and send your first pull request.',
   },
+  '/privacy': {
+    title: 'Shetu privacy policy · What the SSH client collects',
+    description:
+      'How Shetu handles your data: no tracking on this site, no telemetry in the app, and a sync server that stores your account and an encrypted vault.',
+  },
+  '/terms': {
+    title: 'Shetu terms of use · Rules for the site and sync server',
+    description:
+      'The terms for using the Shetu website and hosted sync server. The open-source desktop client and server code stay under the MIT license.',
+  },
 } satisfies Record<string, PageMeta>;
 
 export type StaticPath = keyof typeof PAGES;
