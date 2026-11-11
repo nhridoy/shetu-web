@@ -128,7 +128,7 @@ describe('DownloadPanel', () => {
       ).toHaveAttribute('href', 'https://example.com/linux-x64.AppImage');
       expect(
         within(menu).getByRole('link', { name: /older releases/i }),
-      ).toHaveAttribute('href', '/releases');
+      ).toHaveAttribute('href', '/changelog');
     });
 
     it('closes on Escape and returns focus to the toggle', async () => {

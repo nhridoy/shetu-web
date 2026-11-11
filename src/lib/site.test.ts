@@ -8,7 +8,7 @@ describe('site constants', () => {
       '/download',
       '/docs',
       '/security',
-      '/releases',
+      '/changelog',
       '/community',
     ]);
   });

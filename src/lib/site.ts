@@ -14,7 +14,7 @@ export const NAV_ITEMS = [
   { label: 'Download', href: '/download' },
   { label: 'Docs', href: '/docs' },
   { label: 'Security', href: '/security' },
-  { label: 'Releases', href: '/releases' },
+  { label: 'Changelog', href: '/changelog' },
   { label: 'Community', href: '/community' },
 ] as const;
 

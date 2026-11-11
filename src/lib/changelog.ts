@@ -2,7 +2,8 @@ import { marked } from 'marked';
 import sanitizeHtml from 'sanitize-html';
 import snapshot from '../data/releases.json';
 import { getReleases } from './github';
-import type { Release } from './releases';
+import { formatReleaseDate, type Release } from './releases';
+import type { PageMeta } from './seo';
 
 const fallback = snapshot.releases as Release[];
 let buildReleases: Promise<Release[]> | null = null;
@@ -20,13 +21,16 @@ export function loadReleases(fetchImpl?: typeof fetch): Promise<Release[]> {
   return buildReleases;
 }
 
-/** Drops the "## Install" section every GitHub release body repeats. */
+/**
+ * Drops what every GitHub release body repeats: the "## Install" section and
+ * the "## What's Changed" heading (pages supply their own heading).
+ */
 export function cleanNotes(body: string): string {
   const kept: string[] = [];
   let skipping = false;
   for (const line of body.split('\n')) {
     if (/^## /.test(line)) skipping = /^## Install\b/.test(line);
-    if (!skipping) kept.push(line);
+    if (!skipping && !/^## What's Changed\s*$/.test(line)) kept.push(line);
   }
   return kept.join('\n').trim();
 }
@@ -64,7 +68,7 @@ export function renderNotes(body: string): string {
       'br',
       'hr',
     ],
-    allowedAttributes: { a: ['href'] },
+    allowedAttributes: { a: ['href', 'rel'] },
     allowedSchemes: ['http', 'https', 'mailto'],
     transformTags: {
       a: sanitizeHtml.simpleTransform('a', { rel: 'nofollow noopener' }),
@@ -74,4 +78,15 @@ export function renderNotes(body: string): string {
 
 export function versionSlug(tag: string): string {
   return tag.replaceAll('.', '-');
+}
+
+export function releasePageMeta(
+  release: Release,
+): PageMeta & { noindex: boolean } {
+  const tag = release.tag_name;
+  return {
+    title: `Terra ${tag} release notes and downloads`,
+    description: `What changed in Terra ${tag}, released ${formatReleaseDate(release.published_at)}: release notes and downloads for macOS, Windows and Linux, x64 and ARM64.`,
+    noindex: !hasNotes(release.body),
+  };
 }

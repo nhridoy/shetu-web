@@ -149,7 +149,7 @@ function HeroDownload({
               All downloads
             </a>
             <a
-              href="/releases"
+              href="/changelog"
               className="flex-1 rounded-lg px-2.5 py-2 text-center text-xs font-semibold text-muted hover:bg-white/[0.06] hover:text-ink"
             >
               Older releases

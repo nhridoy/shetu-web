@@ -1,5 +1,10 @@
 import { getCollection } from 'astro:content';
 import type { APIRoute, GetStaticPaths } from 'astro';
+import {
+  loadReleases,
+  releasePageMeta,
+  versionSlug,
+} from '../../lib/changelog';
 import { loadOgFonts, renderOgPng } from '../../lib/og';
 import { PAGES } from '../../lib/seo';
 
@@ -19,6 +24,10 @@ async function ogEntries(): Promise<
       path: `/docs/${entry.id}`,
       title: entry.data.title,
       description: entry.data.description,
+    })),
+    ...(await loadReleases()).map((release) => ({
+      path: `/changelog/${versionSlug(release.tag_name)}`,
+      ...releasePageMeta(release),
     })),
   ];
 }

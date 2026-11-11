@@ -1,0 +1,60 @@
+---
+import { ArrowRight } from '@phosphor-icons/react';
+import PageHeader from '../components/ui/PageHeader.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import {
+  hasNotes,
+  loadReleases,
+  renderNotes,
+  versionSlug,
+} from '../lib/changelog';
+import { formatReleaseDate } from '../lib/releases';
+import { PAGES } from '../lib/seo';
+
+const releases = await loadReleases();
+---
+
+<BaseLayout {...PAGES['/changelog']}>
+  <PageHeader
+    eyebrow="Changelog"
+    title="Every release, in the open."
+    lede="What changed in each version of Terra, with downloads for macOS, Windows and Linux. Newest first."
+  />
+  <section class="mx-auto max-w-[900px] px-5 py-14 sm:px-6 md:py-20">
+    <ol class="relative space-y-6 border-l border-line pl-6 sm:pl-8">
+      {releases.map((release) => (
+        <li class="relative">
+          <span
+            aria-hidden="true"
+            class="absolute top-7 -left-[29px] h-2.5 w-2.5 rounded-full bg-accent ring-4 ring-paper sm:-left-[37px]"
+          />
+          <article class="panel p-6">
+            <div class="flex flex-wrap items-center gap-3">
+              <h2 class="font-mono text-lg font-semibold">
+                <a href={`/changelog/${versionSlug(release.tag_name)}`} class="hover:text-accent">
+                  {release.tag_name}
+                </a>
+              </h2>
+              {release.prerelease && (
+                <span class="rounded-full border border-amber-400/30 bg-amber-400/10 px-2 py-0.5 font-mono text-[10px] tracking-[0.14em] text-amber-300 uppercase">
+                  Pre-release
+                </span>
+              )}
+              <time class="font-mono text-[11px] tracking-[0.14em] text-muted uppercase" datetime={release.published_at}>
+                {formatReleaseDate(release.published_at)}
+              </time>
+            </div>
+            {hasNotes(release.body) ? (
+              <div class="docs-prose mt-3 line-clamp-4 text-sm" set:html={renderNotes(release.body)} />
+            ) : (
+              <p class="mt-3 text-sm text-muted">Downloads only, no written notes.</p>
+            )}
+            <a href={`/changelog/${versionSlug(release.tag_name)}`} class="link mt-4 inline-flex items-center gap-1.5 text-sm font-medium">
+              Notes and downloads <ArrowRight size={13} />
+            </a>
+          </article>
+        </li>
+      ))}
+    </ol>
+  </section>
+</BaseLayout>

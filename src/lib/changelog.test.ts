@@ -5,9 +5,11 @@ import {
   cleanNotes,
   hasNotes,
   loadReleases,
+  releasePageMeta,
   renderNotes,
   versionSlug,
 } from './changelog';
+import { mapAssets, type Release } from './releases';
 
 const v15 = readFileSync('src/lib/fixtures/release-v0.0.15.md', 'utf8');
 const v5 =
@@ -19,6 +21,7 @@ describe('release notes', () => {
     expect(notes).toContain('stop groups inside deleted groups');
     expect(notes).not.toContain('curl -fsSL');
     expect(notes).not.toContain('## Install');
+    expect(notes).not.toContain("## What's Changed");
   });
 
   it('detects releases with no real notes', () => {
@@ -38,7 +41,7 @@ describe('release notes', () => {
 
   it('autolinks bare URLs', () => {
     expect(renderNotes(v15)).toContain(
-      '<a href="https://github.com/nhridoy/terra-client/pull/11"',
+      '<a href="https://github.com/nhridoy/terra-client/pull/11" rel="nofollow noopener"',
     );
   });
 
@@ -54,5 +57,30 @@ describe('loadReleases', () => {
     });
     expect(releases.length).toBeGreaterThan(0);
     expect(releases).toEqual(snapshot.releases);
+  });
+});
+
+describe('release pages', () => {
+  const v15Release = snapshot.releases.find(
+    (r) => r.tag_name === 'v0.0.15',
+  ) as Release;
+  const v5Release = snapshot.releases.find(
+    (r) => r.tag_name === 'v0.0.5',
+  ) as Release;
+
+  it('marks releases without notes as noindex', () => {
+    expect(releasePageMeta(v5Release).noindex).toBe(true);
+    expect(releasePageMeta(v15Release).noindex).toBe(false);
+  });
+
+  it('keeps release titles and descriptions within limits', () => {
+    const { title, description } = releasePageMeta(v15Release);
+    expect(title.length).toBeLessThanOrEqual(60);
+    expect(description.length).toBeGreaterThanOrEqual(110);
+    expect(description.length).toBeLessThanOrEqual(160);
+  });
+
+  it('handles releases with no assets', () => {
+    expect(mapAssets({ ...v15Release, assets: [] })).toEqual([]);
   });
 });
