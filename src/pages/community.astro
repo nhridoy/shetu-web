@@ -38,7 +38,9 @@ const repos = [
     <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
       Community
     </p>
-    <h1 class="mt-4 max-w-4xl text-5xl font-medium tracking-[-0.05em] md:text-6xl">
+    <h1
+      class="mt-4 max-w-4xl text-balance text-5xl font-medium tracking-[-0.05em] md:text-6xl"
+    >
       Built in the open.
     </h1>
     <p class="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
@@ -55,7 +57,7 @@ const repos = [
         {repos.map((repo) => (
           <a
             href={repo.href}
-            class="rounded-xl border border-line bg-paper p-6 transition-colors duration-150 hover:border-accent/40 hover:bg-accent-wash/40"
+            class="rounded-xl border border-line bg-elevated p-6 transition-colors duration-150 hover:border-accent/40 hover:bg-accent-wash/40"
           >
             <p class="font-mono text-sm text-ink">{repo.name}</p>
             <p class="mt-2 text-sm leading-relaxed text-muted">
