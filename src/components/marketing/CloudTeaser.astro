@@ -1,0 +1,25 @@
+---
+import { ArrowUpRight, CloudArrowUp } from '@phosphor-icons/react';
+import { REPOS } from '../../lib/site';
+---
+
+<section class="px-5 sm:px-6">
+  <div class="panel reveal relative mx-auto flex max-w-[1000px] flex-col gap-6 overflow-hidden p-7 md:flex-row md:items-center md:p-9">
+    <div class="glow-beam pointer-events-none absolute -top-20 -right-20 h-64 w-96 opacity-60" aria-hidden="true"></div>
+    <span class="relative grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-accent/30 to-accent-2/25 text-ink ring-1 ring-accent/40">
+      <CloudArrowUp size={24} />
+    </span>
+    <div class="relative flex-1">
+      <div class="flex flex-wrap items-center gap-3">
+        <h2 class="text-2xl font-bold">Terra Cloud</h2>
+        <span class="rounded-full border border-accent/40 bg-accent-wash px-2.5 py-0.5 font-mono text-[10px] tracking-[0.14em] text-accent uppercase">Coming soon</span>
+      </div>
+      <p class="mt-2 max-w-xl text-[15px] leading-relaxed text-muted">
+        Don't want to run a server? A hosted, managed sync option is on the way.
+      </p>
+    </div>
+    <a href={REPOS.monorepo} class="btn-ghost relative shrink-0">
+      Watch the repo on GitHub for release news <ArrowUpRight size={14} />
+    </a>
+  </div>
+</section>

@@ -1,93 +1,90 @@
 ---
+import { AppleLogo, LinuxLogo, WindowsLogo } from '@phosphor-icons/react';
 import DownloadPanel from '../components/download/DownloadPanel';
 import InstallCommand from '../components/download/InstallCommand.astro';
 import Callout from '../components/ui/Callout.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const requirements = [
+  {
+    Icon: AppleLogo,
+    os: 'macOS',
+    text: 'Apple Silicon or Intel. Download the matching .dmg.',
+  },
+  {
+    Icon: WindowsLogo,
+    os: 'Windows',
+    text: 'x64 or ARM64. Download the matching NSIS .exe installer.',
+  },
+  {
+    Icon: LinuxLogo,
+    os: 'Linux',
+    text: 'x64 or ARM64. Use the AppImage (needs libfuse2), or the .deb on Debian and Ubuntu.',
+  },
+];
 ---
 
 <BaseLayout
   title="Download Terra"
-  description="Download Terra for Windows, macOS, or Linux. Direct SSH, encrypted vault, SFTP, and optional self-hosted sync."
+  description="Download Terra for Windows, macOS, or Linux. Free and open source: split terminals, SFTP, port forwarding and an encrypted vault."
 >
-  <section class="mx-auto max-w-[1200px] px-6 pt-14 pb-16 md:pt-20">
-    <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
-      Download
-    </p>
-    <h1
-      class="mt-4 text-balance text-5xl font-medium tracking-[-0.05em] md:text-6xl"
-    >
-      Get Terra for your machine.
-    </h1>
-    <p class="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
-      Pick the build that matches your OS and architecture. Detection is a
-      convenience; every build is listed below.
-    </p>
-    <div class="mt-10">
-      <DownloadPanel client:load variant="full" />
-    </div>
+  <PageHeader
+    eyebrow="Download"
+    title="Get Terra for your machine."
+    lede="Free for macOS, Windows and Linux, on x64 and ARM64. We suggest a build for your system, and every build is listed below."
+  />
+
+  <section class="mx-auto max-w-[1200px] px-5 py-14 sm:px-6 md:py-20">
+    <DownloadPanel client:load variant="full" />
   </section>
 
-  <section class="border-y border-line bg-surface">
-    <div class="mx-auto max-w-[1200px] px-6 py-16">
-      <h2 class="text-3xl font-medium tracking-[-0.03em]">
-        Install in one line
-      </h2>
-      <p class="mt-3 max-w-2xl text-muted">
-        The installer picks the right file for your computer and skips the
-        first-launch warning.
-      </p>
-      <div class="mt-8 max-w-3xl">
-        <InstallCommand />
+  <section class="border-y border-line bg-surface/40">
+    <div class="mx-auto grid max-w-[1200px] gap-10 px-5 py-16 sm:px-6 md:py-20 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16">
+      <div>
+        <p class="eyebrow">Terminal install</p>
+        <h2 class="mt-4 text-3xl font-bold md:text-4xl">Install in one line.</h2>
+        <p class="mt-4 max-w-md text-muted">
+          The script picks the right file for your computer and skips the
+          first-launch warning.
+        </p>
       </div>
+      <InstallCommand />
     </div>
   </section>
 
-  <section class="mx-auto grid max-w-[1200px] gap-10 px-6 py-16 md:grid-cols-2">
+  <section class="mx-auto grid max-w-[1200px] gap-12 px-5 py-16 sm:px-6 md:py-20 lg:grid-cols-2">
     <div>
-      <h2 class="text-3xl font-medium tracking-[-0.03em]">First launch</h2>
-      <div class="mt-5 space-y-4">
+      <h2 class="text-3xl font-bold">First launch</h2>
+      <div class="mt-6 space-y-4">
         <Callout tone="warning" title="macOS">
-          Terra is not signed by Apple yet. Drag it to Applications, open it
-          once, then go to <strong>System Settings → Privacy & Security</strong>
-          and click <strong>Open Anyway</strong>.
+          Terra is not notarized by Apple yet. Drag it to Applications, open it
+          once, then go to <strong>System Settings → Privacy & Security</strong> and
+          click <strong>Open Anyway</strong>.
         </Callout>
         <Callout tone="warning" title="Windows">
-          Terra is not signed by Microsoft yet. On the SmartScreen prompt, click
-          <strong>More info → Run anyway</strong>. If your browser warns that the
+          Terra is not signed by Microsoft yet. On the SmartScreen prompt, click <strong>More info → Run anyway</strong>. If your browser warns that the
           file is uncommon, choose <strong>Keep</strong>.
         </Callout>
       </div>
     </div>
     <div>
-      <h2 class="text-3xl font-medium tracking-[-0.03em]">Requirements</h2>
-      <ul class="mt-5 space-y-3 text-sm leading-relaxed text-muted">
-        <li>
-          <strong class="text-ink">macOS:</strong> Apple Silicon or Intel.
-          Download the matching <code class="font-mono text-ink">.dmg</code>.
-        </li>
-        <li>
-          <strong class="text-ink">Windows:</strong> x64 or ARM64. Download the
-          matching NSIS <code class="font-mono text-ink">.exe</code>.
-        </li>
-        <li>
-          <strong class="text-ink">Linux:</strong> x64 or ARM64. Use the
-          AppImage, or the <code class="font-mono text-ink">.deb</code> on
-          Debian and Ubuntu. The AppImage needs
-          <code class="font-mono text-ink">libfuse2</code>.
-        </li>
-        <li>
-          <strong class="text-ink">Network:</strong> direct SSH access to your
-          hosts. Sync and shared vaults require a Terra server.
-        </li>
+      <h2 class="text-3xl font-bold">Requirements</h2>
+      <ul class="mt-6 space-y-3">
+        {requirements.map(({ Icon, os, text }) => (
+          <li class="panel flex items-start gap-4 p-4">
+            <Icon size={20} weight="fill" className="mt-0.5 shrink-0 text-accent" />
+            <p class="text-sm leading-relaxed text-muted">
+              <strong class="font-semibold text-ink">{os}.</strong> {text}
+            </p>
+          </li>
+        ))}
       </ul>
-      <p class="mt-5 text-sm text-muted">
-        Minimum OS versions are not listed because the project does not publish
-        a support matrix. If a build does not run on your system, open an issue
-        with your OS version.
-      </p>
-      <p class="mt-5 text-sm text-muted">
-        Need the full release history? See
-        <a href="/releases" class="text-accent underline decoration-line underline-offset-4 hover:decoration-accent">Releases</a>.
+      <p class="mt-5 text-sm leading-relaxed text-muted">
+        You also need direct SSH access to your hosts, and a Terra server for
+        sign-in and sync. The project does not publish a minimum OS matrix yet;
+        if a build does not run, open an issue with your OS version. Full
+        history is on the <a href="/releases" class="link">releases page</a>.
       </p>
     </div>
   </section>

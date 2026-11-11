@@ -1,43 +1,47 @@
 ---
+import TerminalPane from '../components/mockups/TerminalPane.astro';
+import TerraWindow from '../components/mockups/TerraWindow.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
-  title="Not found — Terra"
+  title="Page not found · Terra"
   description="The page you requested does not exist."
 >
-  <section class="mx-auto max-w-[1200px] px-6 py-24 md:py-32">
-    <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
-      404
-    </p>
-    <h1
-      class="mt-4 text-balance text-5xl font-medium tracking-[-0.045em] md:text-6xl"
-    >
-      Connection refused.
-    </h1>
-    <p class="mt-4 max-w-xl text-lg leading-relaxed text-muted">
-      This page isn’t in the vault. Try the homepage, the docs, or the download
-      page.
-    </p>
-    <div class="mt-8 flex flex-wrap gap-3">
-      <a
-        href="/"
-        class="rounded-lg bg-ink px-5 py-3 text-sm font-medium text-paper"
-      >
-        Home
-      </a>
-      <a
-        href="/download"
-        class="rounded-lg border border-line px-5 py-3 text-sm font-medium text-ink hover:border-accent/40 hover:text-accent"
-      >
-        Download
-      </a>
-      <a
-        href="/docs"
-        class="rounded-lg border border-line px-5 py-3 text-sm font-medium text-ink hover:border-accent/40 hover:text-accent"
-      >
-        Docs
-      </a>
+  <section class="relative overflow-hidden">
+    <div class="dot-grid pointer-events-none absolute inset-0" aria-hidden="true"></div>
+    <div class="relative mx-auto grid max-w-[1200px] items-center gap-12 px-5 py-20 sm:px-6 md:py-28 lg:grid-cols-2">
+      <div>
+        <p class="eyebrow">404</p>
+        <h1 class="mt-5 text-balance text-5xl leading-[1.02] font-bold tracking-[-0.045em] md:text-6xl">
+          Host not found.
+        </h1>
+        <p class="mt-5 max-w-md text-lg leading-relaxed text-muted">
+          This page is not in the vault. Try the homepage, the docs or the
+          download page.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/" class="btn-primary">Home</a>
+          <a href="/download" class="btn-ghost">Download</a>
+          <a href="/docs" class="btn-ghost">Docs</a>
+        </div>
+      </div>
+      <div class="relative">
+        <div class="glow-beam pointer-events-none absolute -inset-8 opacity-60" aria-hidden="true"></div>
+        <TerraWindow title="ssh" class="relative">
+          <TerminalPane
+            title="me@laptop"
+            lines={[
+              {
+                prompt: 'me@laptop:~$',
+                cmd: 'ssh this-page',
+                out: ['ssh: Could not resolve hostname this-page: Name or service not known'],
+              },
+            ]}
+            class="h-56"
+          />
+        </TerraWindow>
+      </div>
     </div>
   </section>
 </BaseLayout>

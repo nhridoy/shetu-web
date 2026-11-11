@@ -3,48 +3,52 @@ title: Security reference
 description: How Terra derives keys, encrypts the vault, wraps team keys, and what the sync server can see.
 section: server
 order: 3
-updated: "2026-11-09"
+updated: "2026-11-11"
 ---
 
-Terra is designed so the sync server never needs plaintext credentials. This page is the technical reference. For the shorter trust page, see [Security](/security).
+Terra is designed so the sync server never needs your plaintext secrets. This page is the technical reference. For the shorter trust page, see [Security](/security).
 
 ## Key hierarchy
 
-1. **Master password.** You choose it. It never leaves your device.
-2. **Vault key.** Terra derives it from the master password with Argon2id.
-3. **Encrypted vault.** Credentials and private keys are encrypted with XChaCha20-Poly1305 before they are stored or synced.
-4. **Identity key.** Each account has an X25519 identity key used to wrap team keys.
-5. **Team keys.** A team key is wrapped for each member's public key. The server stores the wrapped keys, not the team key.
+1. **Account password.** You choose it. It never leaves your device in plaintext.
+2. **Key-encryption key.** Terra derives it from your account password with Argon2id (32 MiB memory, 2 passes) on your device.
+3. **Data key.** A random per-account key, wrapped by the key-encryption key. It encrypts vault records with XChaCha20-Poly1305 before they are stored or synced.
+4. **Identity key.** Each account has an X25519 key pair used to seal team vault keys.
+5. **Team vault keys.** Each shared vault has its own key, sealed to every member's public key with X25519, HKDF-SHA256 and XChaCha20-Poly1305. The key rotates when a member is removed.
 
-## What the server stores
+Sign-in uses a separate verifier derived from the same key with a server salt, answered with an HMAC-SHA256 challenge proof. The server never receives the password itself.
 
-The sync server stores:
+## What the server can see
 
-- Account identifiers and authentication state.
-- Encrypted vault records.
-- Wrapped team keys.
-- Sync metadata needed to order and deliver records.
+The server needs some fields in the clear to sync records. It can see:
 
-The server does not receive:
+- Every record's name, IDs, timestamps and sort order.
+- Host OS, auth type, tags, color, group and key IDs.
+- Key description, type, fingerprint and public key.
+- Snippet description and tags.
+- Port-forward mode and host ID.
 
-- Your master password.
-- Plaintext credentials or private keys.
-- SSH traffic. Connections go directly from the client to the remote host.
-- Terminal output or file contents.
+These stay encrypted on your device and the server cannot read them:
+
+- Host address, port and username.
+- Passwords and private keys.
+- Snippet commands and terminal recordings.
+
+The server never receives SSH traffic. Connections go directly from the client to the remote host.
 
 ## Threat model
 
-**Compromised sync server.** An attacker can read ciphertext and wrapped keys, and can delete or withhold records. They cannot decrypt the vault without the master password.
+**Compromised sync server.** An attacker can read the visible fields above, read ciphertext and wrapped keys, and delete or withhold records. They cannot decrypt the vault without your password or recovery kit.
 
-**Stolen device.** A locked device protects the local vault. If the device is unlocked and the vault is open, the attacker has the same access you do.
+**Removed team member.** Removing a member rotates the vault key, so they cannot read new changes. Data already cached on their device cannot be wiped remotely.
 
 **Malicious sync response.** Encrypted records are authenticated with XChaCha20-Poly1305. Tampered ciphertext fails to decrypt.
 
-**Network attacker.** Use TLS for the sync server. SSH traffic is protected by SSH itself.
+**Network attacker.** Use TLS for the sync server. SSH traffic is protected by SSH itself, and Terra warns when a host key changes.
 
 ## Recovery kit
 
-Terra creates a recovery kit when you set up the vault. Store it offline. The recovery kit is the only way to recover the vault if you forget the master password. The server cannot reset it, and the maintainers cannot recover it for you.
+Terra gives you a recovery kit when you create your account. It holds a recovery code that can unwrap your data key. Store it offline. If you forget your password, the recovery kit is the only way back into your vault. The server cannot reset it, and the maintainers cannot recover it for you.
 
 ## Reporting a vulnerability
 

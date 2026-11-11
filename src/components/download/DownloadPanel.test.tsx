@@ -27,6 +27,19 @@ const release: Release = {
 };
 
 describe('DownloadPanel', () => {
+  it('puts an h2 above the platform headings before detection', () => {
+    render(
+      <DownloadPanel
+        variant="full"
+        detect={() => new Promise<DetectedPlatform>(() => {})}
+        load={() => new Promise<ReleaseResult>(() => {})}
+      />,
+    );
+    expect(
+      screen.getByRole('heading', { level: 2, name: /pick the build/i }),
+    ).toBeInTheDocument();
+  });
+
   it('renders the committed matrix before live data arrives', () => {
     render(
       <DownloadPanel

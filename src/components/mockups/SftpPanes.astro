@@ -1,0 +1,82 @@
+---
+import {
+  File,
+  FileCode,
+  Folder,
+  HardDrives,
+  Laptop,
+} from '@phosphor-icons/react';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+const panes = [
+  {
+    title: 'Local',
+    path: '~/projects/api',
+    Icon: Laptop,
+    rows: [
+      { name: 'dist', dir: true, size: '', mode: 'drwxr-xr-x' },
+      { name: 'migrations', dir: true, size: '', mode: 'drwxr-xr-x' },
+      {
+        name: 'docker-compose.yml',
+        dir: false,
+        size: '1.2 KB',
+        mode: '-rw-r--r--',
+      },
+      {
+        name: '.env.production',
+        dir: false,
+        size: '412 B',
+        mode: '-rw-------',
+      },
+    ],
+  },
+  {
+    title: 'prod-api',
+    path: '/srv/api',
+    Icon: HardDrives,
+    rows: [
+      { name: 'releases', dir: true, size: '', mode: 'drwxr-xr-x' },
+      { name: 'shared', dir: true, size: '', mode: 'drwxr-x---' },
+      { name: 'Caddyfile', dir: false, size: '688 B', mode: '-rw-r--r--' },
+      { name: 'deploy.sh', dir: false, size: '2.4 KB', mode: '-rwxr-xr-x' },
+    ],
+  },
+];
+---
+
+<div class:list={['grid grid-cols-1 sm:grid-cols-2', className]}>
+  {panes.map(({ title, path, Icon, rows }, i) => (
+    <div class:list={['min-w-0 p-3 text-[11px]', i === 1 && 'border-t border-line sm:border-t-0 sm:border-l']}>
+      <div class="flex items-center gap-2 text-ink">
+        <Icon size={13} className="text-accent" />
+        <span class="font-semibold">{title}</span>
+        <span class="truncate font-mono text-[10px] text-muted">{path}</span>
+      </div>
+      <div class="mt-2.5 space-y-0.5">
+        {rows.map((row, j) => (
+          <div
+            class:list={[
+              'flex items-center gap-2 rounded-md px-2 py-1.5',
+              i === 0 && j === 2 ? 'bg-accent/15 text-ink ring-1 ring-accent/30' : 'text-muted',
+            ]}
+          >
+            {row.dir ? (
+              <Folder size={12} weight="fill" className="shrink-0 text-accent-2" />
+            ) : row.name.endsWith('.sh') || row.name.endsWith('.yml') ? (
+              <FileCode size={12} className="shrink-0" />
+            ) : (
+              <File size={12} className="shrink-0" />
+            )}
+            <span class="truncate font-mono">{row.name}</span>
+            <span class="ml-auto hidden font-mono text-[9.5px] text-muted/70 md:inline">{row.mode}</span>
+            <span class="w-12 shrink-0 text-right font-mono text-[9.5px] text-muted/70">{row.size}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  ))}
+</div>

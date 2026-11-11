@@ -46,4 +46,5 @@ The output is a static `dist/` directory. No adapter or server runtime is requir
 - `src/lib/`: platform detection, release mapping, and GitHub data.
 - `src/data/releases.json`: committed fallback snapshot.
 - `src/styles/global.css`: dark product tokens and prose styles.
-- `src/assets/app/`: blurred product screenshots used on the homepage.
+- `src/components/mockups/`: coded HTML/CSS mockups of the Terra window used on the homepage.
+- `src/test/copy-guard.test.ts`: blocks unsupported product claims and en/em dashes in `src/`.

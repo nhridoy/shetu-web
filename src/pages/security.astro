@@ -1,126 +1,151 @@
 ---
+import {
+  ArrowRight,
+  Eye,
+  EyeSlash,
+  ShieldWarning,
+} from '@phosphor-icons/react';
 import SecurityFlow from '../components/marketing/SecurityFlow.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const visible = [
+  'Record names, IDs, timestamps and sort order',
+  'Host OS, auth type, tags, color, group and key IDs',
+  'Key description, type, fingerprint and public key',
+  'Snippet description and tags',
+  'Port-forward mode and host ID',
+];
+const hidden = [
+  'Host address, port and username',
+  'Passwords and private keys',
+  'Snippet commands and terminal recordings',
+  'Your account password',
+  'Your SSH traffic, which never touches the server',
+];
+const keys = [
+  {
+    step: 'Account password',
+    body: 'Argon2id (32 MiB, 2 passes) turns it into a key-encryption key on your device.',
+  },
+  {
+    step: 'Data key',
+    body: 'A random per-account key, wrapped by that key. It encrypts your vault with XChaCha20-Poly1305.',
+  },
+  {
+    step: 'X25519 identity',
+    body: 'Each account has a key pair used to seal team vault keys to its members.',
+  },
+  {
+    step: 'Team vault keys',
+    body: 'Every shared vault has its own key, sealed to each member and rotated when someone is removed.',
+  },
+];
+const limits = [
+  'Removing a team member rotates the vault key, but data already cached on their device cannot be wiped remotely.',
+  'Builds are not notarized by Apple or signed by Microsoft yet, so your OS warns on first launch.',
+  'If you lose both your password and your recovery kit, nobody can decrypt your vault. That includes us.',
+];
 ---
 
 <BaseLayout
-  title="Security — Terra"
-  description="Terra connects directly to your servers and encrypts your vault on your device. The sync server stores ciphertext, never plaintext."
+  title="Security · Terra"
+  description="Terra encrypts your vault on your device with Argon2id and XChaCha20-Poly1305. The sync server stores ciphertext, and SSH connects directly to your hosts."
 >
-  <section class="mx-auto max-w-[1200px] px-6 pt-14 pb-16 md:pt-20">
-    <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
-      Security
-    </p>
-    <h1
-      class="mt-4 max-w-4xl text-balance text-5xl font-medium tracking-[-0.05em] md:text-6xl"
-    >
-      Trust the math, not the server.
-    </h1>
-    <p class="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
-      Terra connects directly to your servers. Your credentials are encrypted on
-      your device before they are stored or synced. The server stores ciphertext
-      and wrapped keys, never plaintext.
-    </p>
-  </section>
+  <PageHeader
+    eyebrow="Security"
+    title="Your keys never leave your device unencrypted."
+    lede="Terra connects straight to your servers and encrypts your vault before anything is synced. Here is exactly what the server can and cannot see."
+  />
 
-  <SecurityFlow />
+  <SecurityFlow compact />
 
-  <section class="mx-auto max-w-[1200px] px-6 py-20 md:py-28">
-    <div class="grid gap-4 md:grid-cols-2">
-      <div class="rounded-xl border border-line bg-surface p-6">
-        <h2 class="text-2xl font-medium tracking-[-0.03em]">
-          What the server stores
-        </h2>
-        <ul class="mt-4 space-y-2 text-sm leading-relaxed text-muted">
-          <li>Account identifiers and authentication state.</li>
-          <li>Encrypted vault records.</li>
-          <li>Wrapped team keys.</li>
-          <li>Sync metadata needed to order and deliver records.</li>
+  <section class="mx-auto max-w-[1200px] px-5 py-20 sm:px-6 md:py-28">
+    <h2 class="reveal text-3xl font-bold md:text-4xl">What the server can see.</h2>
+    <p class="reveal mt-4 max-w-2xl text-lg text-muted">
+      Sync needs a few fields in the clear. Everything that would let someone
+      log in to your machines stays encrypted.
+    </p>
+    <div class="mt-10 grid gap-4 md:grid-cols-2">
+      <div class="panel reveal p-6">
+        <h3 class="flex items-center gap-2.5 text-lg font-bold">
+          <Eye size={20} className="text-muted" /> Visible to the server
+        </h3>
+        <ul class="mt-5 space-y-2.5 text-[15px] text-muted">
+          {visible.map((item) => <li class="flex gap-3"><span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-muted" aria-hidden="true"></span>{item}</li>)}
         </ul>
       </div>
-      <div class="rounded-xl border border-line bg-surface p-6">
-        <h2 class="text-2xl font-medium tracking-[-0.03em]">
-          What it never sees
-        </h2>
-        <ul class="mt-4 space-y-2 text-sm leading-relaxed text-muted">
-          <li>Your master password.</li>
-          <li>Plaintext credentials or private keys.</li>
-          <li>SSH traffic. Connections go directly to the host.</li>
-          <li>Terminal output or file contents.</li>
+      <div class="panel reveal border-accent/30 p-6">
+        <h3 class="flex items-center gap-2.5 text-lg font-bold">
+          <EyeSlash size={20} className="text-accent" /> Encrypted on your device
+        </h3>
+        <ul class="mt-5 space-y-2.5 text-[15px] text-ink/90">
+          {hidden.map((item) => <li class="flex gap-3"><span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" aria-hidden="true"></span>{item}</li>)}
         </ul>
       </div>
     </div>
   </section>
 
-  <section class="border-y border-line bg-surface">
-    <div class="mx-auto grid max-w-[1200px] gap-10 px-6 py-20 md:grid-cols-[1fr_1.2fr] md:py-28">
-      <div>
-        <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
-          Key hierarchy
-        </p>
-        <h2 class="mt-3 text-4xl font-medium tracking-[-0.04em]">
-          One password, layered keys.
-        </h2>
+  <section class="border-y border-line bg-surface/40">
+    <div class="mx-auto grid max-w-[1200px] gap-12 px-5 py-20 sm:px-6 md:py-28 lg:grid-cols-[0.8fr_1.2fr]">
+      <div class="reveal">
+        <p class="eyebrow">Key hierarchy</p>
+        <h2 class="mt-4 text-3xl font-bold md:text-4xl">One password, layered keys.</h2>
         <p class="mt-4 text-lg leading-relaxed text-muted">
-          The master password unlocks the vault key. The vault key encrypts your
-          data. Team keys are wrapped for each member with X25519. The server
-          only handles ciphertext and wrapped keys.
+          Your password never travels in plaintext. Sign-in uses a separate
+          verifier and an HMAC-SHA256 challenge, so the server can check you
+          without learning the password.
         </p>
       </div>
       <ol class="space-y-3">
-        <li class="rounded-xl border border-line bg-elevated p-4">
-          <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-accent">01 · Master password</p>
-          <p class="mt-2 text-sm text-muted">Argon2id derives the vault key on your device. The password never leaves it.</p>
-        </li>
-        <li class="rounded-xl border border-line bg-elevated p-4">
-          <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-accent">02 · Vault key</p>
-          <p class="mt-2 text-sm text-muted">XChaCha20-Poly1305 encrypts credentials and private keys before storage or sync.</p>
-        </li>
-        <li class="rounded-xl border border-line bg-elevated p-4">
-          <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-accent">03 · X25519 identity</p>
-          <p class="mt-2 text-sm text-muted">Team keys are wrapped for each member's public key. The server stores the envelopes.</p>
-        </li>
-        <li class="rounded-xl border border-line bg-elevated p-4">
-          <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-accent">04 · Sync server</p>
-          <p class="mt-2 text-sm text-muted">Stores ciphertext and wrapped keys. It cannot decrypt them without the vault key.</p>
-        </li>
+        {keys.map((key, i) => (
+          <li class="panel reveal flex gap-4 p-5">
+            <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-accent/30 bg-accent-wash font-mono text-[11px] text-accent">
+              {i + 1}
+            </span>
+            <div>
+              <p class="font-bold">{key.step}</p>
+              <p class="mt-1 text-sm leading-relaxed text-muted">{key.body}</p>
+            </div>
+          </li>
+        ))}
       </ol>
     </div>
   </section>
 
-  <section class="mx-auto max-w-[1200px] px-6 py-20 md:py-28">
-    <div class="grid gap-10 md:grid-cols-2">
-      <div>
-        <h2 class="text-3xl font-medium tracking-[-0.03em]">Recovery kit</h2>
-        <p class="mt-4 text-sm leading-relaxed text-muted">
-          Terra creates a recovery kit when you set up the vault. Store it
-          offline. It is the only way to recover the vault if you forget the
-          master password. The server cannot reset it, and the maintainers
-          cannot recover it for you.
-        </p>
-      </div>
-      <div>
-        <h2 class="text-3xl font-medium tracking-[-0.03em]">Disclosure</h2>
-        <p class="mt-4 text-sm leading-relaxed text-muted">
-          Report vulnerabilities privately through GitHub Security Advisories.
-          Do not open a public issue. Include the affected version, your OS,
-          reproduction steps, and impact.
-        </p>
-        <a
-          href="https://github.com/nhridoy/terra/security/advisories/new"
-          class="mt-4 inline-flex text-sm font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent"
-        >
+  <section class="mx-auto grid max-w-[1200px] gap-12 px-5 py-20 sm:px-6 md:py-28 lg:grid-cols-2">
+    <div class="reveal">
+      <h2 class="text-3xl font-bold">Recovery kit</h2>
+      <p class="mt-4 leading-relaxed text-muted">
+        Terra gives you a recovery kit when you create your account. Its code
+        can unwrap your data key. Store it offline: it is the only way back in
+        if you forget your password. The server cannot reset it.
+      </p>
+      <h2 class="mt-12 text-3xl font-bold">Known limits</h2>
+      <ul class="mt-4 space-y-3">
+        {limits.map((limit) => (
+          <li class="flex gap-3 text-muted">
+            <ShieldWarning size={18} className="mt-0.5 shrink-0 text-amber-300" />
+            {limit}
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div class="panel reveal self-start p-7">
+      <h2 class="text-2xl font-bold">Found a vulnerability?</h2>
+      <p class="mt-3 leading-relaxed text-muted">
+        Report it privately through GitHub Security Advisories, not a public
+        issue. Include the affected version, your OS, reproduction steps and
+        impact.
+      </p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href="https://github.com/nhridoy/terra/security/advisories/new" class="btn-primary">
           Report a vulnerability
         </a>
+        <a href="/docs/security" class="btn-ghost">
+          Technical reference <ArrowRight size={14} />
+        </a>
       </div>
-    </div>
-    <div class="mt-10 border-t border-line pt-6">
-      <a
-        href="/docs/security"
-        class="text-sm font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent"
-      >
-        Read the technical security reference
-      </a>
     </div>
   </section>
 </BaseLayout>

@@ -1,69 +1,42 @@
 ---
-import type { ImageMetadata } from 'astro';
-import AppWindow from './AppWindow.astro';
+import { Check } from '@phosphor-icons/react';
 
 interface Props {
-  id?: string;
+  id: string;
   eyebrow: string;
   title: string;
   body: string;
   bullets: string[];
-  image: ImageMetadata;
-  alt: string;
-  imageSide?: 'left' | 'right';
-  widths?: number[];
-  sizes?: string;
+  side?: 'left' | 'right';
 }
 
-const {
-  id,
-  eyebrow,
-  title,
-  body,
-  bullets,
-  image,
-  alt,
-  imageSide = 'right',
-  widths = [640, 960, 1366],
-  sizes = '(min-width: 1200px) 560px, 100vw',
-} = Astro.props;
+const { id, eyebrow, title, body, bullets, side = 'right' } = Astro.props;
 ---
 
-<section id={id} class="scroll-mt-24 border-t border-line">
+<section id={id} class="scroll-mt-20">
   <div
-    class="mx-auto grid max-w-[1200px] items-center gap-10 px-6 py-20 md:grid-cols-2 md:gap-16 md:py-28"
+    class="mx-auto grid max-w-[1200px] items-center gap-12 px-5 py-16 sm:px-6 md:py-24 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16"
   >
-    <div class:list={[imageSide === 'left' ? 'md:order-2' : '']}>
-      <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
-        {eyebrow}
-      </p>
-      <h2
-        class="mt-3 text-balance text-3xl font-medium tracking-[-0.04em] md:text-4xl"
-      >
-        {title}
-      </h2>
-      <p class="mt-4 text-lg leading-relaxed text-muted">{body}</p>
-      <ul class="mt-6 space-y-2 text-sm text-muted">
+    <div class:list={['reveal', side === 'left' && 'lg:order-2']}>
+      <p class="eyebrow">{eyebrow}</p>
+      <h2 class="mt-4 text-balance text-4xl leading-[1.05] font-bold md:text-5xl">{title}</h2>
+      <p class="mt-5 max-w-md text-pretty text-lg leading-relaxed text-muted">{body}</p>
+      <ul class="mt-7 space-y-3">
         {bullets.map((bullet) => (
-          <li class="flex gap-2.5">
-            <span
-              class="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent"
-              aria-hidden="true"
-            ></span>
-            <span>{bullet}</span>
+          <li class="flex items-start gap-3 text-[15px] text-ink/90">
+            <span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-accent-wash text-accent">
+              <Check size={11} weight="bold" />
+            </span>
+            {bullet}
           </li>
         ))}
       </ul>
     </div>
-
-    <div class:list={[imageSide === 'left' ? 'md:order-1' : '']}>
-      <AppWindow
-        image={image}
-        alt={alt}
-        widths={widths}
-        sizes={sizes}
-        loading="lazy"
-      />
+    <div class:list={['reveal relative min-w-0', side === 'left' && 'lg:order-1']}>
+      <div class="glow-beam pointer-events-none absolute -inset-6 opacity-60" aria-hidden="true"></div>
+      <div class="relative">
+        <slot />
+      </div>
     </div>
   </div>
 </section>

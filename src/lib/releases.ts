@@ -137,7 +137,7 @@ export function pickRecommended(
 }
 
 export function formatBytes(bytes: number): string {
-  if (!Number.isFinite(bytes) || bytes <= 0) return '—';
+  if (!Number.isFinite(bytes) || bytes <= 0) return 'Size unknown';
   const units = ['B', 'KB', 'MB', 'GB'];
   const exponent = Math.min(
     Math.floor(Math.log(bytes) / Math.log(1024)),

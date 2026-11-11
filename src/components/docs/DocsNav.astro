@@ -26,8 +26,8 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     class:list={[
       'block rounded-lg px-3 py-2 text-sm',
       currentPath === '/docs'
-        ? 'bg-accent-wash text-accent'
-        : 'text-muted hover:bg-accent-wash hover:text-accent',
+        ? 'bg-white/[0.06] font-semibold text-ink shadow-[inset_2px_0_0_var(--color-accent)]'
+        : 'text-muted hover:bg-white/[0.04] hover:text-ink',
     ]}
   >
     Docs home
@@ -35,7 +35,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 
   {groups.map((group) => (
     <div class="mt-6">
-      <p class="px-3 font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
+      <p class="px-3 font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
         {group.label}
       </p>
       <ul class="mt-2 space-y-1">
@@ -50,8 +50,8 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
                 class:list={[
                   'block rounded-lg px-3 py-2 text-sm',
                   active
-                    ? 'bg-accent-wash text-accent'
-                    : 'text-muted hover:bg-accent-wash hover:text-accent',
+                    ? 'bg-white/[0.06] font-semibold text-ink shadow-[inset_2px_0_0_var(--color-accent)]'
+                    : 'text-muted hover:bg-white/[0.04] hover:text-ink',
                 ]}
               >
                 {entry.data.title}
@@ -64,7 +64,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
   ))}
 
   <div class="mt-6 border-t border-line pt-4">
-    <a href="/security" class="block rounded-lg px-3 py-2 text-sm text-muted hover:bg-accent-wash hover:text-accent">
+    <a href="/security" class="block rounded-lg px-3 py-2 text-sm text-muted hover:bg-white/[0.04] hover:text-ink">
       Security overview
     </a>
   </div>

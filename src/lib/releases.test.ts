@@ -145,7 +145,7 @@ describe('pickRecommended', () => {
 
 describe('formatBytes', () => {
   it('formats sizes', () => {
-    expect(formatBytes(0)).toBe('—');
+    expect(formatBytes(0)).toBe('Size unknown');
     expect(formatBytes(1024)).toBe('1 KB');
     expect(formatBytes(12292167)).toBe('11.7 MB');
   });

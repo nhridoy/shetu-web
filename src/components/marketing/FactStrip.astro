@@ -1,23 +1,26 @@
 ---
+import {
+  Broadcast,
+  CloudArrowUp,
+  Desktop,
+  Scales,
+} from '@phosphor-icons/react';
+
 const facts = [
-  { label: 'License', value: 'MIT' },
-  { label: 'Systems', value: 'Windows, macOS, Linux' },
-  { label: 'Connections', value: 'Direct SSH' },
-  { label: 'Sync', value: 'Self-hosted' },
+  { Icon: Scales, label: 'MIT licensed' },
+  { Icon: Desktop, label: 'macOS, Windows, Linux · x64 and ARM64' },
+  { Icon: Broadcast, label: 'Direct SSH, no relay' },
+  { Icon: CloudArrowUp, label: 'Self-hostable sync' },
 ];
 ---
 
-<section class="border-y border-line bg-surface">
-  <div
-    class="mx-auto grid max-w-[1200px] grid-cols-2 gap-px bg-line md:grid-cols-4"
-  >
-    {facts.map((fact) => (
-      <div class="bg-surface px-6 py-5">
-        <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-muted">
-          {fact.label}
-        </p>
-        <p class="mt-1 text-sm font-medium text-ink">{fact.value}</p>
-      </div>
+<section class="border-y border-line bg-surface/50">
+  <ul class="mx-auto flex max-w-[1200px] flex-wrap items-center justify-center gap-x-10 gap-y-3 px-5 py-6 sm:px-6">
+    {facts.map(({ Icon, label }) => (
+      <li class="flex items-center gap-2 font-mono text-[12px] text-muted">
+        <Icon size={15} className="text-accent" />
+        {label}
+      </li>
     ))}
-  </div>
+  </ul>
 </section>

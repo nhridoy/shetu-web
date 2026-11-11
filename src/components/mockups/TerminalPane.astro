@@ -1,0 +1,106 @@
+---
+import { ArrowsOutSimple, Columns, Rows, X } from '@phosphor-icons/react';
+import type { SessionStep } from './demo';
+
+interface Props {
+  title: string;
+  lines?: SessionStep[];
+  /** Final prompt shown after the session, with a blinking cursor. */
+  prompt?: string;
+  animate?: boolean;
+  class?: string;
+}
+
+const {
+  title,
+  lines = [],
+  prompt = lines.at(-1)?.prompt ?? '~$',
+  animate = false,
+  class: className = '',
+} = Astro.props;
+---
+
+<div class:list={['flex min-w-0 flex-col bg-terminal', className]}>
+  <div class="flex h-7 items-center gap-2 border-b border-line px-3 text-[10.5px] text-muted">
+    <span class="h-1.5 w-1.5 rounded-full bg-terminal-text"></span>
+    <span class="truncate">{title}</span>
+    <span class="ml-auto hidden items-center gap-2.5 sm:flex">
+      <ArrowsOutSimple size={11} />
+      <Columns size={11} />
+      <Rows size={11} />
+      <X size={11} />
+    </span>
+  </div>
+  <div
+    class="flex-1 overflow-hidden px-3 py-2.5 font-mono text-[11.5px] leading-[1.75] text-[#c9c9d6]"
+    data-typer={animate ? '' : undefined}
+  >
+    {lines.map((step) => (
+      <>
+        <div data-step class="whitespace-pre">
+          <span class="text-terminal-text">{step.prompt}</span>{' '}
+          <span data-cmd={step.cmd}>{step.cmd}</span>
+        </div>
+        {step.out.map((line) => (
+          <div data-out class="whitespace-pre text-muted">{line}</div>
+        ))}
+      </>
+    ))}
+    <slot />
+    <div data-final class="whitespace-pre">
+      <span class="text-terminal-text">{prompt}</span>{' '}
+      <span class="cursor-blink inline-block h-[13px] w-[7px] translate-y-[2px] bg-ink/80"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+  const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const inView = new WeakMap<Element, boolean>();
+  const started = new WeakSet<Element>();
+
+  async function play(root: HTMLElement) {
+    const rows = [...root.children] as HTMLElement[];
+    const cmds = [...root.querySelectorAll<HTMLElement>('[data-cmd]')];
+    for (;;) {
+      // Pause between loops while the pane is off-screen.
+      while (!inView.get(root) && !reduce.matches) await sleep(400);
+      for (const row of rows) row.hidden = true;
+      for (const cmd of cmds) cmd.textContent = '';
+      root.dataset.playing = '';
+      for (const row of rows) {
+        if (reduce.matches) break;
+        row.hidden = false;
+        const cmd = row.querySelector<HTMLElement>('[data-cmd]');
+        if (cmd) {
+          await sleep(500);
+          for (const ch of cmd.dataset.cmd ?? '') {
+            cmd.textContent += ch;
+            await sleep(35);
+          }
+          await sleep(350);
+        } else if (row.hasAttribute('data-out')) {
+          await sleep(60);
+        }
+      }
+      if (reduce.matches) break;
+      await sleep(6000);
+    }
+    // Reduced motion: show the finished session.
+    for (const row of rows) row.hidden = false;
+    for (const cmd of cmds) cmd.textContent = cmd.dataset.cmd ?? '';
+  }
+
+  if (!reduce.matches) {
+    const io = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        inView.set(entry.target, entry.isIntersecting);
+        if (!entry.isIntersecting || started.has(entry.target)) continue;
+        started.add(entry.target);
+        play(entry.target as HTMLElement);
+      }
+    });
+    for (const el of document.querySelectorAll<HTMLElement>('[data-typer]')) io.observe(el);
+  }
+</script>

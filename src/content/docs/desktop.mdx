@@ -3,10 +3,10 @@ title: Desktop app
 description: Install Terra on macOS, Windows, or Linux, connect your first host, and manage your encrypted vault.
 section: desktop
 order: 1
-updated: "2026-11-09"
+updated: "2026-11-11"
 ---
 
-Terra is a desktop SSH client for macOS, Windows, and Linux. It connects directly from your machine to your servers. The optional sync server never proxies SSH traffic.
+Terra is a desktop SSH client for macOS, Windows, and Linux. It connects directly from your machine to your servers. The Terra sync server you sign in to never proxies SSH traffic.
 
 ## Install
 
@@ -41,7 +41,7 @@ Download the build for your platform from [the download page](/download). The cu
 
 ## First launch
 
-Terra is not signed by Apple or Microsoft yet. You will see a warning once.
+Terra is not notarized by Apple or signed by Microsoft yet. You will see a warning once.
 
 **macOS:** drag Terra to Applications, open it once, then go to **System Settings → Privacy & Security** and click **Open Anyway**.
 
@@ -51,18 +51,19 @@ In-app updates do not repeat the warning.
 
 ## Connect your first host
 
-1. Open Terra and choose **New host**.
-2. Enter the hostname, port (usually 22), and username.
-3. Choose the authentication method your server allows: password or private key.
-4. Save the host and connect.
+1. Open Terra and sign in or create an account. To use your own server, set **Server URL** on the sign-in screen first ([server guide](/docs/server#point-the-client-at-your-server)).
+2. Choose **New host**.
+3. Enter the hostname, port (usually 22), and username.
+4. Choose the authentication method your server allows: password or private key.
+5. Save the host and connect.
 
 Terra opens an SSH session in a tab. From the same workspace you can open an SFTP panel, split the terminal, and add port forwards.
 
 ## The vault
 
-The vault stores credentials and keys encrypted on your device. Terra derives the vault key from your master password with Argon2id and encrypts vault contents with XChaCha20-Poly1305.
+The vault stores credentials and keys encrypted on your device. Terra derives a key from your account password with Argon2id and encrypts vault contents with XChaCha20-Poly1305.
 
-Create the vault on first use and store the recovery kit somewhere safe. The recovery kit is the only way to recover the vault if you forget the master password. Terra cannot recover it for you.
+Save the recovery kit Terra gives you when you create your account, and store it somewhere safe. It is the only way back into your vault if you forget your password. Terra cannot recover it for you.
 
 ## Updates
 

@@ -24,7 +24,14 @@ const canonicalUrl = canonical
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark" />
-    <meta name="theme-color" content="#08090A" />
+    <meta name="theme-color" content="#07070A" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://api.fontshare.com/v2/css?f[]=satoshi@1&display=swap"
+    />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
@@ -37,11 +44,31 @@ const canonicalUrl = canonical
     <meta name="twitter:card" content="summary" />
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
-  <body class="min-h-screen bg-paper text-ink antialiased">
+  <body class="min-h-screen overflow-x-clip bg-paper text-ink antialiased">
     <a class="skip-link" href="#main">Skip to content</a>
     <Header />
     <main id="main"><slot /></main>
     <Footer />
+    <script is:inline>
+      (() => {
+        const blocks = document.querySelectorAll('.reveal');
+        if (!('IntersectionObserver' in window)) {
+          for (const el of blocks) el.classList.add('is-visible');
+          return;
+        }
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              entry.target.classList.add('is-visible');
+              io.unobserve(entry.target);
+            }
+          },
+          { threshold: 0.15, rootMargin: '0px 0px -40px 0px' },
+        );
+        for (const el of blocks) io.observe(el);
+      })();
+    </script>
     <script is:inline>
       document.addEventListener('click', async (event) => {
         const target = event.target;

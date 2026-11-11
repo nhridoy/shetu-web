@@ -1,68 +1,88 @@
 ---
-import { ArrowUpRight } from '@phosphor-icons/react';
-import hosts from '../../assets/app/hosts.webp';
-import { REPOS } from '../../lib/site';
+import { ArrowRight, GithubLogo } from '@phosphor-icons/react';
+import releases from '../../data/releases.json';
+import { INSTALL_COMMANDS, REPOS } from '../../lib/site';
 import DownloadPanel from '../download/DownloadPanel';
-import AppWindow from './AppWindow.astro';
+import { HERO_SESSION } from '../mockups/demo';
+import HostSidebar from '../mockups/HostSidebar.astro';
+import TerminalPane from '../mockups/TerminalPane.astro';
+import TerraWindow from '../mockups/TerraWindow.astro';
+
+const version = releases.latest.tag_name;
 ---
 
 <section class="relative overflow-hidden">
-  <div
-    class="hero-grid pointer-events-none absolute inset-0"
-    aria-hidden="true"
-  ></div>
-  <div
-    class="pointer-events-none absolute left-1/2 top-0 h-[560px] w-[900px] -translate-x-1/2 rounded-full bg-glow blur-[120px]"
-    aria-hidden="true"
-  ></div>
+  <div class="dot-grid pointer-events-none absolute inset-0" aria-hidden="true"></div>
 
-  <div
-    class="relative mx-auto max-w-[1200px] px-6 pt-20 pb-20 md:pt-28 md:pb-28"
-  >
+  <div class="relative mx-auto max-w-[1200px] px-5 pt-16 pb-20 sm:px-6 md:pt-24 md:pb-28">
     <div class="mx-auto max-w-3xl text-center">
-      <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-accent">
-        Open source · MIT · Windows, macOS, Linux
-      </p>
-      <h1
-        class="mt-6 text-balance text-[clamp(2.75rem,6vw,5.25rem)] font-medium leading-[1.02] tracking-[-0.055em]"
+      <a
+        href="/releases"
+        class="group inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-line-strong bg-white/[0.03] py-1 pr-3 pl-1.5 font-mono text-[11px] tracking-[0.06em] text-muted transition-colors hover:border-accent/40 hover:text-ink"
       >
-        Every server. One window.
+        <span class="rounded-full bg-accent-wash px-2 py-0.5 text-accent">{version}</span>
+        Open-source Termius alternative
+        <ArrowRight size={12} className="transition-transform group-hover:translate-x-0.5" />
+      </a>
+
+      <h1 class="mt-7 text-balance text-[clamp(2.6rem,7vw,5.4rem)] leading-[1] font-bold tracking-[-0.045em]">
+        SSH, without the <span class="text-gradient">subscription.</span>
       </h1>
-      <p
-        class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted md:text-xl"
-      >
-        Terra is an open-source SSH workspace with encrypted vaults, split
-        terminals, SFTP, and team-shared hosts. Connect directly, and sync on
-        your own terms.
+      <p class="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-muted md:text-xl">
+        Terra is a free, open-source SSH client with split terminals, SFTP, port
+        forwarding and an encrypted vault you can sync through your own server.
       </p>
 
-      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+      <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
         <DownloadPanel client:load variant="hero" />
-        <a
-          href={REPOS.monorepo}
-          class="inline-flex items-center justify-center gap-1.5 rounded-lg border border-line bg-surface/60 px-5 py-3 text-sm font-medium text-ink transition-colors duration-150 hover:border-accent/40 hover:text-accent"
-        >
-          View on GitHub <ArrowUpRight size={14} weight="bold" />
+        <a href={REPOS.monorepo} class="btn-ghost px-5 py-3">
+          <GithubLogo size={16} weight="fill" /> Star on GitHub
         </a>
       </div>
 
-      <p
-        class="mt-4 font-mono text-[10px] uppercase tracking-[0.16em] text-muted"
-      >
-        MIT licensed · Direct SSH · Self-hostable sync
+      <div class="mx-auto mt-6 flex max-w-xl items-center gap-2 rounded-xl border border-line bg-surface/80 py-1.5 pr-1.5 pl-4 font-mono text-[12px] text-muted">
+        <span class="text-accent" aria-hidden="true">$</span>
+        <code class="min-w-0 flex-1 truncate text-left">{INSTALL_COMMANDS.unix}</code>
+        <button
+          type="button"
+          data-copy={INSTALL_COMMANDS.unix}
+          aria-label="Copy install command"
+          class="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-line px-2.5 py-1.5 text-[11px] text-ink transition-colors hover:border-accent/40"
+        >
+          Copy
+        </button>
+      </div>
+      <p class="mt-2.5 text-xs text-muted">
+        macOS and Linux. Windows and every other build are on the{" "}
+        <a href="/download" class="link">download page</a>.
       </p>
     </div>
 
-    <div class="relative mx-auto mt-14 max-w-[1060px] md:mt-20">
-      <AppWindow
-        image={hosts}
-        alt="Terra host list with groups, tags, and connection status"
-        title="Terra · Vaults"
-        widths={[640, 960, 1366]}
-        sizes="(min-width: 1200px) 1060px, 100vw"
-        loading="eager"
-        fetchpriority="high"
-      />
+    <div class="relative mx-auto mt-16 max-w-[1080px] md:mt-20">
+      <div class="glow-beam pointer-events-none absolute -inset-x-10 -top-10 bottom-0" aria-hidden="true"></div>
+      <p class="sr-only">
+        Terra window showing a host list grouped into Production, Staging and
+        Homelab, and a split terminal connected to prod-api.
+      </p>
+      <TerraWindow class="relative">
+        <div class="flex h-[280px] sm:h-[360px] md:h-[420px]">
+          <HostSidebar class="hidden md:flex" />
+          <div class="flex min-w-0 flex-1">
+            <TerminalPane
+              title="deploy@prod-api"
+              lines={HERO_SESSION}
+              animate
+              class="flex-[1.4]"
+            />
+            <TerminalPane
+              title="Local"
+              lines={[{ prompt: 'me@laptop:~$', cmd: 'git pull --rebase', out: ['Already up to date.'] }]}
+              class="hidden flex-1 border-l border-line lg:flex"
+            />
+          </div>
+        </div>
+      </TerraWindow>
+      <div class="pointer-events-none absolute inset-x-0 -bottom-px h-24 bg-gradient-to-t from-paper to-transparent" aria-hidden="true"></div>
     </div>
   </div>
 </section>

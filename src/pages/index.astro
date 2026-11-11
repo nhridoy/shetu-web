@@ -1,20 +1,18 @@
 ---
-import editHost from '../assets/app/edit-host.webp';
-import editor from '../assets/app/editor.webp';
-import teamVault from '../assets/app/team-vault.webp';
-import terminal from '../assets/app/terminal.webp';
-import themes from '../assets/app/themes.webp';
 import ClosingCta from '../components/marketing/ClosingCta.astro';
+import CloudTeaser from '../components/marketing/CloudTeaser.astro';
+import Comparison from '../components/marketing/Comparison.astro';
 import FactStrip from '../components/marketing/FactStrip.astro';
 import FaqSection from '../components/marketing/FaqSection.astro';
-import FeatureGrid from '../components/marketing/FeatureGrid.astro';
+import FeatureBento from '../components/marketing/FeatureBento.astro';
 import FeatureShowcase from '../components/marketing/FeatureShowcase.astro';
 import Hero from '../components/marketing/Hero.astro';
-import InstallSection from '../components/marketing/InstallSection.astro';
 import OpenSourceSection from '../components/marketing/OpenSourceSection.astro';
-import PortForwardingSection from '../components/marketing/PortForwardingSection.astro';
 import SecurityFlow from '../components/marketing/SecurityFlow.astro';
 import SelfHostSection from '../components/marketing/SelfHostSection.astro';
+import SftpPanes from '../components/mockups/SftpPanes.astro';
+import TerminalPane from '../components/mockups/TerminalPane.astro';
+import TerraWindow from '../components/mockups/TerraWindow.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE_DESCRIPTION } from '../lib/site';
 
@@ -25,93 +23,141 @@ const jsonLd = {
   applicationCategory: 'DeveloperApplication',
   operatingSystem: 'Windows, macOS, Linux',
   license: 'https://opensource.org/licenses/MIT',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
   codeRepository: 'https://github.com/nhridoy/terra',
   downloadUrl: 'https://github.com/nhridoy/terra-client/releases/latest',
   description: SITE_DESCRIPTION,
 };
+
+const members = [
+  {
+    name: 'Aisha K.',
+    email: 'aisha@acme.dev',
+    role: 'Owner',
+    color: '#8b7cff',
+  },
+  {
+    name: 'Marco R.',
+    email: 'marco@acme.dev',
+    role: 'Admin',
+    color: '#5b8cff',
+  },
+  { name: 'Lin W.', email: 'lin@acme.dev', role: 'Member', color: '#7ee2a8' },
+  { name: 'Sam T.', email: 'sam@acme.dev', role: 'Member', color: '#f5a524' },
+];
 ---
 
 <BaseLayout
-  title="Terra — Every server. One window."
+  title="Terra · Open-source SSH client and Termius alternative"
   description={SITE_DESCRIPTION}
   jsonLd={jsonLd}
 >
   <Hero />
   <FactStrip />
-  <FeatureGrid />
-
-  <FeatureShowcase
-    id="hosts"
-    eyebrow="Hosts"
-    title="Your whole fleet, one list."
-    body="Group machines by project or environment, add tags and colors, and find the right host without digging through config files."
-    bullets={[
-      'Groups, tags, and colors',
-      'Search across hosts',
-      'Connection status at a glance',
-    ]}
-    image={editHost}
-    alt="Terra edit-host form with groups, tags, color, and authentication options"
-    imageSide="right"
-  />
-
-  <FeatureShowcase
-    id="terminal"
-    eyebrow="Terminal"
-    title="A terminal that keeps up."
-    body="Open tabs, split panes, and save a workspace when a task spans several machines. Local and remote shells live in the same window."
-    bullets={[
-      'Tabs and split panes',
-      'Saved workspaces',
-      'Local and remote shells',
-    ]}
-    image={terminal}
-    alt="Terra terminal with split panes, tabs, and a connected host"
-    imageSide="left"
-  />
+  <FeatureBento />
 
   <FeatureShowcase
     id="files"
     eyebrow="Files"
-    title="Files without leaving the session."
-    body="Open an SFTP browser beside the terminal, transfer files, and edit remote files in place. No separate client, no context switch."
+    title="Files without a second app."
+    body="Open an SFTP browser next to your terminal, drag files across, and edit remote config in place. Saving writes straight back to the server."
     bullets={[
-      'SFTP browser',
-      'Remote file editor',
-      'Transfers beside the terminal',
+      'Local and remote panes with drag and drop',
+      'Rename, chmod, chown, symlinks and search',
+      'Edit remote files in the built-in editor',
     ]}
-    image={editor}
-    alt="Terra file editor with a project explorer open"
-    imageSide="right"
-  />
+  >
+    <p class="sr-only">Terra SFTP view with a local folder on the left and the prod-api server on the right.</p>
+    <TerraWindow tab="SFTP" title="prod-api · /srv/api">
+      <SftpPanes />
+    </TerraWindow>
+  </FeatureShowcase>
+
+  <FeatureShowcase
+    id="workspaces"
+    eyebrow="Workspaces"
+    title="Pick up where you left off."
+    body="Save a layout of tabs and split panes once, then bring the whole set back with one click when you return to the task."
+    bullets={[
+      'Save and restore tab and pane layouts',
+      'Mix remote hosts and local shells',
+      'Focus mode on F11',
+    ]}
+    side="left"
+  >
+    <p class="sr-only">A saved workspace with three terminals: two servers and a local shell.</p>
+    <TerraWindow title="release-day">
+      <div class="grid h-[300px] grid-cols-2 grid-rows-2">
+        <TerminalPane
+          title="deploy@prod-api"
+          lines={[{ prompt: 'prod-api$', cmd: 'systemctl status api', out: ['● api.service: active (running)'] }]}
+          class="row-span-2 border-r border-line"
+        />
+        <TerminalPane
+          title="postgres@prod-db-01"
+          lines={[{ prompt: 'db-01$', cmd: 'pg_isready', out: ['accepting connections'] }]}
+          class="border-b border-line"
+        />
+        <TerminalPane
+          title="Local"
+          lines={[{ prompt: 'me$', cmd: 'make release', out: ['tagged v2.4.0'] }]}
+        />
+      </div>
+    </TerraWindow>
+  </FeatureShowcase>
 
   <FeatureShowcase
     id="teams"
     eyebrow="Teams"
-    title="Share access with your team."
-    body="Create a team, invite members, and share vaults with the people who need them. Member roles keep access organized."
-    bullets={['Team invites', 'Shared vaults', 'Member roles']}
-    image={teamVault}
-    alt="Terra team page with an invite dialog and member role controls"
-    imageSide="left"
-  />
+    title="Share a vault, not a password."
+    body="Create a team on your Terra server, invite people, and share the hosts they need. Each shared vault has its own key, sealed to every member."
+    bullets={[
+      'Owner, admin and member roles',
+      'Shared vaults with their own keys',
+      'Keys rotate when someone leaves',
+    ]}
+  >
+    <p class="sr-only">Terra team view listing four members with owner, admin and member roles.</p>
+    <TerraWindow title="Team · Platform">
+      <div class="p-4 text-[12px]">
+        <div class="flex items-center justify-between">
+          <p class="font-semibold text-ink">Platform team</p>
+          <span class="rounded-md border border-line px-2 py-1 text-[11px] text-muted">+ Invite</span>
+        </div>
+        <div class="mt-3 space-y-1.5">
+          {members.map((m) => (
+            <div class="flex items-center gap-3 rounded-lg border border-line bg-white/[0.02] px-3 py-2">
+              <span class="grid h-7 w-7 place-items-center rounded-full text-[11px] font-bold text-paper" style={`background:${m.color}`}>
+                {m.name[0]}
+              </span>
+              <div class="min-w-0">
+                <p class="text-ink">{m.name}</p>
+                <p class="truncate font-mono text-[10px] text-muted">{m.email}</p>
+              </div>
+              <span
+                class:list={[
+                  'ml-auto rounded-full border px-2 py-0.5 font-mono text-[10px]',
+                  m.role === 'Owner' ? 'border-accent/40 bg-accent-wash text-ink' : 'border-line text-muted',
+                ]}
+              >
+                {m.role}
+              </span>
+            </div>
+          ))}
+        </div>
+        <p class="mt-3 flex items-center gap-2 font-mono text-[10.5px] text-muted">
+          <span class="h-1.5 w-1.5 rounded-full bg-terminal-text"></span>
+          Vault key sealed to 4 members
+        </p>
+      </div>
+    </TerraWindow>
+  </FeatureShowcase>
 
-  <FeatureShowcase
-    id="themes"
-    eyebrow="Themes"
-    title="Make the workspace yours."
-    body="Choose a dark, light, or named theme. The whole workspace changes, not just the terminal."
-    bullets={['Dark and light', 'Named themes', 'Workspace-wide']}
-    image={themes}
-    alt="Terra appearance settings with a grid of themes"
-    imageSide="right"
-  />
-
-  <PortForwardingSection />
   <SecurityFlow />
   <SelfHostSection />
+  <Comparison />
+  <CloudTeaser />
   <OpenSourceSection />
-  <InstallSection />
   <FaqSection />
   <ClosingCta />
 </BaseLayout>

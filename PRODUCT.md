@@ -8,28 +8,28 @@ web
 
 ## Users
 
-Developers, DevOps professionals, and tech leads managing remote servers.
+Primary: solo developers leaving Termius over price or closed source. Secondary: small teams and self-hosters.
 
 ## Product Purpose
 
-An open-source, self-hostable Termius alternative. SSH terminals, host management, SFTP, and file transfers in one workspace.
+A free, MIT-licensed, open-source Termius alternative. A Tauri desktop SSH client (terminals, hosts, SFTP, port forwarding, keys, editor) plus an open-source Go sync server you can run yourself.
 
 ## Capabilities and Constraints
 
-Direct client-to-remote SSH. Sensitive configuration encrypted on the client before storage and sync. Optional cloud offering with a free tier and paid team plans, as supplied in the brief. Cloud prices and a signup URL are not supplied, so the page links to project discussions rather than inventing either.
+Direct client-to-host SSH, no relay. The vault is encrypted on the device (Argon2id, XChaCha20-Poly1305, X25519 for team vaults) before sync. The app requires signing in to a Terra server; the server can see record names, tags and timestamps, but not addresses, usernames, passwords, keys or commands. A hosted "Terra Cloud" is announced as coming soon, with no prices or signup URL.
 
 ## Brand Commitments
 
-Terra. Modern, minimalist, clean, professional. Self-hosting and open source lead the story. The user approved charcoal, emerald, Geist, and a locked dark theme, with design dials 6/3/3. Zero U+2013 and U+2014 punctuation. Modify terra-web only.
+Raycast-style dark, violet `#8B7CFF` and blue `#5B8CFF` accents, Satoshi + JetBrains Mono, dark theme only. Headline: "SSH, without the subscription." Fair, dated Termius comparison. Zero U+2013 and U+2014 punctuation. Modify terra-web only.
 
 ## Stack
 
-Preserve the installed Astro scaffold, React islands, Tailwind v4, Geist Variable, and Phosphor icons. pnpm only. The user's later Astro instruction supersedes the original Next.js request.
+Astro 7, React islands, Tailwind v4, MDX, Phosphor icons, Biome, Vitest, pnpm.
 
 ## Evidence on Hand
 
-Root AGENTS.md describes client-side Argon2id and ChaCha20Poly1305 and direct SSH. Client code contains SSH, SFTP, hosts, vaults, tabs, and split terminals. No customer logos, testimonials, performance benchmarks, or commercial prices are supplied. Do not invent them.
+Verified facts and the banned-claims list are in `docs/superpowers/specs/2026-11-11-terra-violet-redesign-design.md`, checked against terra-client v0.0.15 and terra-server v0.0.6. The client README overstates crypto and features; do not copy from it.
 
 ## Product Principles
 
-Keep control with the user. Explain deployment choices plainly. Show the workflow without asking for credentials. Make source code discoverable.
+Keep control with the user. Say plainly what the server can see. Show the real workflow without asking for credentials. Make source code one click away.

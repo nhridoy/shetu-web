@@ -1,57 +1,82 @@
 ---
+import {
+  ArrowRight,
+  CloudCheck,
+  LockKey,
+  PlugsConnected,
+} from '@phosphor-icons/react';
+
+interface Props {
+  /** Drops the section heading; used on /security, which has its own h1. */
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
 const steps = [
   {
-    label: 'Master password',
-    detail: 'Argon2id derives the vault key on your device.',
+    Icon: LockKey,
+    title: 'Your device encrypts',
+    body: 'Argon2id turns your account password into a key on your machine. Hosts, keys and passwords are sealed with XChaCha20-Poly1305 before they leave.',
+    tag: 'Argon2id · XChaCha20-Poly1305',
   },
   {
-    label: 'Vault key',
-    detail: 'XChaCha20-Poly1305 encrypts credentials and keys.',
+    Icon: CloudCheck,
+    title: 'The server stores ciphertext',
+    body: 'The sync server checks the shape of each record and stores it. It never decrypts your vault.',
+    tag: 'Encrypted at rest and in sync',
   },
   {
-    label: 'X25519 identity',
-    detail: 'Team keys are wrapped for each member.',
-  },
-  {
-    label: 'Sync server',
-    detail: 'Stores ciphertext and wrapped keys. Never plaintext.',
+    Icon: PlugsConnected,
+    title: 'SSH goes straight to the host',
+    body: 'Connections run from your computer to your server. Nothing is relayed through Terra.',
+    tag: 'Direct SSH, no relay',
   },
 ];
 ---
 
-<section id="security" class="scroll-mt-24 border-y border-line bg-surface">
-  <div class="mx-auto grid max-w-[1200px] gap-10 px-6 py-20 md:grid-cols-2 md:py-28">
-    <div>
-      <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
-        Security model
-      </p>
-      <h2 class="mt-3 text-4xl font-medium tracking-[-0.04em]">
-        The server never sees the keys.
-      </h2>
-      <p class="mt-4 max-w-lg text-lg leading-relaxed text-muted">
-        Terra encrypts your vault before anything reaches sync. The server can
-        store and return ciphertext, but it cannot read your credentials,
-        private keys, or SSH traffic.
-      </p>
-      <a
-        href="/security"
-        class="mt-6 inline-flex text-sm font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent"
-      >
-        Read the security model
-      </a>
-    </div>
-    <div class="space-y-3">
-      {steps.map((step, index) => (
-        <div class="flex gap-4 rounded-xl border border-line bg-elevated p-4">
-          <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-line font-mono text-[10px] text-accent">
-            {String(index + 1).padStart(2, '0')}
-          </span>
-          <div>
-            <p class="text-sm font-medium">{step.label}</p>
-            <p class="mt-1 text-sm text-muted">{step.detail}</p>
+<section id="security" class="relative scroll-mt-20 border-y border-line bg-surface/40">
+  <div class="mx-auto max-w-[1200px] px-5 py-20 sm:px-6 md:py-28">
+    {compact && <h2 class="sr-only">How Terra protects your vault</h2>}
+    {!compact && (
+      <div class="reveal max-w-2xl">
+        <p class="eyebrow">Security</p>
+        <h2 class="mt-4 text-balance text-4xl leading-[1.05] font-bold md:text-[3.25rem]">
+          Your keys stay yours.
+        </h2>
+        <p class="mt-5 text-lg leading-relaxed text-muted">
+          Terra encrypts on your device first. The server only ever holds what
+          it cannot read.
+        </p>
+      </div>
+    )}
+
+    <ol class:list={['grid gap-4 md:grid-cols-3', !compact && 'mt-14']}>
+      {steps.map(({ Icon, title, body, tag }, i) => (
+        <li class="panel reveal relative p-6">
+          <div class="flex items-center justify-between">
+            <span class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-accent/25 to-accent-2/20 text-accent ring-1 ring-accent/30">
+              <Icon size={20} />
+            </span>
+            <span class="font-mono text-[11px] text-muted">0{i + 1}</span>
           </div>
-        </div>
+          <h3 class="mt-5 text-lg font-bold">{title}</h3>
+          <p class="mt-2 text-[15px] leading-relaxed text-muted">{body}</p>
+          <p class="mt-5 font-mono text-[11px] text-accent">{tag}</p>
+        </li>
       ))}
+    </ol>
+
+    <div class="reveal mt-6 flex flex-col gap-4 rounded-2xl border border-line bg-white/[0.02] p-5 sm:flex-row sm:items-center sm:justify-between">
+      <p class="max-w-3xl text-sm leading-relaxed text-muted">
+        <span class="font-semibold text-ink">Plainly:</span> The server can see
+        record names, tags and timestamps so it can sync them. Addresses,
+        usernames, passwords, private keys and commands stay encrypted.
+      </p>
+      {!compact && (
+        <a href="/security" class="link inline-flex shrink-0 items-center gap-1.5 text-sm font-medium">
+          How Terra handles your keys <ArrowRight size={13} />
+        </a>
+      )}
     </div>
   </div>
 </section>

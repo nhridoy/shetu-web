@@ -1,33 +1,27 @@
-<section class="mx-auto max-w-[1200px] px-6 py-20 md:py-28">
-  <div
-    class="relative overflow-hidden rounded-3xl border border-line bg-surface px-6 py-16 text-center md:px-12 md:py-20"
-  >
-    <div class="cta-glow pointer-events-none absolute inset-0" aria-hidden="true">
-    </div>
-    <div class="relative">
-      <h2
-        class="mx-auto max-w-2xl text-balance text-4xl font-medium tracking-[-0.04em] md:text-5xl"
-      >
-        Your servers are waiting.
-      </h2>
-      <p class="mx-auto mt-4 max-w-xl text-base leading-relaxed text-muted">
-        Download Terra, connect your first host, and keep the rest of your setup
-        where it belongs.
-      </p>
-      <div class="mt-8 flex flex-wrap justify-center gap-3">
-        <a
-          href="/download"
-          class="rounded-lg bg-ink px-5 py-3 text-sm font-medium text-paper transition-colors duration-150 hover:bg-ink/90"
-        >
-          Download Terra
-        </a>
-        <a
-          href="/docs"
-          class="rounded-lg border border-line px-5 py-3 text-sm font-medium text-ink transition-colors duration-150 hover:border-accent/40 hover:text-accent"
-        >
-          Read the docs
-        </a>
-      </div>
+---
+import { GithubLogo } from '@phosphor-icons/react';
+import { REPOS } from '../../lib/site';
+import Logo from '../brand/Logo.astro';
+import DownloadPanel from '../download/DownloadPanel';
+---
+
+<section class="relative overflow-hidden border-t border-line">
+  <div class="glow-beam pointer-events-none absolute inset-x-0 top-1/3 mx-auto h-72 max-w-3xl" aria-hidden="true"></div>
+  <div class="dot-grid pointer-events-none absolute inset-0" aria-hidden="true"></div>
+  <div class="reveal relative mx-auto max-w-3xl px-5 py-24 text-center sm:px-6 md:py-32">
+    <Logo size={52} class="justify-center" />
+    <h2 class="mt-8 text-balance text-4xl leading-[1.05] font-bold md:text-6xl">
+      Your servers deserve a better client.
+    </h2>
+    <p class="mx-auto mt-5 max-w-lg text-lg text-muted">
+      Free, open source, and yours to keep. Every feature, no account tiers,
+      no trial clock.
+    </p>
+    <div class="mt-9 flex flex-wrap items-center justify-center gap-3">
+      <DownloadPanel client:visible variant="hero" />
+      <a href={REPOS.monorepo} class="btn-ghost px-5 py-3">
+        <GithubLogo size={16} weight="fill" /> View source
+      </a>
     </div>
   </div>
 </section>

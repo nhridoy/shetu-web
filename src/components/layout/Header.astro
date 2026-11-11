@@ -1,6 +1,7 @@
 ---
-import { ArrowUpRight, GithubLogo } from '@phosphor-icons/react';
+import { DownloadSimple, GithubLogo, List } from '@phosphor-icons/react';
 import { NAV_ITEMS, REPOS } from '../../lib/site';
+import Logo from '../brand/Logo.astro';
 
 const path = Astro.url.pathname;
 const isActive = (href: string) =>
@@ -9,32 +10,23 @@ const headerNav = NAV_ITEMS.filter((item) => item.href !== '/download');
 ---
 
 <header
-  class="sticky top-0 z-40 border-b border-line bg-paper/80 backdrop-blur-xl"
+  class="sticky top-0 z-40 border-b border-line bg-paper/70 backdrop-blur-xl backdrop-saturate-150"
 >
   <div
-    class="mx-auto flex h-16 max-w-[1200px] items-center justify-between gap-4 px-6"
+    class="mx-auto flex h-16 max-w-[1200px] items-center justify-between gap-4 px-5 sm:px-6"
   >
-    <a
-      href="/"
-      class="flex items-center gap-2.5 font-mono text-sm font-medium tracking-tight"
-    >
-      <span
-        class="grid h-7 w-7 place-items-center rounded-md border border-accent/30 bg-accent-wash font-mono text-[11px] text-accent"
-        aria-hidden="true"
-      >
-        &gt;_
-      </span>
-      <span>terra</span>
+    <a href="/" aria-label="Terra home" class="rounded-lg">
+      <Logo wordmark />
     </a>
 
-    <nav class="hidden items-center gap-7 md:flex" aria-label="Primary">
+    <nav class="hidden items-center gap-1 md:flex" aria-label="Primary">
       {headerNav.map((item) => (
         <a
           href={item.href}
           aria-current={isActive(item.href) ? 'page' : undefined}
           class:list={[
-            'text-sm transition-colors duration-150 hover:text-accent',
-            isActive(item.href) ? 'text-accent' : 'text-muted',
+            'rounded-lg px-3 py-1.5 text-sm font-medium transition-colors duration-150 hover:bg-white/5 hover:text-ink',
+            isActive(item.href) ? 'text-ink' : 'text-muted',
           ]}
         >
           {item.label}
@@ -46,47 +38,40 @@ const headerNav = NAV_ITEMS.filter((item) => item.href !== '/download');
       <a
         href={REPOS.monorepo}
         aria-label="Terra on GitHub"
-        class="hidden h-9 w-9 place-items-center rounded-lg border border-line text-muted transition-colors duration-150 hover:border-accent/40 hover:text-accent sm:grid"
+        class="hidden h-9 w-9 place-items-center rounded-lg border border-line text-muted transition-colors duration-150 hover:border-line-strong hover:text-ink sm:grid"
       >
         <GithubLogo size={17} weight="fill" />
       </a>
-      <a
-        href="/download"
-        class="hidden items-center gap-1.5 rounded-lg bg-ink px-4 py-2 text-sm font-medium text-paper transition-colors duration-150 hover:bg-ink/90 sm:inline-flex"
-      >
-        Download <ArrowUpRight size={14} weight="bold" />
+      <a href="/download" class="btn-primary hidden px-3.5 py-2 text-sm sm:inline-flex">
+        <DownloadSimple size={15} weight="bold" /> Download
       </a>
 
       <details class="relative md:hidden">
         <summary
-          class="cursor-pointer list-none rounded-lg border border-line px-3 py-2 font-mono text-[10px] uppercase tracking-[0.14em] text-muted"
+          class="grid h-9 w-9 cursor-pointer list-none place-items-center rounded-lg border border-line text-muted [&::-webkit-details-marker]:hidden"
+          aria-label="Menu"
         >
-          Menu
+          <List size={18} />
         </summary>
         <nav
-          class="absolute right-0 mt-2 w-56 rounded-xl border border-line bg-surface p-2 shadow-2xl shadow-black/50"
+          class="panel absolute right-0 mt-2 w-60 p-2 shadow-2xl shadow-black/60"
           aria-label="Mobile"
         >
           {headerNav.map((item) => (
             <a
               href={item.href}
-              class="block rounded-lg px-3 py-2 text-sm text-muted hover:bg-accent-wash hover:text-accent"
+              class="block rounded-lg px-3 py-2 text-sm text-muted hover:bg-white/5 hover:text-ink"
             >
               {item.label}
             </a>
           ))}
           <a
             href={REPOS.monorepo}
-            class="block rounded-lg px-3 py-2 text-sm text-muted hover:bg-accent-wash hover:text-accent"
+            class="block rounded-lg px-3 py-2 text-sm text-muted hover:bg-white/5 hover:text-ink"
           >
             GitHub
           </a>
-          <a
-            href="/download"
-            class="mt-1 block rounded-lg bg-ink px-3 py-2 text-sm font-medium text-paper"
-          >
-            Download
-          </a>
+          <a href="/download" class="btn-primary mt-2 w-full">Download</a>
         </nav>
       </details>
     </div>

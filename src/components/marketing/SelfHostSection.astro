@@ -1,71 +1,62 @@
 ---
-import CodeBlock from '../ui/CodeBlock.astro';
+import { ArrowRight, Check } from '@phosphor-icons/react';
 
-const commands = `cd server
-docker compose -f docker-compose.prod.yml pull
-docker compose -f docker-compose.prod.yml up -d`;
+const points = [
+  'Go server with PostgreSQL',
+  'Multi-arch Docker image for amd64 and arm64',
+  'Email sign-in, plus Google and GitHub OAuth',
+  'Teams with owner, admin and member roles',
+];
+const lines = [
+  { c: '# generate a JWT_SECRET for compose.yaml', comment: true },
+  { c: 'openssl rand -base64 48' },
+  { c: 'docker compose up -d' },
+  { c: '✔ terra-server  Started', out: true },
+];
 ---
 
-<section id="self-hosted" class="scroll-mt-24 border-t border-line bg-surface">
-  <div
-    class="mx-auto grid max-w-[1200px] gap-10 px-6 py-20 md:grid-cols-2 md:items-start md:gap-16 md:py-28"
-  >
-    <div>
-      <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
-        Self-hosted
-      </p>
-      <h2
-        class="mt-3 text-balance text-3xl font-medium tracking-[-0.04em] md:text-4xl"
-      >
+<section id="self-host" class="scroll-mt-20">
+  <div class="mx-auto grid max-w-[1200px] items-center gap-12 px-5 py-20 sm:px-6 md:py-28 lg:grid-cols-2 lg:gap-16">
+    <div class="reveal">
+      <p class="eyebrow">Self-host</p>
+      <h2 class="mt-4 text-balance text-4xl leading-[1.05] font-bold md:text-5xl">
         Run the sync server yourself.
       </h2>
-      <p class="mt-4 text-lg leading-relaxed text-muted">
-        Terra’s sync server is open source. Run it on your own infrastructure
-        with PostgreSQL, set
-        <code
-          class="rounded border border-line bg-elevated px-1.5 py-0.5 font-mono text-[0.85em] text-ink"
-        >
-          JWT_SECRET
-        </code>
-        and
-        <code
-          class="rounded border border-line bg-elevated px-1.5 py-0.5 font-mono text-[0.85em] text-ink"
-        >
-          BASE_URL
-        </code>
-        , and keep sync and shared vaults where you want them.
+      <p class="mt-5 max-w-lg text-lg leading-relaxed text-muted">
+        Sync, sign-in and shared vaults go through a Terra server. It is open
+        source too, so you can run it on your own box and keep every byte where
+        you want it.
       </p>
-      <ul class="mt-6 space-y-2 text-sm text-muted">
-        <li class="flex gap-2.5">
-          <span
-            class="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent"
-            aria-hidden="true"
-          ></span>
-          PostgreSQL for production
-        </li>
-        <li class="flex gap-2.5">
-          <span
-            class="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent"
-            aria-hidden="true"
-          ></span>
-          Google and GitHub OAuth
-        </li>
-        <li class="flex gap-2.5">
-          <span
-            class="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent"
-            aria-hidden="true"
-          ></span>
-          Your own domain and TLS
-        </li>
+      <ul class="mt-7 space-y-3">
+        {points.map((point) => (
+          <li class="flex items-start gap-3 text-[15px] text-ink/90">
+            <span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-accent-wash text-accent">
+              <Check size={11} weight="bold" />
+            </span>
+            {point}
+          </li>
+        ))}
       </ul>
-      <a
-        href="/docs/server"
-        class="mt-6 inline-flex text-sm font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent"
-      >
-        Read the server guide
+      <a href="/docs/server" class="link mt-8 inline-flex items-center gap-1.5 text-sm font-medium">
+        Read the server guide <ArrowRight size={13} />
       </a>
     </div>
 
-    <CodeBlock code={commands} label="server/" />
+    <div class="reveal relative min-w-0">
+      <div class="glow-beam pointer-events-none absolute -inset-6 opacity-50" aria-hidden="true"></div>
+      <figure class="relative overflow-hidden rounded-xl border border-line-strong bg-terminal shadow-2xl shadow-black/60">
+        <div class="flex items-center gap-2 border-b border-line px-4 py-2.5 font-mono text-[11px] text-muted">
+          <span class="h-1.5 w-1.5 rounded-full bg-terminal-text"></span>
+          you@server: ~/terra
+          <span class="ml-auto">ghcr.io/nhridoy/terra-server</span>
+        </div>
+        <pre class="overflow-x-auto p-5 font-mono text-[12.5px] leading-[1.9]"><code>{lines.map((l) => (
+          <span class:list={['block', l.comment ? 'text-muted' : l.out ? 'text-terminal-text' : 'text-ink']}>{!l.comment && !l.out && <span class="text-accent">$ </span>}{l.c}</span>
+        ))}</code></pre>
+        <figcaption class="border-t border-line px-4 py-2.5 text-xs text-muted">
+          Using the compose.yaml from the server guide.
+        </figcaption>
+      </figure>
+    </div>
   </div>
 </section>
