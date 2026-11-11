@@ -1,12 +1,12 @@
 {
-  "fetched_at": "2026-11-09T00:00:00Z",
+  "fetched_at": "2026-11-11T07:40:33.691Z",
   "latest": {
     "tag_name": "v0.0.15",
     "name": "v0.0.15",
     "published_at": "2026-11-05T10:20:49Z",
     "html_url": "https://github.com/nhridoy/terra-client/releases/tag/v0.0.15",
     "prerelease": false,
-    "body": "",
+    "body": "## What's Changed\n* fix: stop groups inside deleted groups from blocking sync by @nhridoy in https://github.com/nhridoy/terra-client/pull/11\n\n\n**Full Changelog**: https://github.com/nhridoy/terra-client/compare/v0.0.14...v0.0.15\n\n## Install\n\nFiles are named by system and CPU. On a Mac, pick `macOS-Apple-Silicon` (M1 and newer) or `macOS-Intel`. On Windows and Linux, pick `x64` (most PCs) or `ARM64`.\n\nThe quickest way is one command. It picks the right file for your computer and skips the security warnings below:\n\n- **macOS or Linux** (Terminal):\n  ```\n  curl -fsSL https://raw.githubusercontent.com/nhridoy/terra-client/main/install.sh | bash\n  ```\n  On Debian/Ubuntu it installs the `.deb`. Elsewhere it puts the AppImage at `~/.local/bin/terra`, which needs `libfuse2` (most distributions have it; otherwise install it with your package manager).\n- **Windows** (PowerShell):\n  ```\n  irm https://raw.githubusercontent.com/nhridoy/terra-client/main/install.ps1 | iex\n  ```\n\nInstalling from a downloaded file instead? Terra isn't signed by Apple or Microsoft yet, so you'll see a warning the first time:\n\n- **macOS** (*\"cannot verify that this app is free from malware\"*): drag Terra to Applications and open it once, then go to **System Settings → Privacy & Security** and click **Open Anyway**.\n- **Windows** (*\"Windows protected your PC\"*): click **More info → Run anyway**. If your browser says the file isn't commonly downloaded, choose **Keep**.\n\nYou only do this once. In-app updates install without the warning.\n",
     "assets": [
       {
         "name": "Terra-0.0.15-Linux-ARM64.AppImage",
@@ -14,9 +14,19 @@
         "size": 90401288
       },
       {
+        "name": "Terra-0.0.15-Linux-ARM64.AppImage.sig",
+        "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Linux-ARM64.AppImage.sig",
+        "size": 440
+      },
+      {
         "name": "Terra-0.0.15-Linux-ARM64.deb",
         "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Linux-ARM64.deb",
         "size": 15362046
+      },
+      {
+        "name": "Terra-0.0.15-Linux-ARM64.deb.sig",
+        "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Linux-ARM64.deb.sig",
+        "size": 432
       },
       {
         "name": "Terra-0.0.15-Linux-x64.AppImage",
@@ -24,14 +34,44 @@
         "size": 91871736
       },
       {
+        "name": "Terra-0.0.15-Linux-x64.AppImage.sig",
+        "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Linux-x64.AppImage.sig",
+        "size": 436
+      },
+      {
         "name": "Terra-0.0.15-Linux-x64.deb",
         "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Linux-x64.deb",
         "size": 14774326
       },
       {
+        "name": "Terra-0.0.15-Linux-x64.deb.sig",
+        "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Linux-x64.deb.sig",
+        "size": 432
+      },
+      {
+        "name": "Terra-0.0.15-macOS-Apple-Silicon.app.tar.gz",
+        "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-macOS-Apple-Silicon.app.tar.gz",
+        "size": 12479459
+      },
+      {
+        "name": "Terra-0.0.15-macOS-Apple-Silicon.app.tar.gz.sig",
+        "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-macOS-Apple-Silicon.app.tar.gz.sig",
+        "size": 424
+      },
+      {
         "name": "Terra-0.0.15-macOS-Apple-Silicon.dmg",
         "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-macOS-Apple-Silicon.dmg",
         "size": 12292167
+      },
+      {
+        "name": "Terra-0.0.15-macOS-Intel.app.tar.gz",
+        "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-macOS-Intel.app.tar.gz",
+        "size": 13303784
+      },
+      {
+        "name": "Terra-0.0.15-macOS-Intel.app.tar.gz.sig",
+        "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-macOS-Intel.app.tar.gz.sig",
+        "size": 424
       },
       {
         "name": "Terra-0.0.15-macOS-Intel.dmg",
@@ -44,11 +84,1332 @@
         "size": 7674339
       },
       {
+        "name": "Terra-0.0.15-Windows-ARM64-Setup.exe.sig",
+        "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Windows-ARM64-Setup.exe.sig",
+        "size": 440
+      },
+      {
         "name": "Terra-0.0.15-Windows-x64-Setup.exe",
         "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Windows-x64-Setup.exe",
         "size": 8653414
+      },
+      {
+        "name": "Terra-0.0.15-Windows-x64-Setup.exe.sig",
+        "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Windows-x64-Setup.exe.sig",
+        "size": 436
+      },
+      {
+        "name": "terra-latest.json",
+        "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/terra-latest.json",
+        "size": 5158
       }
     ]
   },
-  "releases": []
+  "releases": [
+    {
+      "tag_name": "v0.0.15",
+      "name": "v0.0.15",
+      "published_at": "2026-11-05T10:20:49Z",
+      "html_url": "https://github.com/nhridoy/terra-client/releases/tag/v0.0.15",
+      "prerelease": false,
+      "body": "## What's Changed\n* fix: stop groups inside deleted groups from blocking sync by @nhridoy in https://github.com/nhridoy/terra-client/pull/11\n\n\n**Full Changelog**: https://github.com/nhridoy/terra-client/compare/v0.0.14...v0.0.15\n\n## Install\n\nFiles are named by system and CPU. On a Mac, pick `macOS-Apple-Silicon` (M1 and newer) or `macOS-Intel`. On Windows and Linux, pick `x64` (most PCs) or `ARM64`.\n\nThe quickest way is one command. It picks the right file for your computer and skips the security warnings below:\n\n- **macOS or Linux** (Terminal):\n  ```\n  curl -fsSL https://raw.githubusercontent.com/nhridoy/terra-client/main/install.sh | bash\n  ```\n  On Debian/Ubuntu it installs the `.deb`. Elsewhere it puts the AppImage at `~/.local/bin/terra`, which needs `libfuse2` (most distributions have it; otherwise install it with your package manager).\n- **Windows** (PowerShell):\n  ```\n  irm https://raw.githubusercontent.com/nhridoy/terra-client/main/install.ps1 | iex\n  ```\n\nInstalling from a downloaded file instead? Terra isn't signed by Apple or Microsoft yet, so you'll see a warning the first time:\n\n- **macOS** (*\"cannot verify that this app is free from malware\"*): drag Terra to Applications and open it once, then go to **System Settings → Privacy & Security** and click **Open Anyway**.\n- **Windows** (*\"Windows protected your PC\"*): click **More info → Run anyway**. If your browser says the file isn't commonly downloaded, choose **Keep**.\n\nYou only do this once. In-app updates install without the warning.\n",
+      "assets": [
+        {
+          "name": "Terra-0.0.15-Linux-ARM64.AppImage",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Linux-ARM64.AppImage",
+          "size": 90401288
+        },
+        {
+          "name": "Terra-0.0.15-Linux-ARM64.AppImage.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Linux-ARM64.AppImage.sig",
+          "size": 440
+        },
+        {
+          "name": "Terra-0.0.15-Linux-ARM64.deb",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Linux-ARM64.deb",
+          "size": 15362046
+        },
+        {
+          "name": "Terra-0.0.15-Linux-ARM64.deb.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Linux-ARM64.deb.sig",
+          "size": 432
+        },
+        {
+          "name": "Terra-0.0.15-Linux-x64.AppImage",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Linux-x64.AppImage",
+          "size": 91871736
+        },
+        {
+          "name": "Terra-0.0.15-Linux-x64.AppImage.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Linux-x64.AppImage.sig",
+          "size": 436
+        },
+        {
+          "name": "Terra-0.0.15-Linux-x64.deb",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Linux-x64.deb",
+          "size": 14774326
+        },
+        {
+          "name": "Terra-0.0.15-Linux-x64.deb.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Linux-x64.deb.sig",
+          "size": 432
+        },
+        {
+          "name": "Terra-0.0.15-macOS-Apple-Silicon.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-macOS-Apple-Silicon.app.tar.gz",
+          "size": 12479459
+        },
+        {
+          "name": "Terra-0.0.15-macOS-Apple-Silicon.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-macOS-Apple-Silicon.app.tar.gz.sig",
+          "size": 424
+        },
+        {
+          "name": "Terra-0.0.15-macOS-Apple-Silicon.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-macOS-Apple-Silicon.dmg",
+          "size": 12292167
+        },
+        {
+          "name": "Terra-0.0.15-macOS-Intel.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-macOS-Intel.app.tar.gz",
+          "size": 13303784
+        },
+        {
+          "name": "Terra-0.0.15-macOS-Intel.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-macOS-Intel.app.tar.gz.sig",
+          "size": 424
+        },
+        {
+          "name": "Terra-0.0.15-macOS-Intel.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-macOS-Intel.dmg",
+          "size": 13237946
+        },
+        {
+          "name": "Terra-0.0.15-Windows-ARM64-Setup.exe",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Windows-ARM64-Setup.exe",
+          "size": 7674339
+        },
+        {
+          "name": "Terra-0.0.15-Windows-ARM64-Setup.exe.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Windows-ARM64-Setup.exe.sig",
+          "size": 440
+        },
+        {
+          "name": "Terra-0.0.15-Windows-x64-Setup.exe",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Windows-x64-Setup.exe",
+          "size": 8653414
+        },
+        {
+          "name": "Terra-0.0.15-Windows-x64-Setup.exe.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Windows-x64-Setup.exe.sig",
+          "size": 436
+        },
+        {
+          "name": "terra-latest.json",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/terra-latest.json",
+          "size": 5158
+        }
+      ]
+    },
+    {
+      "tag_name": "v0.0.14",
+      "name": "v0.0.14",
+      "published_at": "2026-11-05T08:55:46Z",
+      "html_url": "https://github.com/nhridoy/terra-client/releases/tag/v0.0.14",
+      "prerelease": false,
+      "body": "## What's Changed\n* fix: read an empty team sync cursor, log why the server rejects sync by @nhridoy in https://github.com/nhridoy/terra-client/pull/10\n\n\n**Full Changelog**: https://github.com/nhridoy/terra-client/compare/v0.0.13...v0.0.14\n\n## Install\n\nFiles are named by system and CPU. On a Mac, pick `macOS-Apple-Silicon` (M1 and newer) or `macOS-Intel`. On Windows and Linux, pick `x64` (most PCs) or `ARM64`.\n\nThe quickest way is one command. It picks the right file for your computer and skips the security warnings below:\n\n- **macOS or Linux** (Terminal):\n  ```\n  curl -fsSL https://raw.githubusercontent.com/nhridoy/terra-client/main/install.sh | bash\n  ```\n  On Debian/Ubuntu it installs the `.deb`. Elsewhere it puts the AppImage at `~/.local/bin/terra`, which needs `libfuse2` (most distributions have it; otherwise install it with your package manager).\n- **Windows** (PowerShell):\n  ```\n  irm https://raw.githubusercontent.com/nhridoy/terra-client/main/install.ps1 | iex\n  ```\n\nInstalling from a downloaded file instead? Terra isn't signed by Apple or Microsoft yet, so you'll see a warning the first time:\n\n- **macOS** (*\"cannot verify that this app is free from malware\"*): drag Terra to Applications and open it once, then go to **System Settings → Privacy & Security** and click **Open Anyway**.\n- **Windows** (*\"Windows protected your PC\"*): click **More info → Run anyway**. If your browser says the file isn't commonly downloaded, choose **Keep**.\n\nYou only do this once. In-app updates install without the warning.\n",
+      "assets": [
+        {
+          "name": "Terra-0.0.14-Linux-ARM64.AppImage",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.14/Terra-0.0.14-Linux-ARM64.AppImage",
+          "size": 90409480
+        },
+        {
+          "name": "Terra-0.0.14-Linux-ARM64.AppImage.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.14/Terra-0.0.14-Linux-ARM64.AppImage.sig",
+          "size": 440
+        },
+        {
+          "name": "Terra-0.0.14-Linux-ARM64.deb",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.14/Terra-0.0.14-Linux-ARM64.deb",
+          "size": 15355110
+        },
+        {
+          "name": "Terra-0.0.14-Linux-ARM64.deb.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.14/Terra-0.0.14-Linux-ARM64.deb.sig",
+          "size": 432
+        },
+        {
+          "name": "Terra-0.0.14-Linux-x64.AppImage",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.14/Terra-0.0.14-Linux-x64.AppImage",
+          "size": 91859448
+        },
+        {
+          "name": "Terra-0.0.14-Linux-x64.AppImage.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.14/Terra-0.0.14-Linux-x64.AppImage.sig",
+          "size": 436
+        },
+        {
+          "name": "Terra-0.0.14-Linux-x64.deb",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.14/Terra-0.0.14-Linux-x64.deb",
+          "size": 14777686
+        },
+        {
+          "name": "Terra-0.0.14-Linux-x64.deb.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.14/Terra-0.0.14-Linux-x64.deb.sig",
+          "size": 432
+        },
+        {
+          "name": "Terra-0.0.14-macOS-Apple-Silicon.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.14/Terra-0.0.14-macOS-Apple-Silicon.app.tar.gz",
+          "size": 12479308
+        },
+        {
+          "name": "Terra-0.0.14-macOS-Apple-Silicon.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.14/Terra-0.0.14-macOS-Apple-Silicon.app.tar.gz.sig",
+          "size": 424
+        },
+        {
+          "name": "Terra-0.0.14-macOS-Apple-Silicon.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.14/Terra-0.0.14-macOS-Apple-Silicon.dmg",
+          "size": 12288583
+        },
+        {
+          "name": "Terra-0.0.14-macOS-Intel.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.14/Terra-0.0.14-macOS-Intel.app.tar.gz",
+          "size": 13315225
+        },
+        {
+          "name": "Terra-0.0.14-macOS-Intel.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.14/Terra-0.0.14-macOS-Intel.app.tar.gz.sig",
+          "size": 424
+        },
+        {
+          "name": "Terra-0.0.14-macOS-Intel.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.14/Terra-0.0.14-macOS-Intel.dmg",
+          "size": 13246169
+        },
+        {
+          "name": "Terra-0.0.14-Windows-ARM64-Setup.exe",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.14/Terra-0.0.14-Windows-ARM64-Setup.exe",
+          "size": 7685022
+        },
+        {
+          "name": "Terra-0.0.14-Windows-ARM64-Setup.exe.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.14/Terra-0.0.14-Windows-ARM64-Setup.exe.sig",
+          "size": 440
+        },
+        {
+          "name": "Terra-0.0.14-Windows-x64-Setup.exe",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.14/Terra-0.0.14-Windows-x64-Setup.exe",
+          "size": 8622683
+        },
+        {
+          "name": "Terra-0.0.14-Windows-x64-Setup.exe.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.14/Terra-0.0.14-Windows-x64-Setup.exe.sig",
+          "size": 436
+        },
+        {
+          "name": "terra-latest.json",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.14/terra-latest.json",
+          "size": 5169
+        }
+      ]
+    },
+    {
+      "tag_name": "v0.0.13",
+      "name": "v0.0.13",
+      "published_at": "2026-11-05T08:08:02Z",
+      "html_url": "https://github.com/nhridoy/terra-client/releases/tag/v0.0.13",
+      "prerelease": false,
+      "body": "## What's Changed\n* ci(release): sign macOS builds with a stable self-signed certificate by @nhridoy in https://github.com/nhridoy/terra-client/pull/9\n\n\n**Full Changelog**: https://github.com/nhridoy/terra-client/compare/v0.0.12...v0.0.13\n\n## Install\n\nFiles are named by system and CPU. On a Mac, pick `macOS-Apple-Silicon` (M1 and newer) or `macOS-Intel`. On Windows and Linux, pick `x64` (most PCs) or `ARM64`.\n\nThe quickest way is one command. It picks the right file for your computer and skips the security warnings below:\n\n- **macOS or Linux** (Terminal):\n  ```\n  curl -fsSL https://raw.githubusercontent.com/nhridoy/terra-client/main/install.sh | bash\n  ```\n  On Debian/Ubuntu it installs the `.deb`. Elsewhere it puts the AppImage at `~/.local/bin/terra`, which needs `libfuse2` (most distributions have it; otherwise install it with your package manager).\n- **Windows** (PowerShell):\n  ```\n  irm https://raw.githubusercontent.com/nhridoy/terra-client/main/install.ps1 | iex\n  ```\n\nInstalling from a downloaded file instead? Terra isn't signed by Apple or Microsoft yet, so you'll see a warning the first time:\n\n- **macOS** (*\"cannot verify that this app is free from malware\"*): drag Terra to Applications and open it once, then go to **System Settings → Privacy & Security** and click **Open Anyway**.\n- **Windows** (*\"Windows protected your PC\"*): click **More info → Run anyway**. If your browser says the file isn't commonly downloaded, choose **Keep**.\n\nYou only do this once. In-app updates install without the warning.\n",
+      "assets": [
+        {
+          "name": "Terra-0.0.13-Linux-ARM64.AppImage",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.13/Terra-0.0.13-Linux-ARM64.AppImage",
+          "size": 90438152
+        },
+        {
+          "name": "Terra-0.0.13-Linux-ARM64.AppImage.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.13/Terra-0.0.13-Linux-ARM64.AppImage.sig",
+          "size": 440
+        },
+        {
+          "name": "Terra-0.0.13-Linux-ARM64.deb",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.13/Terra-0.0.13-Linux-ARM64.deb",
+          "size": 15387956
+        },
+        {
+          "name": "Terra-0.0.13-Linux-ARM64.deb.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.13/Terra-0.0.13-Linux-ARM64.deb.sig",
+          "size": 432
+        },
+        {
+          "name": "Terra-0.0.13-Linux-x64.AppImage",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.13/Terra-0.0.13-Linux-x64.AppImage",
+          "size": 91871736
+        },
+        {
+          "name": "Terra-0.0.13-Linux-x64.AppImage.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.13/Terra-0.0.13-Linux-x64.AppImage.sig",
+          "size": 436
+        },
+        {
+          "name": "Terra-0.0.13-Linux-x64.deb",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.13/Terra-0.0.13-Linux-x64.deb",
+          "size": 14768462
+        },
+        {
+          "name": "Terra-0.0.13-Linux-x64.deb.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.13/Terra-0.0.13-Linux-x64.deb.sig",
+          "size": 432
+        },
+        {
+          "name": "Terra-0.0.13-macOS-Apple-Silicon.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.13/Terra-0.0.13-macOS-Apple-Silicon.app.tar.gz",
+          "size": 12475757
+        },
+        {
+          "name": "Terra-0.0.13-macOS-Apple-Silicon.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.13/Terra-0.0.13-macOS-Apple-Silicon.app.tar.gz.sig",
+          "size": 424
+        },
+        {
+          "name": "Terra-0.0.13-macOS-Apple-Silicon.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.13/Terra-0.0.13-macOS-Apple-Silicon.dmg",
+          "size": 12283169
+        },
+        {
+          "name": "Terra-0.0.13-macOS-Intel.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.13/Terra-0.0.13-macOS-Intel.app.tar.gz",
+          "size": 13305880
+        },
+        {
+          "name": "Terra-0.0.13-macOS-Intel.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.13/Terra-0.0.13-macOS-Intel.app.tar.gz.sig",
+          "size": 424
+        },
+        {
+          "name": "Terra-0.0.13-macOS-Intel.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.13/Terra-0.0.13-macOS-Intel.dmg",
+          "size": 13248369
+        },
+        {
+          "name": "Terra-0.0.13-Windows-ARM64-Setup.exe",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.13/Terra-0.0.13-Windows-ARM64-Setup.exe",
+          "size": 7700005
+        },
+        {
+          "name": "Terra-0.0.13-Windows-ARM64-Setup.exe.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.13/Terra-0.0.13-Windows-ARM64-Setup.exe.sig",
+          "size": 440
+        },
+        {
+          "name": "Terra-0.0.13-Windows-x64-Setup.exe",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.13/Terra-0.0.13-Windows-x64-Setup.exe",
+          "size": 8642863
+        },
+        {
+          "name": "Terra-0.0.13-Windows-x64-Setup.exe.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.13/Terra-0.0.13-Windows-x64-Setup.exe.sig",
+          "size": 436
+        },
+        {
+          "name": "terra-latest.json",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.13/terra-latest.json",
+          "size": 5168
+        }
+      ]
+    },
+    {
+      "tag_name": "v0.0.12",
+      "name": "v0.0.12",
+      "published_at": "2026-11-05T07:12:30Z",
+      "html_url": "https://github.com/nhridoy/terra-client/releases/tag/v0.0.12",
+      "prerelease": false,
+      "body": "## What's Changed\n* feat: client logging and bug-report export by @nhridoy in https://github.com/nhridoy/terra-client/pull/7\n* fix: redact bare hostnames and usernames from logs by @nhridoy in https://github.com/nhridoy/terra-client/pull/8\n\n\n**Full Changelog**: https://github.com/nhridoy/terra-client/compare/v0.0.11...v0.0.12\n\n## Install\n\nFiles are named by system and CPU. On a Mac, pick `macOS-Apple-Silicon` (M1 and newer) or `macOS-Intel`. On Windows and Linux, pick `x64` (most PCs) or `ARM64`.\n\nThe quickest way is one command. It picks the right file for your computer and skips the security warnings below:\n\n- **macOS or Linux** (Terminal):\n  ```\n  curl -fsSL https://raw.githubusercontent.com/nhridoy/terra-client/main/install.sh | bash\n  ```\n  On Debian/Ubuntu it installs the `.deb`. Elsewhere it puts the AppImage at `~/.local/bin/terra`, which needs `libfuse2` (most distributions have it; otherwise install it with your package manager).\n- **Windows** (PowerShell):\n  ```\n  irm https://raw.githubusercontent.com/nhridoy/terra-client/main/install.ps1 | iex\n  ```\n\nInstalling from a downloaded file instead? Terra isn't signed by Apple or Microsoft yet, so you'll see a warning the first time:\n\n- **macOS** (*\"cannot verify that this app is free from malware\"*): drag Terra to Applications and open it once, then go to **System Settings → Privacy & Security** and click **Open Anyway**.\n- **Windows** (*\"Windows protected your PC\"*): click **More info → Run anyway**. If your browser says the file isn't commonly downloaded, choose **Keep**.\n\nYou only do this once. In-app updates install without the warning.\n",
+      "assets": [
+        {
+          "name": "Terra-0.0.12-Linux-ARM64.AppImage",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.12/Terra-0.0.12-Linux-ARM64.AppImage",
+          "size": 90425864
+        },
+        {
+          "name": "Terra-0.0.12-Linux-ARM64.AppImage.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.12/Terra-0.0.12-Linux-ARM64.AppImage.sig",
+          "size": 440
+        },
+        {
+          "name": "Terra-0.0.12-Linux-ARM64.deb",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.12/Terra-0.0.12-Linux-ARM64.deb",
+          "size": 15382564
+        },
+        {
+          "name": "Terra-0.0.12-Linux-ARM64.deb.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.12/Terra-0.0.12-Linux-ARM64.deb.sig",
+          "size": 432
+        },
+        {
+          "name": "Terra-0.0.12-Linux-x64.AppImage",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.12/Terra-0.0.12-Linux-x64.AppImage",
+          "size": 91871736
+        },
+        {
+          "name": "Terra-0.0.12-Linux-x64.AppImage.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.12/Terra-0.0.12-Linux-x64.AppImage.sig",
+          "size": 436
+        },
+        {
+          "name": "Terra-0.0.12-Linux-x64.deb",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.12/Terra-0.0.12-Linux-x64.deb",
+          "size": 14766584
+        },
+        {
+          "name": "Terra-0.0.12-Linux-x64.deb.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.12/Terra-0.0.12-Linux-x64.deb.sig",
+          "size": 432
+        },
+        {
+          "name": "Terra-0.0.12-macOS-Apple-Silicon.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.12/Terra-0.0.12-macOS-Apple-Silicon.app.tar.gz",
+          "size": 12665933
+        },
+        {
+          "name": "Terra-0.0.12-macOS-Apple-Silicon.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.12/Terra-0.0.12-macOS-Apple-Silicon.app.tar.gz.sig",
+          "size": 424
+        },
+        {
+          "name": "Terra-0.0.12-macOS-Apple-Silicon.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.12/Terra-0.0.12-macOS-Apple-Silicon.dmg",
+          "size": 12469278
+        },
+        {
+          "name": "Terra-0.0.12-macOS-Intel.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.12/Terra-0.0.12-macOS-Intel.app.tar.gz",
+          "size": 13015528
+        },
+        {
+          "name": "Terra-0.0.12-macOS-Intel.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.12/Terra-0.0.12-macOS-Intel.app.tar.gz.sig",
+          "size": 424
+        },
+        {
+          "name": "Terra-0.0.12-macOS-Intel.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.12/Terra-0.0.12-macOS-Intel.dmg",
+          "size": 12942326
+        },
+        {
+          "name": "Terra-0.0.12-Windows-ARM64-Setup.exe",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.12/Terra-0.0.12-Windows-ARM64-Setup.exe",
+          "size": 7701778
+        },
+        {
+          "name": "Terra-0.0.12-Windows-ARM64-Setup.exe.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.12/Terra-0.0.12-Windows-ARM64-Setup.exe.sig",
+          "size": 440
+        },
+        {
+          "name": "Terra-0.0.12-Windows-x64-Setup.exe",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.12/Terra-0.0.12-Windows-x64-Setup.exe",
+          "size": 8647040
+        },
+        {
+          "name": "Terra-0.0.12-Windows-x64-Setup.exe.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.12/Terra-0.0.12-Windows-x64-Setup.exe.sig",
+          "size": 436
+        },
+        {
+          "name": "terra-latest.json",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.12/terra-latest.json",
+          "size": 5258
+        }
+      ]
+    },
+    {
+      "tag_name": "v0.0.11",
+      "name": "v0.0.11",
+      "published_at": "2026-11-04T16:55:31Z",
+      "html_url": "https://github.com/nhridoy/terra-client/releases/tag/v0.0.11",
+      "prerelease": false,
+      "body": "## What's Changed\n* Fix crash on first launch: create the app data folder before opening the DB by @nhridoy in https://github.com/nhridoy/terra-client/pull/5\n* Apply the DMG background and layout on CI builds by @nhridoy in https://github.com/nhridoy/terra-client/pull/6\n\n\n**Full Changelog**: https://github.com/nhridoy/terra-client/compare/v0.0.10...v0.0.11\n\n## Install\n\nFiles are named by system and CPU. On a Mac, pick `macOS-Apple-Silicon` (M1 and newer) or `macOS-Intel`. On Windows and Linux, pick `x64` (most PCs) or `ARM64`.\n\nThe quickest way is one command. It picks the right file for your computer and skips the security warnings below:\n\n- **macOS or Linux** (Terminal):\n  ```\n  curl -fsSL https://raw.githubusercontent.com/nhridoy/terra-client/main/install.sh | bash\n  ```\n  On Debian/Ubuntu it installs the `.deb`. Elsewhere it puts the AppImage at `~/.local/bin/terra`, which needs `libfuse2` (most distributions have it; otherwise install it with your package manager).\n- **Windows** (PowerShell):\n  ```\n  irm https://raw.githubusercontent.com/nhridoy/terra-client/main/install.ps1 | iex\n  ```\n\nInstalling from a downloaded file instead? Terra isn't signed by Apple or Microsoft yet, so you'll see a warning the first time:\n\n- **macOS** (*\"cannot verify that this app is free from malware\"*): drag Terra to Applications and open it once, then go to **System Settings → Privacy & Security** and click **Open Anyway**.\n- **Windows** (*\"Windows protected your PC\"*): click **More info → Run anyway**. If your browser says the file isn't commonly downloaded, choose **Keep**.\n\nYou only do this once. In-app updates install without the warning.\n",
+      "assets": [
+        {
+          "name": "Terra-0.0.11-Linux-ARM64.AppImage",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.11/Terra-0.0.11-Linux-ARM64.AppImage",
+          "size": 90245640
+        },
+        {
+          "name": "Terra-0.0.11-Linux-ARM64.AppImage.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.11/Terra-0.0.11-Linux-ARM64.AppImage.sig",
+          "size": 440
+        },
+        {
+          "name": "Terra-0.0.11-Linux-ARM64.deb",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.11/Terra-0.0.11-Linux-ARM64.deb",
+          "size": 15174242
+        },
+        {
+          "name": "Terra-0.0.11-Linux-ARM64.deb.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.11/Terra-0.0.11-Linux-ARM64.deb.sig",
+          "size": 432
+        },
+        {
+          "name": "Terra-0.0.11-Linux-x64.AppImage",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.11/Terra-0.0.11-Linux-x64.AppImage",
+          "size": 91744760
+        },
+        {
+          "name": "Terra-0.0.11-Linux-x64.AppImage.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.11/Terra-0.0.11-Linux-x64.AppImage.sig",
+          "size": 436
+        },
+        {
+          "name": "Terra-0.0.11-Linux-x64.deb",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.11/Terra-0.0.11-Linux-x64.deb",
+          "size": 14614582
+        },
+        {
+          "name": "Terra-0.0.11-Linux-x64.deb.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.11/Terra-0.0.11-Linux-x64.deb.sig",
+          "size": 432
+        },
+        {
+          "name": "Terra-0.0.11-macOS-Apple-Silicon.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.11/Terra-0.0.11-macOS-Apple-Silicon.app.tar.gz",
+          "size": 12489405
+        },
+        {
+          "name": "Terra-0.0.11-macOS-Apple-Silicon.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.11/Terra-0.0.11-macOS-Apple-Silicon.app.tar.gz.sig",
+          "size": 424
+        },
+        {
+          "name": "Terra-0.0.11-macOS-Apple-Silicon.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.11/Terra-0.0.11-macOS-Apple-Silicon.dmg",
+          "size": 12313105
+        },
+        {
+          "name": "Terra-0.0.11-macOS-Intel.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.11/Terra-0.0.11-macOS-Intel.app.tar.gz",
+          "size": 12835793
+        },
+        {
+          "name": "Terra-0.0.11-macOS-Intel.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.11/Terra-0.0.11-macOS-Intel.app.tar.gz.sig",
+          "size": 424
+        },
+        {
+          "name": "Terra-0.0.11-macOS-Intel.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.11/Terra-0.0.11-macOS-Intel.dmg",
+          "size": 12773527
+        },
+        {
+          "name": "Terra-0.0.11-Windows-ARM64-Setup.exe",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.11/Terra-0.0.11-Windows-ARM64-Setup.exe",
+          "size": 7601260
+        },
+        {
+          "name": "Terra-0.0.11-Windows-ARM64-Setup.exe.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.11/Terra-0.0.11-Windows-ARM64-Setup.exe.sig",
+          "size": 440
+        },
+        {
+          "name": "Terra-0.0.11-Windows-x64-Setup.exe",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.11/Terra-0.0.11-Windows-x64-Setup.exe",
+          "size": 8571151
+        },
+        {
+          "name": "Terra-0.0.11-Windows-x64-Setup.exe.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.11/Terra-0.0.11-Windows-x64-Setup.exe.sig",
+          "size": 436
+        },
+        {
+          "name": "terra-latest.json",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.11/terra-latest.json",
+          "size": 5289
+        }
+      ]
+    },
+    {
+      "tag_name": "v0.0.10",
+      "name": "v0.0.10",
+      "published_at": "2026-11-04T15:07:23Z",
+      "html_url": "https://github.com/nhridoy/terra-client/releases/tag/v0.0.10",
+      "prerelease": false,
+      "body": "## What's Changed\n* One-line installers for Windows and Linux by @nhridoy in https://github.com/nhridoy/terra-client/pull/3\n* Branded macOS DMG install window by @nhridoy in https://github.com/nhridoy/terra-client/pull/4\n\n\n**Full Changelog**: https://github.com/nhridoy/terra-client/compare/v0.0.9...v0.0.10\n\n## Install\n\nFiles are named by system and CPU. On a Mac, pick `macOS-Apple-Silicon` (M1 and newer) or `macOS-Intel`. On Windows and Linux, pick `x64` (most PCs) or `ARM64`.\n\nThe quickest way is one command. It picks the right file for your computer and skips the security warnings below:\n\n- **macOS or Linux** (Terminal):\n  ```\n  curl -fsSL https://raw.githubusercontent.com/nhridoy/terra-client/main/install.sh | bash\n  ```\n  On Debian/Ubuntu it installs the `.deb`. Elsewhere it puts the AppImage at `~/.local/bin/terra`, which needs `libfuse2` (most distributions have it; otherwise install it with your package manager).\n- **Windows** (PowerShell):\n  ```\n  irm https://raw.githubusercontent.com/nhridoy/terra-client/main/install.ps1 | iex\n  ```\n\nInstalling from a downloaded file instead? Terra isn't signed by Apple or Microsoft yet, so you'll see a warning the first time:\n\n- **macOS** (*\"cannot verify that this app is free from malware\"*): drag Terra to Applications and open it once, then go to **System Settings → Privacy & Security** and click **Open Anyway**.\n- **Windows** (*\"Windows protected your PC\"*): click **More info → Run anyway**. If your browser says the file isn't commonly downloaded, choose **Keep**.\n\nYou only do this once. In-app updates install without the warning.\n",
+      "assets": [
+        {
+          "name": "Terra-0.0.10-Linux-ARM64.AppImage",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.10/Terra-0.0.10-Linux-ARM64.AppImage",
+          "size": 90237448
+        },
+        {
+          "name": "Terra-0.0.10-Linux-ARM64.AppImage.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.10/Terra-0.0.10-Linux-ARM64.AppImage.sig",
+          "size": 440
+        },
+        {
+          "name": "Terra-0.0.10-Linux-ARM64.deb",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.10/Terra-0.0.10-Linux-ARM64.deb",
+          "size": 15170518
+        },
+        {
+          "name": "Terra-0.0.10-Linux-ARM64.deb.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.10/Terra-0.0.10-Linux-ARM64.deb.sig",
+          "size": 432
+        },
+        {
+          "name": "Terra-0.0.10-Linux-x64.AppImage",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.10/Terra-0.0.10-Linux-x64.AppImage",
+          "size": 91716088
+        },
+        {
+          "name": "Terra-0.0.10-Linux-x64.AppImage.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.10/Terra-0.0.10-Linux-x64.AppImage.sig",
+          "size": 436
+        },
+        {
+          "name": "Terra-0.0.10-Linux-x64.deb",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.10/Terra-0.0.10-Linux-x64.deb",
+          "size": 14614360
+        },
+        {
+          "name": "Terra-0.0.10-Linux-x64.deb.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.10/Terra-0.0.10-Linux-x64.deb.sig",
+          "size": 432
+        },
+        {
+          "name": "Terra-0.0.10-macOS-Apple-Silicon.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.10/Terra-0.0.10-macOS-Apple-Silicon.app.tar.gz",
+          "size": 12501906
+        },
+        {
+          "name": "Terra-0.0.10-macOS-Apple-Silicon.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.10/Terra-0.0.10-macOS-Apple-Silicon.app.tar.gz.sig",
+          "size": 424
+        },
+        {
+          "name": "Terra-0.0.10-macOS-Apple-Silicon.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.10/Terra-0.0.10-macOS-Apple-Silicon.dmg",
+          "size": 12308201
+        },
+        {
+          "name": "Terra-0.0.10-macOS-Intel.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.10/Terra-0.0.10-macOS-Intel.app.tar.gz",
+          "size": 12846205
+        },
+        {
+          "name": "Terra-0.0.10-macOS-Intel.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.10/Terra-0.0.10-macOS-Intel.app.tar.gz.sig",
+          "size": 424
+        },
+        {
+          "name": "Terra-0.0.10-macOS-Intel.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.10/Terra-0.0.10-macOS-Intel.dmg",
+          "size": 12768594
+        },
+        {
+          "name": "Terra-0.0.10-Windows-ARM64-Setup.exe",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.10/Terra-0.0.10-Windows-ARM64-Setup.exe",
+          "size": 7597961
+        },
+        {
+          "name": "Terra-0.0.10-Windows-ARM64-Setup.exe.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.10/Terra-0.0.10-Windows-ARM64-Setup.exe.sig",
+          "size": 440
+        },
+        {
+          "name": "Terra-0.0.10-Windows-x64-Setup.exe",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.10/Terra-0.0.10-Windows-x64-Setup.exe",
+          "size": 8576496
+        },
+        {
+          "name": "Terra-0.0.10-Windows-x64-Setup.exe.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.10/Terra-0.0.10-Windows-x64-Setup.exe.sig",
+          "size": 436
+        },
+        {
+          "name": "terra-latest.json",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.10/terra-latest.json",
+          "size": 5238
+        }
+      ]
+    },
+    {
+      "tag_name": "v0.0.9",
+      "name": "v0.0.9",
+      "published_at": "2026-11-04T13:58:45Z",
+      "html_url": "https://github.com/nhridoy/terra-client/releases/tag/v0.0.9",
+      "prerelease": false,
+      "body": "**Full Changelog**: https://github.com/nhridoy/terra-client/compare/v0.0.8...v0.0.9\n\n## Install\n\nFiles are named by system and CPU. On a Mac, pick `macOS-Apple-Silicon` (M1 and newer) or `macOS-Intel`. On Windows and Linux, pick `x64` (most PCs) or `ARM64`.\n\nThe quickest way is one command. It picks the right file for your computer and skips the security warnings below:\n\n- **macOS or Linux** (Terminal):\n  ```\n  curl -fsSL https://raw.githubusercontent.com/nhridoy/terra-client/main/install.sh | bash\n  ```\n  On Debian/Ubuntu it installs the `.deb`. Elsewhere it puts the AppImage at `~/.local/bin/terra`, which needs `libfuse2` (most distributions have it; otherwise install it with your package manager).\n- **Windows** (PowerShell):\n  ```\n  irm https://raw.githubusercontent.com/nhridoy/terra-client/main/install.ps1 | iex\n  ```\n\nInstalling from a downloaded file instead? Terra isn't signed by Apple or Microsoft yet, so you'll see a warning the first time:\n\n- **macOS** (*\"cannot verify that this app is free from malware\"*): drag Terra to Applications and open it once, then go to **System Settings → Privacy & Security** and click **Open Anyway**.\n- **Windows** (*\"Windows protected your PC\"*): click **More info → Run anyway**. If your browser says the file isn't commonly downloaded, choose **Keep**.\n\nYou only do this once. In-app updates install without the warning.\n",
+      "assets": [
+        {
+          "name": "Terra-0.0.9-Linux-ARM64.AppImage",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.9/Terra-0.0.9-Linux-ARM64.AppImage",
+          "size": 90237448
+        },
+        {
+          "name": "Terra-0.0.9-Linux-ARM64.AppImage.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.9/Terra-0.0.9-Linux-ARM64.AppImage.sig",
+          "size": 436
+        },
+        {
+          "name": "Terra-0.0.9-Linux-ARM64.deb",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.9/Terra-0.0.9-Linux-ARM64.deb",
+          "size": 15173988
+        },
+        {
+          "name": "Terra-0.0.9-Linux-ARM64.deb.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.9/Terra-0.0.9-Linux-ARM64.deb.sig",
+          "size": 428
+        },
+        {
+          "name": "Terra-0.0.9-Linux-x64.AppImage",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.9/Terra-0.0.9-Linux-x64.AppImage",
+          "size": 91720184
+        },
+        {
+          "name": "Terra-0.0.9-Linux-x64.AppImage.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.9/Terra-0.0.9-Linux-x64.AppImage.sig",
+          "size": 436
+        },
+        {
+          "name": "Terra-0.0.9-Linux-x64.deb",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.9/Terra-0.0.9-Linux-x64.deb",
+          "size": 14614154
+        },
+        {
+          "name": "Terra-0.0.9-Linux-x64.deb.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.9/Terra-0.0.9-Linux-x64.deb.sig",
+          "size": 428
+        },
+        {
+          "name": "Terra-0.0.9-macOS-Apple-Silicon.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.9/Terra-0.0.9-macOS-Apple-Silicon.app.tar.gz",
+          "size": 12501410
+        },
+        {
+          "name": "Terra-0.0.9-macOS-Apple-Silicon.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.9/Terra-0.0.9-macOS-Apple-Silicon.app.tar.gz.sig",
+          "size": 420
+        },
+        {
+          "name": "Terra-0.0.9-macOS-Apple-Silicon.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.9/Terra-0.0.9-macOS-Apple-Silicon.dmg",
+          "size": 12241882
+        },
+        {
+          "name": "Terra-0.0.9-macOS-Intel.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.9/Terra-0.0.9-macOS-Intel.app.tar.gz",
+          "size": 12847516
+        },
+        {
+          "name": "Terra-0.0.9-macOS-Intel.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.9/Terra-0.0.9-macOS-Intel.app.tar.gz.sig",
+          "size": 420
+        },
+        {
+          "name": "Terra-0.0.9-macOS-Intel.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.9/Terra-0.0.9-macOS-Intel.dmg",
+          "size": 12703251
+        },
+        {
+          "name": "Terra-0.0.9-Windows-ARM64-Setup.exe",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.9/Terra-0.0.9-Windows-ARM64-Setup.exe",
+          "size": 7602322
+        },
+        {
+          "name": "Terra-0.0.9-Windows-ARM64-Setup.exe.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.9/Terra-0.0.9-Windows-ARM64-Setup.exe.sig",
+          "size": 436
+        },
+        {
+          "name": "Terra-0.0.9-Windows-x64-Setup.exe",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.9/Terra-0.0.9-Windows-x64-Setup.exe",
+          "size": 8577414
+        },
+        {
+          "name": "Terra-0.0.9-Windows-x64-Setup.exe.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.9/Terra-0.0.9-Windows-x64-Setup.exe.sig",
+          "size": 432
+        },
+        {
+          "name": "terra-latest.json",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.9/terra-latest.json",
+          "size": 4964
+        }
+      ]
+    },
+    {
+      "tag_name": "v0.0.8",
+      "name": "v0.0.8",
+      "published_at": "2026-11-04T05:43:47Z",
+      "html_url": "https://github.com/nhridoy/terra-client/releases/tag/v0.0.8",
+      "prerelease": false,
+      "body": "## What's Changed\n* Mac-native look and feel by @nhridoy in https://github.com/nhridoy/terra-client/pull/2\n\n## New Contributors\n* @nhridoy made their first contribution in https://github.com/nhridoy/terra-client/pull/2\n\n**Full Changelog**: https://github.com/nhridoy/terra-client/compare/v0.0.7...v0.0.8\n",
+      "assets": [
+        {
+          "name": "darwin-aarch64-Terra.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.8/darwin-aarch64-Terra.app.tar.gz",
+          "size": 12503163
+        },
+        {
+          "name": "darwin-aarch64-Terra.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.8/darwin-aarch64-Terra.app.tar.gz.sig",
+          "size": 420
+        },
+        {
+          "name": "darwin-aarch64-Terra_0.0.8_aarch64.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.8/darwin-aarch64-Terra_0.0.8_aarch64.dmg",
+          "size": 12249928
+        },
+        {
+          "name": "darwin-x86_64-Terra.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.8/darwin-x86_64-Terra.app.tar.gz",
+          "size": 12847342
+        },
+        {
+          "name": "darwin-x86_64-Terra.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.8/darwin-x86_64-Terra.app.tar.gz.sig",
+          "size": 420
+        },
+        {
+          "name": "darwin-x86_64-Terra_0.0.8_x64.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.8/darwin-x86_64-Terra_0.0.8_x64.dmg",
+          "size": 12703038
+        },
+        {
+          "name": "linux-aarch64-Terra_0.0.8_aarch64.AppImage",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.8/linux-aarch64-Terra_0.0.8_aarch64.AppImage",
+          "size": 90237448
+        },
+        {
+          "name": "linux-aarch64-Terra_0.0.8_aarch64.AppImage.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.8/linux-aarch64-Terra_0.0.8_aarch64.AppImage.sig",
+          "size": 436
+        },
+        {
+          "name": "linux-aarch64-Terra_0.0.8_arm64.deb",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.8/linux-aarch64-Terra_0.0.8_arm64.deb",
+          "size": 15171680
+        },
+        {
+          "name": "linux-aarch64-Terra_0.0.8_arm64.deb.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.8/linux-aarch64-Terra_0.0.8_arm64.deb.sig",
+          "size": 428
+        },
+        {
+          "name": "linux-x86_64-Terra_0.0.8_amd64.AppImage",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.8/linux-x86_64-Terra_0.0.8_amd64.AppImage",
+          "size": 91728376
+        },
+        {
+          "name": "linux-x86_64-Terra_0.0.8_amd64.AppImage.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.8/linux-x86_64-Terra_0.0.8_amd64.AppImage.sig",
+          "size": 436
+        },
+        {
+          "name": "linux-x86_64-Terra_0.0.8_amd64.deb",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.8/linux-x86_64-Terra_0.0.8_amd64.deb",
+          "size": 14613792
+        },
+        {
+          "name": "linux-x86_64-Terra_0.0.8_amd64.deb.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.8/linux-x86_64-Terra_0.0.8_amd64.deb.sig",
+          "size": 428
+        },
+        {
+          "name": "terra-latest.json",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.8/terra-latest.json",
+          "size": 5226
+        },
+        {
+          "name": "windows-aarch64-Terra_0.0.8_arm64-setup.exe",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.8/windows-aarch64-Terra_0.0.8_arm64-setup.exe",
+          "size": 7598466
+        },
+        {
+          "name": "windows-aarch64-Terra_0.0.8_arm64-setup.exe.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.8/windows-aarch64-Terra_0.0.8_arm64-setup.exe.sig",
+          "size": 436
+        },
+        {
+          "name": "windows-x86_64-Terra_0.0.8_x64-setup.exe",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.8/windows-x86_64-Terra_0.0.8_x64-setup.exe",
+          "size": 8578906
+        },
+        {
+          "name": "windows-x86_64-Terra_0.0.8_x64-setup.exe.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.8/windows-x86_64-Terra_0.0.8_x64-setup.exe.sig",
+          "size": 432
+        }
+      ]
+    },
+    {
+      "tag_name": "v0.0.7",
+      "name": "v0.0.7",
+      "published_at": "2026-11-03T14:40:03Z",
+      "html_url": "https://github.com/nhridoy/terra-client/releases/tag/v0.0.7",
+      "prerelease": false,
+      "body": "**Full Changelog**: https://github.com/nhridoy/terra-client/compare/v0.0.6...v0.0.7\n",
+      "assets": [
+        {
+          "name": "darwin-aarch64-Terra.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.7/darwin-aarch64-Terra.app.tar.gz",
+          "size": 12466909
+        },
+        {
+          "name": "darwin-aarch64-Terra.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.7/darwin-aarch64-Terra.app.tar.gz.sig",
+          "size": 420
+        },
+        {
+          "name": "darwin-aarch64-Terra_0.0.7_aarch64.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.7/darwin-aarch64-Terra_0.0.7_aarch64.dmg",
+          "size": 12202426
+        },
+        {
+          "name": "darwin-x86_64-Terra.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.7/darwin-x86_64-Terra.app.tar.gz",
+          "size": 12819289
+        },
+        {
+          "name": "darwin-x86_64-Terra.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.7/darwin-x86_64-Terra.app.tar.gz.sig",
+          "size": 420
+        },
+        {
+          "name": "darwin-x86_64-Terra_0.0.7_x64.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.7/darwin-x86_64-Terra_0.0.7_x64.dmg",
+          "size": 12679098
+        },
+        {
+          "name": "linux-aarch64-Terra_0.0.7_aarch64.AppImage",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.7/linux-aarch64-Terra_0.0.7_aarch64.AppImage",
+          "size": 90241544
+        },
+        {
+          "name": "linux-aarch64-Terra_0.0.7_aarch64.AppImage.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.7/linux-aarch64-Terra_0.0.7_aarch64.AppImage.sig",
+          "size": 436
+        },
+        {
+          "name": "linux-aarch64-Terra_0.0.7_arm64.deb",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.7/linux-aarch64-Terra_0.0.7_arm64.deb",
+          "size": 15167976
+        },
+        {
+          "name": "linux-aarch64-Terra_0.0.7_arm64.deb.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.7/linux-aarch64-Terra_0.0.7_arm64.deb.sig",
+          "size": 428
+        },
+        {
+          "name": "linux-x86_64-Terra_0.0.7_amd64.AppImage",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.7/linux-x86_64-Terra_0.0.7_amd64.AppImage",
+          "size": 91716088
+        },
+        {
+          "name": "linux-x86_64-Terra_0.0.7_amd64.AppImage.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.7/linux-x86_64-Terra_0.0.7_amd64.AppImage.sig",
+          "size": 436
+        },
+        {
+          "name": "linux-x86_64-Terra_0.0.7_amd64.deb",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.7/linux-x86_64-Terra_0.0.7_amd64.deb",
+          "size": 14613268
+        },
+        {
+          "name": "linux-x86_64-Terra_0.0.7_amd64.deb.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.7/linux-x86_64-Terra_0.0.7_amd64.deb.sig",
+          "size": 428
+        },
+        {
+          "name": "terra-latest.json",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.7/terra-latest.json",
+          "size": 5000
+        },
+        {
+          "name": "windows-aarch64-Terra_0.0.7_arm64-setup.exe",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.7/windows-aarch64-Terra_0.0.7_arm64-setup.exe",
+          "size": 7594626
+        },
+        {
+          "name": "windows-aarch64-Terra_0.0.7_arm64-setup.exe.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.7/windows-aarch64-Terra_0.0.7_arm64-setup.exe.sig",
+          "size": 436
+        },
+        {
+          "name": "windows-x86_64-Terra_0.0.7_x64-setup.exe",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.7/windows-x86_64-Terra_0.0.7_x64-setup.exe",
+          "size": 8573537
+        },
+        {
+          "name": "windows-x86_64-Terra_0.0.7_x64-setup.exe.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.7/windows-x86_64-Terra_0.0.7_x64-setup.exe.sig",
+          "size": 432
+        }
+      ]
+    },
+    {
+      "tag_name": "v0.0.6",
+      "name": "v0.0.6",
+      "published_at": "2026-11-03T13:57:40Z",
+      "html_url": "https://github.com/nhridoy/terra-client/releases/tag/v0.0.6",
+      "prerelease": false,
+      "body": "**Full Changelog**: https://github.com/nhridoy/terra-client/compare/v0.0.5...v0.0.6\n",
+      "assets": [
+        {
+          "name": "darwin-aarch64-Terra.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.6/darwin-aarch64-Terra.app.tar.gz",
+          "size": 12467745
+        },
+        {
+          "name": "darwin-aarch64-Terra.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.6/darwin-aarch64-Terra.app.tar.gz.sig",
+          "size": 420
+        },
+        {
+          "name": "darwin-aarch64-Terra_0.0.6_aarch64.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.6/darwin-aarch64-Terra_0.0.6_aarch64.dmg",
+          "size": 12202906
+        },
+        {
+          "name": "darwin-x86_64-Terra.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.6/darwin-x86_64-Terra.app.tar.gz",
+          "size": 12819333
+        },
+        {
+          "name": "darwin-x86_64-Terra.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.6/darwin-x86_64-Terra.app.tar.gz.sig",
+          "size": 420
+        },
+        {
+          "name": "darwin-x86_64-Terra_0.0.6_x64.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.6/darwin-x86_64-Terra_0.0.6_x64.dmg",
+          "size": 12678616
+        },
+        {
+          "name": "linux-aarch64-Terra_0.0.6_aarch64.AppImage",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.6/linux-aarch64-Terra_0.0.6_aarch64.AppImage",
+          "size": 90233352
+        },
+        {
+          "name": "linux-aarch64-Terra_0.0.6_aarch64.AppImage.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.6/linux-aarch64-Terra_0.0.6_aarch64.AppImage.sig",
+          "size": 436
+        },
+        {
+          "name": "linux-aarch64-Terra_0.0.6_arm64.deb",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.6/linux-aarch64-Terra_0.0.6_arm64.deb",
+          "size": 15168952
+        },
+        {
+          "name": "linux-aarch64-Terra_0.0.6_arm64.deb.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.6/linux-aarch64-Terra_0.0.6_arm64.deb.sig",
+          "size": 428
+        },
+        {
+          "name": "linux-x86_64-Terra_0.0.6_amd64.AppImage",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.6/linux-x86_64-Terra_0.0.6_amd64.AppImage",
+          "size": 91728376
+        },
+        {
+          "name": "linux-x86_64-Terra_0.0.6_amd64.AppImage.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.6/linux-x86_64-Terra_0.0.6_amd64.AppImage.sig",
+          "size": 436
+        },
+        {
+          "name": "linux-x86_64-Terra_0.0.6_amd64.deb",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.6/linux-x86_64-Terra_0.0.6_amd64.deb",
+          "size": 14612060
+        },
+        {
+          "name": "linux-x86_64-Terra_0.0.6_amd64.deb.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.6/linux-x86_64-Terra_0.0.6_amd64.deb.sig",
+          "size": 428
+        },
+        {
+          "name": "terra-latest.json",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.6/terra-latest.json",
+          "size": 5000
+        },
+        {
+          "name": "windows-aarch64-Terra_0.0.6_arm64-setup.exe",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.6/windows-aarch64-Terra_0.0.6_arm64-setup.exe",
+          "size": 7601119
+        },
+        {
+          "name": "windows-aarch64-Terra_0.0.6_arm64-setup.exe.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.6/windows-aarch64-Terra_0.0.6_arm64-setup.exe.sig",
+          "size": 436
+        },
+        {
+          "name": "windows-x86_64-Terra_0.0.6_x64-setup.exe",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.6/windows-x86_64-Terra_0.0.6_x64-setup.exe",
+          "size": 8579205
+        },
+        {
+          "name": "windows-x86_64-Terra_0.0.6_x64-setup.exe.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.6/windows-x86_64-Terra_0.0.6_x64-setup.exe.sig",
+          "size": 432
+        }
+      ]
+    },
+    {
+      "tag_name": "v0.0.5",
+      "name": "v0.0.5",
+      "published_at": "2026-11-02T16:00:24Z",
+      "html_url": "https://github.com/nhridoy/terra-client/releases/tag/v0.0.5",
+      "prerelease": false,
+      "body": "**Full Changelog**: https://github.com/nhridoy/terra-client/compare/v0.0.4...v0.0.5\n",
+      "assets": [
+        {
+          "name": "darwin-aarch64-Terra.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.5/darwin-aarch64-Terra.app.tar.gz",
+          "size": 12466735
+        },
+        {
+          "name": "darwin-aarch64-Terra.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.5/darwin-aarch64-Terra.app.tar.gz.sig",
+          "size": 420
+        },
+        {
+          "name": "darwin-aarch64-Terra_0.0.5_aarch64.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.5/darwin-aarch64-Terra_0.0.5_aarch64.dmg",
+          "size": 12203162
+        },
+        {
+          "name": "darwin-x86_64-Terra.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.5/darwin-x86_64-Terra.app.tar.gz",
+          "size": 12818272
+        },
+        {
+          "name": "darwin-x86_64-Terra.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.5/darwin-x86_64-Terra.app.tar.gz.sig",
+          "size": 420
+        },
+        {
+          "name": "darwin-x86_64-Terra_0.0.5_x64.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.5/darwin-x86_64-Terra_0.0.5_x64.dmg",
+          "size": 12679426
+        },
+        {
+          "name": "linux-aarch64-Terra_0.0.5_aarch64.AppImage",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.5/linux-aarch64-Terra_0.0.5_aarch64.AppImage",
+          "size": 90233352
+        },
+        {
+          "name": "linux-aarch64-Terra_0.0.5_aarch64.AppImage.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.5/linux-aarch64-Terra_0.0.5_aarch64.AppImage.sig",
+          "size": 436
+        },
+        {
+          "name": "linux-aarch64-Terra_0.0.5_arm64.deb",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.5/linux-aarch64-Terra_0.0.5_arm64.deb",
+          "size": 15170760
+        },
+        {
+          "name": "linux-aarch64-Terra_0.0.5_arm64.deb.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.5/linux-aarch64-Terra_0.0.5_arm64.deb.sig",
+          "size": 428
+        },
+        {
+          "name": "linux-x86_64-Terra_0.0.5_amd64.AppImage",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.5/linux-x86_64-Terra_0.0.5_amd64.AppImage",
+          "size": 91724280
+        },
+        {
+          "name": "linux-x86_64-Terra_0.0.5_amd64.AppImage.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.5/linux-x86_64-Terra_0.0.5_amd64.AppImage.sig",
+          "size": 436
+        },
+        {
+          "name": "linux-x86_64-Terra_0.0.5_amd64.deb",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.5/linux-x86_64-Terra_0.0.5_amd64.deb",
+          "size": 14612392
+        },
+        {
+          "name": "linux-x86_64-Terra_0.0.5_amd64.deb.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.5/linux-x86_64-Terra_0.0.5_amd64.deb.sig",
+          "size": 428
+        },
+        {
+          "name": "terra-latest.json",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.5/terra-latest.json",
+          "size": 5000
+        },
+        {
+          "name": "windows-aarch64-Terra_0.0.5_arm64-setup.exe",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.5/windows-aarch64-Terra_0.0.5_arm64-setup.exe",
+          "size": 7593684
+        },
+        {
+          "name": "windows-aarch64-Terra_0.0.5_arm64-setup.exe.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.5/windows-aarch64-Terra_0.0.5_arm64-setup.exe.sig",
+          "size": 436
+        },
+        {
+          "name": "windows-x86_64-Terra_0.0.5_x64-setup.exe",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.5/windows-x86_64-Terra_0.0.5_x64-setup.exe",
+          "size": 8568584
+        },
+        {
+          "name": "windows-x86_64-Terra_0.0.5_x64-setup.exe.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.5/windows-x86_64-Terra_0.0.5_x64-setup.exe.sig",
+          "size": 432
+        }
+      ]
+    },
+    {
+      "tag_name": "v0.0.4",
+      "name": "v0.0.4",
+      "published_at": "2026-11-02T14:00:32Z",
+      "html_url": "https://github.com/nhridoy/terra-client/releases/tag/v0.0.4",
+      "prerelease": false,
+      "body": "**Full Changelog**: https://github.com/nhridoy/terra-client/compare/v0.0.3...v0.0.4\n",
+      "assets": [
+        {
+          "name": "darwin-aarch64-Terra.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.4/darwin-aarch64-Terra.app.tar.gz",
+          "size": 12180782
+        },
+        {
+          "name": "darwin-aarch64-Terra.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.4/darwin-aarch64-Terra.app.tar.gz.sig",
+          "size": 420
+        },
+        {
+          "name": "darwin-aarch64-Terra_0.0.4_aarch64.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.4/darwin-aarch64-Terra_0.0.4_aarch64.dmg",
+          "size": 11932939
+        },
+        {
+          "name": "darwin-x86_64-Terra.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.4/darwin-x86_64-Terra.app.tar.gz",
+          "size": 12526515
+        },
+        {
+          "name": "darwin-x86_64-Terra.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.4/darwin-x86_64-Terra.app.tar.gz.sig",
+          "size": 420
+        },
+        {
+          "name": "darwin-x86_64-Terra_0.0.4_x64.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.4/darwin-x86_64-Terra_0.0.4_x64.dmg",
+          "size": 12399342
+        },
+        {
+          "name": "linux-x86_64-Terra_0.0.4_amd64.AppImage",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.4/linux-x86_64-Terra_0.0.4_amd64.AppImage",
+          "size": 91240952
+        },
+        {
+          "name": "linux-x86_64-Terra_0.0.4_amd64.AppImage.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.4/linux-x86_64-Terra_0.0.4_amd64.AppImage.sig",
+          "size": 436
+        },
+        {
+          "name": "linux-x86_64-Terra_0.0.4_amd64.deb",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.4/linux-x86_64-Terra_0.0.4_amd64.deb",
+          "size": 14060706
+        },
+        {
+          "name": "linux-x86_64-Terra_0.0.4_amd64.deb.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.4/linux-x86_64-Terra_0.0.4_amd64.deb.sig",
+          "size": 428
+        },
+        {
+          "name": "terra-latest.json",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.4/terra-latest.json",
+          "size": 3172
+        },
+        {
+          "name": "windows-x86_64-Terra_0.0.4_x64-setup.exe",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.4/windows-x86_64-Terra_0.0.4_x64-setup.exe",
+          "size": 8458755
+        },
+        {
+          "name": "windows-x86_64-Terra_0.0.4_x64-setup.exe.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.4/windows-x86_64-Terra_0.0.4_x64-setup.exe.sig",
+          "size": 432
+        }
+      ]
+    },
+    {
+      "tag_name": "v0.0.3",
+      "name": "v0.0.3",
+      "published_at": "2026-11-02T13:14:45Z",
+      "html_url": "https://github.com/nhridoy/terra-client/releases/tag/v0.0.3",
+      "prerelease": false,
+      "body": "**Full Changelog**: https://github.com/nhridoy/terra-client/commits/v0.0.3\n",
+      "assets": [
+        {
+          "name": "darwin-aarch64-Terra.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.3/darwin-aarch64-Terra.app.tar.gz",
+          "size": 12180911
+        },
+        {
+          "name": "darwin-aarch64-Terra.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.3/darwin-aarch64-Terra.app.tar.gz.sig",
+          "size": 420
+        },
+        {
+          "name": "darwin-aarch64-Terra_0.0.3_aarch64.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.3/darwin-aarch64-Terra_0.0.3_aarch64.dmg",
+          "size": 11933586
+        },
+        {
+          "name": "darwin-x86_64-Terra.app.tar.gz",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.3/darwin-x86_64-Terra.app.tar.gz",
+          "size": 12527825
+        },
+        {
+          "name": "darwin-x86_64-Terra.app.tar.gz.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.3/darwin-x86_64-Terra.app.tar.gz.sig",
+          "size": 420
+        },
+        {
+          "name": "darwin-x86_64-Terra_0.0.3_x64.dmg",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.3/darwin-x86_64-Terra_0.0.3_x64.dmg",
+          "size": 12397107
+        },
+        {
+          "name": "linux-x86_64-Terra_0.0.3_amd64.AppImage",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.3/linux-x86_64-Terra_0.0.3_amd64.AppImage",
+          "size": 91249144
+        },
+        {
+          "name": "linux-x86_64-Terra_0.0.3_amd64.AppImage.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.3/linux-x86_64-Terra_0.0.3_amd64.AppImage.sig",
+          "size": 436
+        },
+        {
+          "name": "linux-x86_64-Terra_0.0.3_amd64.deb",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.3/linux-x86_64-Terra_0.0.3_amd64.deb",
+          "size": 14060842
+        },
+        {
+          "name": "linux-x86_64-Terra_0.0.3_amd64.deb.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.3/linux-x86_64-Terra_0.0.3_amd64.deb.sig",
+          "size": 428
+        },
+        {
+          "name": "terra-latest.json",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.3/terra-latest.json",
+          "size": 3163
+        },
+        {
+          "name": "windows-x86_64-Terra_0.0.3_x64-setup.exe",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.3/windows-x86_64-Terra_0.0.3_x64-setup.exe",
+          "size": 8455588
+        },
+        {
+          "name": "windows-x86_64-Terra_0.0.3_x64-setup.exe.sig",
+          "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.3/windows-x86_64-Terra_0.0.3_x64-setup.exe.sig",
+          "size": 432
+        }
+      ]
+    }
+  ]
 }

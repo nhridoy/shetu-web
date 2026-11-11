@@ -1,0 +1,77 @@
+import { marked } from 'marked';
+import sanitizeHtml from 'sanitize-html';
+import snapshot from '../data/releases.json';
+import { getReleases } from './github';
+import type { Release } from './releases';
+
+const fallback = snapshot.releases as Release[];
+let buildReleases: Promise<Release[]> | null = null;
+
+/** All releases, newest first; the committed snapshot when GitHub is unreachable. */
+export function loadReleases(fetchImpl?: typeof fetch): Promise<Release[]> {
+  const load = () =>
+    getReleases({
+      fallback,
+      fetchImpl,
+      token: process.env.GITHUB_TOKEN,
+    }).then((result) => result.releases);
+  if (fetchImpl) return load();
+  buildReleases ??= load();
+  return buildReleases;
+}
+
+/** Drops the "## Install" section every GitHub release body repeats. */
+export function cleanNotes(body: string): string {
+  const kept: string[] = [];
+  let skipping = false;
+  for (const line of body.split('\n')) {
+    if (/^## /.test(line)) skipping = /^## Install\b/.test(line);
+    if (!skipping) kept.push(line);
+  }
+  return kept.join('\n').trim();
+}
+
+/** False when only the "What's Changed" heading or "Full Changelog" link is left. */
+export function hasNotes(body: string): boolean {
+  return cleanNotes(body)
+    .split('\n')
+    .some(
+      (line) =>
+        line.trim() !== '' &&
+        !/^## What's Changed\s*$/.test(line) &&
+        !/^\*\*Full Changelog\*\*:/.test(line),
+    );
+}
+
+/** Release notes are untrusted: render GitHub-flavoured Markdown, then sanitize. */
+export function renderNotes(body: string): string {
+  const html = marked.parse(cleanNotes(body), { gfm: true, async: false });
+  return sanitizeHtml(html, {
+    allowedTags: [
+      'p',
+      'ul',
+      'ol',
+      'li',
+      'a',
+      'code',
+      'pre',
+      'strong',
+      'em',
+      'h2',
+      'h3',
+      'h4',
+      'blockquote',
+      'br',
+      'hr',
+    ],
+    allowedAttributes: { a: ['href'] },
+    allowedSchemes: ['http', 'https', 'mailto'],
+    transformTags: {
+      a: sanitizeHtml.simpleTransform('a', { rel: 'nofollow noopener' }),
+    },
+  });
+}
+
+export function versionSlug(tag: string): string {
+  return tag.replaceAll('.', '-');
+}

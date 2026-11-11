@@ -24,11 +24,20 @@ interface Options {
   now?: () => number;
   ttlMs?: number;
   apiBase?: string;
+  /** Optional GitHub token (build time only) for a higher rate limit. */
+  token?: string;
 }
 
-async function request(url: string, fetchImpl: typeof fetch): Promise<unknown> {
+async function request(
+  url: string,
+  fetchImpl: typeof fetch,
+  token?: string,
+): Promise<unknown> {
   const response = await fetchImpl(url, {
-    headers: { Accept: 'application/vnd.github+json' },
+    headers: {
+      Accept: 'application/vnd.github+json',
+      ...(token && { Authorization: `Bearer ${token}` }),
+    },
   });
   if (!response.ok) {
     throw new Error(`GitHub request failed: ${response.status}`);
@@ -114,6 +123,7 @@ export async function getReleases(
     now = Date.now,
     ttlMs = TTL_MS,
     apiBase = API_BASE,
+    token,
     fallback,
   } = options;
   const key = `terra:releases:${apiBase}`;
@@ -121,9 +131,15 @@ export async function getReleases(
   if (cached) return { releases: cached, source: 'live' };
 
   try {
-    const payload = await request(`${apiBase}/releases?per_page=20`, fetchImpl);
+    // shortcut: one page of 100 releases; paginate once there are more.
+    const payload = await request(
+      `${apiBase}/releases?per_page=100`,
+      fetchImpl,
+      token,
+    );
     if (!Array.isArray(payload)) throw new Error('Invalid releases payload');
     const releases = payload
+      .filter((raw) => !(raw as { draft?: boolean }).draft)
       .map(parseRelease)
       .filter((release) => release.tag_name);
     writeCache(cache, key, releases, now);
