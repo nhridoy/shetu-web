@@ -1,6 +1,6 @@
 export const SITE_NAME = 'Terra';
 export const SITE_DESCRIPTION =
-  'The open-source SSH workspace. Encrypted vaults, split terminals, SFTP, and team-shared hosts. Windows, macOS, and Linux.';
+  'Terra is a free, open-source SSH client for macOS, Windows and Linux with split terminals, SFTP, port forwarding and encrypted sync you can self-host.';
 
 export const REPOS = {
   monorepo: 'https://github.com/nhridoy/terra',

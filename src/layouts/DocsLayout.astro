@@ -1,6 +1,8 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import DocsNav from '../components/docs/DocsNav.astro';
+import { breadcrumbJsonLd, techArticleJsonLd } from '../lib/seo';
+import { cleanPath } from '../lib/site';
 import BaseLayout from './BaseLayout.astro';
 
 interface Heading {
@@ -15,6 +17,7 @@ interface Props {
   headings?: Heading[];
   prev?: CollectionEntry<'docs'> | null;
   next?: CollectionEntry<'docs'> | null;
+  updated?: string;
 }
 
 const {
@@ -23,13 +26,26 @@ const {
   headings = [],
   prev = null,
   next = null,
+  updated,
 } = Astro.props;
+const path = cleanPath(Astro.url.pathname);
 const toc = headings.filter(
   (heading) => heading.depth === 2 || heading.depth === 3,
 );
 ---
 
-<BaseLayout title={`${title} · Terra Docs`} description={description}>
+<BaseLayout
+  title={`${title} · Terra Docs`}
+  description={description}
+  type="article"
+  jsonLd={[
+    techArticleJsonLd({ title, description, path, updated }),
+    breadcrumbJsonLd([
+      { name: 'Docs', path: '/docs' },
+      { name: title, path },
+    ]),
+  ]}
+>
   <div class="mx-auto grid max-w-[1200px] gap-10 px-5 sm:px-6 py-10 lg:grid-cols-[210px_minmax(0,1fr)_190px] lg:py-14">
     <aside class="lg:sticky lg:top-24 lg:self-start">
       <details class="panel p-4 lg:hidden">

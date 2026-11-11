@@ -13,21 +13,10 @@ import SelfHostSection from '../components/marketing/SelfHostSection.astro';
 import SftpPanes from '../components/mockups/SftpPanes.astro';
 import TerminalPane from '../components/mockups/TerminalPane.astro';
 import TerraWindow from '../components/mockups/TerraWindow.astro';
+import releases from '../data/releases.json';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SITE_DESCRIPTION } from '../lib/site';
-
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'SoftwareApplication',
-  name: 'Terra',
-  applicationCategory: 'DeveloperApplication',
-  operatingSystem: 'Windows, macOS, Linux',
-  license: 'https://opensource.org/licenses/MIT',
-  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-  codeRepository: 'https://github.com/nhridoy/terra',
-  downloadUrl: 'https://github.com/nhridoy/terra-client/releases/latest',
-  description: SITE_DESCRIPTION,
-};
+import type { Release } from '../lib/releases';
+import { PAGES, softwareJsonLd } from '../lib/seo';
 
 const members = [
   {
@@ -48,9 +37,8 @@ const members = [
 ---
 
 <BaseLayout
-  title="Terra · Open-source SSH client and Termius alternative"
-  description={SITE_DESCRIPTION}
-  jsonLd={jsonLd}
+  {...PAGES['/']}
+  jsonLd={softwareJsonLd(releases.latest as Release)}
 >
   <Hero />
   <FactStrip />

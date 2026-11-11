@@ -23,11 +23,15 @@ const requirements = [
     text: 'x64 or ARM64. Use the AppImage (needs libfuse2), or the .deb on Debian and Ubuntu.',
   },
 ];
+
+import releases from '../data/releases.json';
+import type { Release } from '../lib/releases';
+import { PAGES, softwareJsonLd } from '../lib/seo';
 ---
 
 <BaseLayout
-  title="Download Terra"
-  description="Download Terra for Windows, macOS, or Linux. Free and open source: split terminals, SFTP, port forwarding and an encrypted vault."
+  {...PAGES['/download']}
+  jsonLd={softwareJsonLd(releases.latest as Release)}
 >
   <PageHeader
     eyebrow="Download"

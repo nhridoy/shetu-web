@@ -7,12 +7,11 @@ const docs = (await getCollection('docs')).sort(
 );
 const desktop = docs.filter((entry) => entry.data.section === 'desktop');
 const server = docs.filter((entry) => entry.data.section === 'server');
+
+import { PAGES } from '../../lib/seo';
 ---
 
-<BaseLayout
-  title="Terra docs"
-  description="Install Terra, self-host the sync server, and read the security reference."
->
+<BaseLayout {...PAGES['/docs']}>
   <section class="mx-auto max-w-[1200px] px-5 sm:px-6 py-16 md:py-20">
     <p class="eyebrow">
       Documentation

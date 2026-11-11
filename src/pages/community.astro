@@ -68,12 +68,11 @@ const groups = [
     ],
   },
 ];
+
+import { PAGES } from '../lib/seo';
 ---
 
-<BaseLayout
-  title="Community · Terra"
-  description="Contribute to Terra, report issues, and read the MIT license."
->
+<BaseLayout {...PAGES['/community']}>
   <PageHeader
     eyebrow="Community"
     title="Built in the open."
