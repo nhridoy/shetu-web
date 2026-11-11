@@ -298,7 +298,7 @@ Use six full screenshots, not all fourteen:
 | `team-vault.webp` | 13:58:27 team detail       | Teams showcase    |
 | `themes.webp`     | 14:05:35 settings/themes   | Themes showcase   |
 
-An additional crop, `terminal-inset.webp`, comes from the clean 13:59:48 `whoami` capture for the hero inset. The split capture shows tabs and panes; the inset keeps the hero terminal readable without a personal prompt.
+An additional clean crop, `terminal-inset.webp`, comes from the 13:59:48 `whoami` capture. The homepage hero uses the host screenshot alone; the split capture is the terminal showcase. The inset is kept as an optional clean terminal asset.
 
 Do not use the six-pane OpenCode screenshot, the save-preset modal, the SFTP empty split, or the create-team modal. They either contain third-party product names, too much personal context, or are not compelling enough.
 

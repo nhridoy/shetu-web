@@ -1,8 +1,6 @@
 ---
-import { Image } from 'astro:assets';
 import { ArrowUpRight } from '@phosphor-icons/react';
 import hosts from '../../assets/app/hosts.webp';
-import terminalInset from '../../assets/app/terminal-inset.webp';
 import { REPOS } from '../../lib/site';
 import DownloadPanel from '../download/DownloadPanel';
 import AppWindow from './AppWindow.astro';
@@ -65,19 +63,6 @@ import AppWindow from './AppWindow.astro';
         loading="eager"
         fetchpriority="high"
       />
-
-      <div
-        class="absolute -bottom-10 -right-6 hidden w-[42%] overflow-hidden rounded-xl border border-line bg-surface shadow-2xl shadow-black/70 md:block"
-      >
-        <Image
-          src={terminalInset}
-          alt="Terra terminal connected to a host"
-          widths={[400, 640, 1000]}
-          sizes="420px"
-          loading="eager"
-          class="h-auto w-full"
-        />
-      </div>
     </div>
   </div>
 </section>

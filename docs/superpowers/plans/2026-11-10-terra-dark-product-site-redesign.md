@@ -118,21 +118,21 @@ def main() -> None:
     hosts = crop_chrome(load("Screenshot From 2026-11-10 13-57-06.png"))
     blur_sidebar_footer(hosts)
     blur_host_card(hosts)
-    save(hosts, "hosts.webp")
+    save(hosts.crop((0, 0, 1366, 500)), "hosts.webp")
 
     edit = crop_chrome(load("Screenshot From 2026-11-10 13-57-26.png"))
     blur_sidebar_footer(edit)
     blur_host_card(edit)
     blur_edit_modal(edit)
-    save(edit, "edit-host.webp")
+    save(edit.crop((0, 0, 1366, 500)), "edit-host.webp")
 
     terminal = crop_chrome(load("Screenshot From 2026-11-10 14-00-25.png"))
     blur_terminal_split(terminal)
-    save(terminal, "terminal.webp")
+    save(terminal.crop((0, 0, 1366, 460)), "terminal.webp")
 
     inset = crop_chrome(load("Screenshot From 2026-11-10 13-59-48.png"))
     blur_terminal_inset(inset)
-    save(inset.crop((0, 0, 1000, 360)), "terminal-inset.webp")
+    save(inset.crop((0, 0, 1000, 220)), "terminal-inset.webp")
 
     editor = crop_chrome(load("Screenshot From 2026-11-10 14-05-10.png"))
     blur_editor(editor)
@@ -141,7 +141,7 @@ def main() -> None:
     team = crop_chrome(load("Screenshot From 2026-11-10 13-58-27.png"))
     blur_sidebar_footer(team)
     blur_team(team)
-    save(team, "team-vault.webp")
+    save(team.crop((0, 0, 1366, 500)), "team-vault.webp")
 
     themes = crop_chrome(load("Screenshot From 2026-11-10 14-05-35.png"))
     blur_sidebar_footer(themes)
@@ -187,7 +187,7 @@ for path in sorted(Path("src/assets/app").glob("*.webp")):
 PY
 ```
 
-Expected: full screenshots are 1366×738; `terminal-inset.webp` is 1000×360; each file is reasonably small.
+Expected: hosts, edit-host, and team-vault are 1366×500; terminal is 1366×460; editor and themes are 1366×738; `terminal-inset.webp` is 1000×220; each file is reasonably small.
 
 **Step 5: Commit**
 
