@@ -44,7 +44,7 @@ const latest = latestRelease(await loadReleases());
     lede="Terra gives you the SSH client you use every day, split terminals, SFTP, port forwarding and synced hosts, without a subscription and with sync you can host yourself."
   >
     <div class="mt-8 flex flex-wrap items-center gap-3">
-      <DownloadPanel client:load variant="hero" />
+      <DownloadPanel client:idle={{ timeout: 1000 }} variant="hero" />
       <a href="#compare" class="btn-ghost px-5 py-3">See the comparison</a>
     </div>
   </PageHeader>

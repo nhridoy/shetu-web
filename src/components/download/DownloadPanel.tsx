@@ -83,7 +83,7 @@ function HeroDownload({
       <a
         href={href}
         data-testid="hero-download"
-        className="btn-primary rounded-r-none px-5 py-3"
+        className="btn-primary min-w-[13rem] rounded-r-none px-5 py-3"
       >
         {label}
       </a>

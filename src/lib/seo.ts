@@ -166,8 +166,13 @@ export function techArticleJsonLd(input: {
     headline: input.title,
     description: input.description,
     url: absoluteUrl(input.path),
+    image: absoluteUrl(ogImagePath(input.path)),
+    author: { '@type': 'Organization', name: 'Terra', url: `${SITE_URL}/` },
     ...(input.published && { datePublished: input.published }),
-    ...(input.updated && { dateModified: input.updated }),
+    // Google's Rich Results Test rejects a bare date here; send a full timestamp.
+    ...(input.updated && {
+      dateModified: new Date(input.updated).toISOString(),
+    }),
     publisher: { '@type': 'Organization', name: 'Terra', url: `${SITE_URL}/` },
   };
 }
