@@ -90,3 +90,19 @@ export function releasePageMeta(
     noindex: !hasNotes(release.body),
   };
 }
+
+/** Plain-text summary for the changelog index: no links to tab into, no "Full Changelog" line. */
+export function notesExcerpt(body: string, max = 180): string {
+  const notes = cleanNotes(body)
+    .split('\n')
+    .filter((line) => !/^\*\*Full Changelog\*\*:/.test(line))
+    .join('\n');
+  const text = sanitizeHtml(marked.parse(notes, { gfm: true, async: false }), {
+    allowedTags: [],
+    allowedAttributes: {},
+  })
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (text.length <= max) return text;
+  return `${text.slice(0, text.lastIndexOf(' ', max))}…`;
+}

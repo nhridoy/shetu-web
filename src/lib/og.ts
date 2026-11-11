@@ -26,11 +26,14 @@ async function fetchSatoshi(fetchImpl: typeof fetch): Promise<OgFont[]> {
       const css = await (
         await fetchImpl(
           `https://api.fontshare.com/v2/css?f[]=satoshi@${weight}&display=swap`,
+          { signal: AbortSignal.timeout(10_000) },
         )
       ).text();
       const url = css.match(/url\('([^']+\.ttf)'\)/)?.[1];
       if (!url) throw new Error('Satoshi TTF not found');
-      const res = await fetchImpl(url.startsWith('//') ? `https:${url}` : url);
+      const res = await fetchImpl(url.startsWith('//') ? `https:${url}` : url, {
+        signal: AbortSignal.timeout(10_000),
+      });
       if (!res.ok) throw new Error(`Satoshi download failed: ${res.status}`);
       return {
         name: 'Satoshi',

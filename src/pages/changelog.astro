@@ -5,7 +5,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import {
   hasNotes,
   loadReleases,
-  renderNotes,
+  notesExcerpt,
   versionSlug,
 } from '../lib/changelog';
 import { formatReleaseDate } from '../lib/releases';
@@ -45,7 +45,7 @@ const releases = await loadReleases();
               </time>
             </div>
             {hasNotes(release.body) ? (
-              <div class="docs-prose mt-3 line-clamp-4 text-sm" set:html={renderNotes(release.body)} />
+              <p class="mt-3 text-sm leading-relaxed text-muted [overflow-wrap:anywhere]">{notesExcerpt(release.body)}</p>
             ) : (
               <p class="mt-3 text-sm text-muted">Downloads only, no written notes.</p>
             )}

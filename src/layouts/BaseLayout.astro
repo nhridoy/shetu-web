@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import Footer from '../components/layout/Footer.astro';
 import Header from '../components/layout/Header.astro';
-import { absoluteUrl, ogImagePath, siteJsonLd } from '../lib/seo';
+import { absoluteUrl, jsonLdScript, ogImagePath, siteJsonLd } from '../lib/seo';
 import { cleanPath, SITE_NAME } from '../lib/site';
 
 interface Props {
@@ -60,7 +60,7 @@ const structuredData = [...siteJsonLd(), ...[jsonLd].flat()];
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={imageUrl} />
     {structuredData.map((data) => (
-      <script type="application/ld+json" set:html={JSON.stringify(data)} />
+      <script type="application/ld+json" set:html={jsonLdScript(data)} />
     ))}
   </head>
   <body class="min-h-screen overflow-x-clip bg-paper text-ink antialiased">

@@ -2,6 +2,7 @@
 import { ArrowRight, Check } from '@phosphor-icons/react';
 import DownloadPanel from '../components/download/DownloadPanel';
 import Comparison from '../components/marketing/Comparison.astro';
+import FaqSection from '../components/marketing/FaqSection.astro';
 import PageHeader from '../components/ui/PageHeader.astro';
 import releases from '../data/releases.json';
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -23,7 +24,7 @@ const reasons = [
   },
   {
     title: 'Encrypted before it leaves your device',
-    body: 'Argon2id and XChaCha20-Poly1305 seal hosts, passwords and private keys on your machine. SSH connects directly to your servers.',
+    body: 'Argon2id and XChaCha20-Poly1305 seal host addresses, usernames, passwords and private keys on your machine. SSH connects directly to your servers.',
   },
 ];
 const gaps = [
@@ -94,4 +95,6 @@ const gaps = [
       </a>
     </div>
   </section>
+
+  <FaqSection />
 </BaseLayout>

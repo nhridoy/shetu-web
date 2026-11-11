@@ -34,6 +34,8 @@ async function request(
   token?: string,
 ): Promise<unknown> {
   const response = await fetchImpl(url, {
+    // A hung request must not stall the build or a visitor's page.
+    signal: AbortSignal.timeout(10_000),
     headers: {
       Accept: 'application/vnd.github+json',
       ...(token && { Authorization: `Bearer ${token}` }),

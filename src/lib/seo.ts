@@ -148,3 +148,8 @@ export function techArticleJsonLd(input: {
     publisher: { '@type': 'Organization', name: 'Terra', url: `${SITE_URL}/` },
   };
 }
+
+/** JSON for a <script type="application/ld+json"> block; `<` escaped so data cannot close the tag. */
+export function jsonLdScript(data: object): string {
+  return JSON.stringify(data).replace(/</g, '\\u003c');
+}
