@@ -23,11 +23,14 @@
     "@astrojs/react": "^7.1.4",
     "@astrojs/sitemap": "^3.7.4",
     "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@fontsource/inter": "^5.3.0",
     "@phosphor-icons/react": "^2.1.10",
     "@tailwindcss/vite": "^4.3.5",
     "astro": "^7.4.7",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
+    "satori": "^0.63.2",
+    "sharp": "0.35.5",
     "tailwindcss": "^4.3.5"
   },
   "allowScripts": {
