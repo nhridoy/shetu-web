@@ -15,7 +15,7 @@ Terra is designed so the sync server never needs your plaintext secrets. This pa
 2. **Key-encryption key.** Terra derives it from your account password with Argon2id (32 MiB memory, 2 passes) on your device.
 3. **Data key.** A random per-account key, wrapped by the key-encryption key. It encrypts vault records with XChaCha20-Poly1305 before they are stored or synced.
 4. **Identity key.** Each account has an X25519 key pair used to seal team vault keys.
-5. **Team vault keys.** Each shared vault has its own key, sealed to every member's public key with X25519, HKDF-SHA256 and XChaCha20-Poly1305. The key rotates when a member is removed.
+5. **Team vault keys.** Each shared vault has its own key, sealed to every member's public key with X25519, HKDF-SHA256 and XChaCha20-Poly1305. Removing a member flags the vault for a key rotation, which an owner or admin completes with **Rotate keys**.
 
 Sign-in uses a separate verifier derived from the same key with a server salt, answered with an HMAC-SHA256 challenge proof. The server never receives the password itself.
 
@@ -41,7 +41,7 @@ The server never receives SSH traffic. Connections go directly from the client t
 
 **Compromised sync server.** An attacker can read the visible fields above, read ciphertext and wrapped keys, and delete or withhold records. They cannot decrypt the vault without your password or recovery kit.
 
-**Removed team member.** Removing a member rotates the vault key, so they cannot read new changes. Data already cached on their device cannot be wiped remotely.
+**Removed team member.** Removing a member flags each shared vault for a key rotation. Once an owner or admin completes it with **Rotate keys**, the removed member cannot read new changes. Data already cached on their device cannot be wiped remotely.
 
 **Malicious sync response.** Encrypted records are authenticated with XChaCha20-Poly1305. Tampered ciphertext fails to decrypt.
 

@@ -16,7 +16,7 @@ const teams = [
   'Create teams and invite people who already have an account',
   'Owner, admin and member roles',
   'Each shared vault has its own key, sealed to every member',
-  'The key rotates when a member is removed',
+  'Removing a member flags the vault; an owner or admin rotates its key',
 ];
 const steps = `openssl rand -base64 48    # JWT_SECRET
 docker compose up -d

@@ -35,6 +35,9 @@ const BANNED = [
   /two-factor/i,
   // Public keys are visible to the server; only private keys stay encrypted.
   /passwords, keys (and|or) commands/i,
+  // Removal only flags vaults; an owner or admin completes the rotation.
+  /rotat(e|es|ed) when (a member|someone)/i,
+  /removing a (team )?member rotates/i,
 ];
 
 describe('copy guard', () => {
