@@ -46,3 +46,21 @@ describe('hero download button', () => {
     expect(button).toMatch(/min-w-\[/);
   });
 });
+
+describe('Rich Results Test: Article', () => {
+  it('has an image, an author and a full ISO dateModified', async () => {
+    const { techArticleJsonLd } = await import('../lib/seo');
+    const data = techArticleJsonLd({
+      title: 't',
+      description: 'd',
+      path: '/docs/server',
+      updated: '2026-11-11',
+    }) as unknown as Record<string, unknown>;
+    expect(data.image).toBe('https://terra.iamnahid.com/og/docs/server.png');
+    expect(data.author).toMatchObject({
+      '@type': 'Organization',
+      name: 'Terra',
+    });
+    expect(data.dateModified).toBe('2026-11-11T00:00:00.000Z');
+  });
+});
