@@ -23,3 +23,8 @@ export const INSTALL_COMMANDS = {
   windows:
     'irm https://raw.githubusercontent.com/nhridoy/terra-client/main/install.ps1 | iex',
 } as const;
+
+/** Page path as served (`/download`), from Astro's file-format path (`/download.html`). */
+export function cleanPath(pathname: string): string {
+  return pathname.replace(/\.html$/, '').replace(/\/index$/, '') || '/';
+}

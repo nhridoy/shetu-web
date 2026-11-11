@@ -3,6 +3,8 @@
 {
   "name": "terra-web",
   "compatibility_date": "2026-11-01",
+  // Serve production only on terra.iamnahid.com, not a duplicate workers.dev host.
+  "workers_dev": false,
   // Branch and PR builds run `wrangler preview`, which needs this block (empty is fine).
   "previews": {},
   "assets": {

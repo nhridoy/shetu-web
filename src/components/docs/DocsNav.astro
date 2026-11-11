@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { cleanPath } from '../../lib/site';
 
 const docs = (await getCollection('docs')).sort(
   (a, b) => a.data.order - b.data.order,
@@ -16,7 +17,7 @@ const groups = [
     items: docs.filter((entry) => entry.data.section === 'server'),
   },
 ];
-const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const currentPath = cleanPath(Astro.url.pathname);
 ---
 
 <nav aria-label="Docs">
