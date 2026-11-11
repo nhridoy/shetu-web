@@ -5,29 +5,35 @@ import InstallCommand from '../components/download/InstallCommand.astro';
 import Callout from '../components/ui/Callout.astro';
 import PageHeader from '../components/ui/PageHeader.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { latestRelease, loadReleases } from '../lib/changelog';
+import { PAGES, softwareJsonLd } from '../lib/seo';
 
 const requirements = [
   {
     Icon: AppleLogo,
     os: 'macOS',
+    href: '/download/macos',
     text: 'Apple Silicon or Intel. Download the matching .dmg.',
   },
   {
     Icon: WindowsLogo,
     os: 'Windows',
+    href: '/download/windows',
     text: 'x64 or ARM64. Download the matching NSIS .exe installer.',
   },
   {
     Icon: LinuxLogo,
     os: 'Linux',
+    href: '/download/linux',
     text: 'x64 or ARM64. Use the AppImage (needs libfuse2), or the .deb on Debian and Ubuntu.',
   },
 ];
+const latest = latestRelease(await loadReleases());
 ---
 
 <BaseLayout
-  title="Download Terra"
-  description="Download Terra for Windows, macOS, or Linux. Free and open source: split terminals, SFTP, port forwarding and an encrypted vault."
+  {...PAGES['/download']}
+  jsonLd={softwareJsonLd(latest)}
 >
   <PageHeader
     eyebrow="Download"
@@ -37,6 +43,14 @@ const requirements = [
 
   <section class="mx-auto max-w-[1200px] px-5 py-14 sm:px-6 md:py-20">
     <DownloadPanel client:load variant="full" />
+    <div class="mt-10 grid gap-4 md:grid-cols-3">
+      {requirements.map(({ Icon, os, href }) => (
+        <a href={href} class="panel lift flex items-center gap-3 p-5">
+          <Icon size={22} weight="fill" className="text-accent" />
+          <span class="font-semibold">Install guide for {os}</span>
+        </a>
+      ))}
+    </div>
   </section>
 
   <section class="border-y border-line bg-surface/40">
@@ -84,7 +98,7 @@ const requirements = [
         You also need direct SSH access to your hosts, and a Terra server for
         sign-in and sync. The project does not publish a minimum OS matrix yet;
         if a build does not run, open an issue with your OS version. Full
-        history is on the <a href="/releases" class="link">releases page</a>.
+        history is in the <a href="/changelog" class="link">changelog</a>.
       </p>
     </div>
   </section>

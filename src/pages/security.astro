@@ -46,12 +46,11 @@ const limits = [
   'Builds are not notarized by Apple or signed by Microsoft yet, so your OS warns on first launch.',
   'If you lose both your password and your recovery kit, nobody can decrypt your vault. That includes us.',
 ];
+
+import { PAGES } from '../lib/seo';
 ---
 
-<BaseLayout
-  title="Security · Terra"
-  description="Terra encrypts your vault on your device with Argon2id and XChaCha20-Poly1305. The sync server stores ciphertext, and SSH connects directly to your hosts."
->
+<BaseLayout {...PAGES['/security']}>
   <PageHeader
     eyebrow="Security"
     title="Your keys never leave your device unencrypted."

@@ -1,0 +1,100 @@
+---
+import { ArrowRight, Check } from '@phosphor-icons/react';
+import DownloadPanel from '../components/download/DownloadPanel';
+import Comparison from '../components/marketing/Comparison.astro';
+import FaqSection from '../components/marketing/FaqSection.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { latestRelease, loadReleases } from '../lib/changelog';
+import { PAGES, softwareJsonLd } from '../lib/seo';
+
+const reasons = [
+  {
+    title: 'Free, with nothing held back',
+    body: 'Terra is MIT licensed. Sync, team vaults, SFTP and port forwarding are in the free download. There is no paid tier today.',
+  },
+  {
+    title: 'Open source, end to end',
+    body: 'The desktop app, the sync server and this website are on GitHub. You can read exactly how your keys are handled.',
+  },
+  {
+    title: 'Sync on a server you run',
+    body: 'Run the open-source sync server with Docker and PostgreSQL. Your vault lives on infrastructure you control.',
+  },
+  {
+    title: 'Encrypted before it leaves your device',
+    body: 'Argon2id and XChaCha20-Poly1305 seal host addresses, usernames, passwords and private keys on your machine. SSH connects directly to your servers.',
+  },
+];
+const gaps = [
+  'Mobile apps: Terra is desktop only (macOS, Windows, Linux) for now.',
+  'Mosh and Telnet: Terra speaks SSH, SFTP and port forwarding today.',
+  'Importing from Termius: add your hosts in Terra by hand for now.',
+];
+const latest = latestRelease(await loadReleases());
+---
+
+<BaseLayout
+  {...PAGES['/termius-alternative']}
+  jsonLd={softwareJsonLd(latest)}
+>
+  <PageHeader
+    eyebrow="Termius alternative"
+    title="The open-source Termius alternative."
+    lede="Terra gives you the SSH client you use every day, split terminals, SFTP, port forwarding and synced hosts, without a subscription and with sync you can host yourself."
+  >
+    <div class="mt-8 flex flex-wrap items-center gap-3">
+      <DownloadPanel client:load variant="hero" />
+      <a href="#compare" class="btn-ghost px-5 py-3">See the comparison</a>
+    </div>
+  </PageHeader>
+
+  <section class="mx-auto max-w-[1200px] px-5 py-16 sm:px-6 md:py-24">
+    <h2 class="text-3xl font-bold md:text-4xl">Why people switch to Terra</h2>
+    <div class="mt-10 grid gap-4 md:grid-cols-2">
+      {reasons.map((reason) => (
+        <article class="panel p-6">
+          <h3 class="flex items-center gap-2.5 text-lg font-bold">
+            <span class="grid h-6 w-6 place-items-center rounded-full bg-accent-wash text-accent">
+              <Check size={13} weight="bold" />
+            </span>
+            {reason.title}
+          </h3>
+          <p class="mt-3 leading-relaxed text-muted">{reason.body}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <Comparison more={false} />
+
+  <section class="mx-auto grid max-w-[1200px] gap-10 px-5 py-16 sm:px-6 md:py-24 lg:grid-cols-2">
+    <div>
+      <h2 class="text-3xl font-bold">What Terra doesn't do yet</h2>
+      <p class="mt-4 text-muted">
+        Termius has had years of polish. If you rely on one of these, Terra is
+        not a full replacement yet:
+      </p>
+      <ul class="mt-5 space-y-3">
+        {gaps.map((gap) => (
+          <li class="flex gap-3 text-ink/90">
+            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-muted" aria-hidden="true"></span>
+            {gap}
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div class="panel self-start p-7">
+      <h2 class="text-2xl font-bold">Bring your own sync server</h2>
+      <p class="mt-3 leading-relaxed text-muted">
+        Terra syncs through a Terra server. Run the open-source server yourself
+        and keep your encrypted vault and team vaults on hardware you trust.
+      </p>
+      <a href="/self-hosted" class="link mt-5 inline-flex items-center gap-1.5 text-sm font-medium">
+        Self-hosted SSH sync <ArrowRight size={13} />
+      </a>
+    </div>
+  </section>
+
+  <FaqSection />
+</BaseLayout>

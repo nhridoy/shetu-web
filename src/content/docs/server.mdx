@@ -1,12 +1,13 @@
 ---
 title: Self-host the sync server
-description: Run the Terra sync and auth server with Docker Compose, PostgreSQL, TLS, and optional OAuth.
+seoTitle: "Self-host the Terra sync server with Docker and PostgreSQL"
+description: "Self-host the Terra sync server with Docker Compose and PostgreSQL: environment variables, TLS behind a reverse proxy, OAuth, email verification and upgrades."
 section: server
 order: 2
 updated: "2026-11-11"
 ---
 
-Terra signs you in and syncs your vault through a Terra server. Run your own to keep accounts, sync and shared vaults on your infrastructure. The server stores ciphertext and wrapped keys. It never sees your SSH traffic, and it cannot read host addresses, usernames, passwords, private keys or commands. See [what the server can see](/docs/security#what-the-server-can-see).
+Terra signs you in and syncs your vault through a Terra server. Run your own to keep accounts, sync and shared vaults on your infrastructure. The server stores ciphertext and wrapped keys. It never sees your SSH traffic, and it cannot read host addresses, usernames, passwords, private keys or commands. See [what the server can see](/docs/security#what-the-server-can-see), or the [self-hosted sync overview](/self-hosted) for the short version.
 
 ## Requirements
 

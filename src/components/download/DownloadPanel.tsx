@@ -28,6 +28,8 @@ export interface DownloadPanelProps {
   variant?: 'hero' | 'full';
   detect?: () => Promise<DetectedPlatform>;
   load?: () => Promise<ReleaseResult>;
+  /** On an OS guide page: never recommend another OS's build. */
+  targetOs?: 'macos' | 'windows' | 'linux';
 }
 
 const OS_ICONS = { macos: AppleLogo, windows: WindowsLogo, linux: LinuxLogo };
@@ -109,7 +111,7 @@ function HeroDownload({
           onKeyDown={(event) => {
             if (event.key === 'Escape') close();
           }}
-          className="panel absolute top-full left-1/2 z-30 mt-2 w-[min(20rem,calc(100vw-2.5rem))] -translate-x-1/2 p-2 text-left shadow-2xl shadow-black/60"
+          className="panel absolute top-full left-0 z-30 mt-2 w-[min(20rem,calc(100vw-2.5rem))] p-2 text-left shadow-2xl shadow-black/60"
         >
           {groups.map(({ os, items }) => (
             <div key={os} className="py-1">
@@ -149,7 +151,7 @@ function HeroDownload({
               All downloads
             </a>
             <a
-              href="/releases"
+              href="/changelog"
               className="flex-1 rounded-lg px-2.5 py-2 text-center text-xs font-semibold text-muted hover:bg-white/[0.06] hover:text-ink"
             >
               Older releases
@@ -165,6 +167,7 @@ export default function DownloadPanel({
   variant = 'full',
   detect,
   load,
+  targetOs,
 }: DownloadPanelProps) {
   const [platform, setPlatform] = useState<DetectedPlatform | null>(null);
   const [release, setRelease] = useState<Release>(fallbackRelease);
@@ -204,10 +207,12 @@ export default function DownloadPanel({
   }, [detect, load]);
 
   const assets = useMemo(() => mapAssets(release), [release]);
-  const recommended = useMemo(
-    () => (platform ? pickRecommended(assets, platform) : null),
-    [assets, platform],
-  );
+  const recommended = useMemo(() => {
+    if (!platform) return null;
+    // A visitor on another OS gets the page's build list, not their own OS.
+    if (targetOs && platform.os !== targetOs) return null;
+    return pickRecommended(assets, platform);
+  }, [assets, platform, targetOs]);
 
   const grouped = ['macos', 'windows', 'linux']
     .map((os) => ({
@@ -219,11 +224,13 @@ export default function DownloadPanel({
   if (variant === 'hero') {
     return (
       <HeroDownload
-        href={recommended?.url ?? '/download'}
+        href={recommended?.url ?? (targetOs ? '#builds' : '/download')}
         label={
-          recommended
-            ? `Download for ${osLabel(platform?.os ?? '')}`
-            : 'Download Terra'
+          targetOs
+            ? `Download for ${osLabel(targetOs)}`
+            : recommended
+              ? `Download for ${osLabel(platform?.os ?? '')}`
+              : 'Download Terra'
         }
         groups={grouped}
         recommendedUrl={recommended?.url}

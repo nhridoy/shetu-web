@@ -1,0 +1,7 @@
+# Hashed build assets never change; cache them for a year.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Keep browsers on HTTPS after the first visit (no preload: hard to undo).
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains

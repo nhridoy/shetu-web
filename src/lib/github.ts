@@ -24,11 +24,22 @@ interface Options {
   now?: () => number;
   ttlMs?: number;
   apiBase?: string;
+  /** Optional GitHub token (build time only) for a higher rate limit. */
+  token?: string;
 }
 
-async function request(url: string, fetchImpl: typeof fetch): Promise<unknown> {
+async function request(
+  url: string,
+  fetchImpl: typeof fetch,
+  token?: string,
+): Promise<unknown> {
   const response = await fetchImpl(url, {
-    headers: { Accept: 'application/vnd.github+json' },
+    // A hung request must not stall the build or a visitor's page.
+    signal: AbortSignal.timeout(10_000),
+    headers: {
+      Accept: 'application/vnd.github+json',
+      ...(token && { Authorization: `Bearer ${token}` }),
+    },
   });
   if (!response.ok) {
     throw new Error(`GitHub request failed: ${response.status}`);
@@ -114,6 +125,7 @@ export async function getReleases(
     now = Date.now,
     ttlMs = TTL_MS,
     apiBase = API_BASE,
+    token,
     fallback,
   } = options;
   const key = `terra:releases:${apiBase}`;
@@ -121,11 +133,23 @@ export async function getReleases(
   if (cached) return { releases: cached, source: 'live' };
 
   try {
-    const payload = await request(`${apiBase}/releases?per_page=20`, fetchImpl);
-    if (!Array.isArray(payload)) throw new Error('Invalid releases payload');
-    const releases = payload
+    const items: unknown[] = [];
+    for (let page = 1; ; page++) {
+      const payload = await request(
+        `${apiBase}/releases?per_page=100&page=${page}`,
+        fetchImpl,
+        token,
+      );
+      if (!Array.isArray(payload)) throw new Error('Invalid releases payload');
+      items.push(...payload);
+      if (payload.length < 100) break;
+    }
+    const releases = items
+      .filter((raw) => !(raw as { draft?: boolean }).draft)
       .map(parseRelease)
-      .filter((release) => release.tag_name);
+      .filter((release) => release.tag_name)
+      // GitHub lists by creation date; pages read newest-published first.
+      .sort((a, b) => b.published_at.localeCompare(a.published_at));
     writeCache(cache, key, releases, now);
     return { releases, source: 'live' };
   } catch {

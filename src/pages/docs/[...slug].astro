@@ -40,6 +40,8 @@ const { Content, headings } = await render(entry);
   headings={headings}
   prev={prev}
   next={next}
+  updated={entry.data.updated}
+  seoTitle={entry.data.seoTitle}
 >
   <Content />
 </DocsLayout>

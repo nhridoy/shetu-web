@@ -302,6 +302,7 @@ html.js .reveal.is-visible {
 
 .docs-prose a {
   color: var(--color-accent);
+  overflow-wrap: anywhere;
   text-decoration: underline;
   text-decoration-color: rgba(139, 124, 255, 0.35);
   text-underline-offset: 4px;

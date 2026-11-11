@@ -1,9 +1,9 @@
 ---
 import { DownloadSimple, GithubLogo, List } from '@phosphor-icons/react';
-import { NAV_ITEMS, REPOS } from '../../lib/site';
+import { cleanPath, NAV_ITEMS, REPOS } from '../../lib/site';
 import Logo from '../brand/Logo.astro';
 
-const path = Astro.url.pathname;
+const path = cleanPath(Astro.url.pathname);
 const isActive = (href: string) =>
   href === '/' ? path === '/' : path.startsWith(href);
 const headerNav = NAV_ITEMS.filter((item) => item.href !== '/download');

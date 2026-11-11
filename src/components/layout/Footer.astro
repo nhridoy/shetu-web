@@ -6,7 +6,11 @@ const year = new Date().getFullYear();
 const columns = [
   {
     title: 'Product',
-    links: NAV_ITEMS.map((item) => ({ label: item.label, href: item.href })),
+    links: [
+      ...NAV_ITEMS.map((item) => ({ label: item.label, href: item.href })),
+      { label: 'Termius alternative', href: '/termius-alternative' },
+      { label: 'Self-hosted sync', href: '/self-hosted' },
+    ],
   },
   {
     title: 'Source',

@@ -1,0 +1,134 @@
+---
+import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpRight,
+  DownloadSimple,
+} from '@phosphor-icons/react';
+import PageHeader from '../../components/ui/PageHeader.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import {
+  hasNotes,
+  loadReleases,
+  releasePageMeta,
+  renderNotes,
+  versionSlug,
+} from '../../lib/changelog';
+import {
+  formatBytes,
+  formatReleaseDate,
+  mapAssets,
+  type Release,
+} from '../../lib/releases';
+import { breadcrumbJsonLd, techArticleJsonLd } from '../../lib/seo';
+
+export async function getStaticPaths() {
+  const releases = await loadReleases();
+  return releases.map((release, i) => ({
+    params: { version: versionSlug(release.tag_name) },
+    // Newest first: the next (newer) release is earlier in the list.
+    props: {
+      release,
+      newer: releases[i - 1] ?? null,
+      older: releases[i + 1] ?? null,
+    },
+  }));
+}
+
+interface Props {
+  release: Release;
+  newer: Release | null;
+  older: Release | null;
+}
+
+const { release, newer, older } = Astro.props;
+const meta = releasePageMeta(release);
+const path = `/changelog/${versionSlug(release.tag_name)}`;
+const assets = mapAssets(release);
+const groups = (['macos', 'windows', 'linux'] as const)
+  .map((os) => ({ os, items: assets.filter((a) => a.os === os) }))
+  .filter((g) => g.items.length > 0);
+const OS_NAMES = { macos: 'macOS', windows: 'Windows', linux: 'Linux' };
+---
+
+<BaseLayout
+  title={meta.title}
+  description={meta.description}
+  noindex={meta.noindex}
+  type="article"
+  jsonLd={[
+    techArticleJsonLd({
+      title: meta.title,
+      description: meta.description,
+      path,
+      published: release.published_at,
+    }),
+    breadcrumbJsonLd([
+      { name: 'Changelog', path: '/changelog' },
+      { name: release.tag_name, path },
+    ]),
+  ]}
+>
+  <PageHeader
+    eyebrow={release.prerelease ? 'Pre-release' : 'Release'}
+    title={`Terra ${release.tag_name}`}
+    lede={`Released ${formatReleaseDate(release.published_at)}.`}
+  />
+  <section class="mx-auto max-w-[900px] space-y-12 px-5 py-14 sm:px-6 md:py-20">
+    <div>
+      <h2 class="text-2xl font-bold">What changed</h2>
+      {hasNotes(release.body) ? (
+        <div class="docs-prose mt-5" set:html={renderNotes(release.body)} />
+      ) : (
+        <p class="mt-4 text-muted">No written notes for this release.</p>
+      )}
+      <a href={release.html_url} class="link mt-5 inline-flex items-center gap-1.5 text-sm font-medium">
+        View on GitHub <ArrowUpRight size={13} />
+      </a>
+    </div>
+
+    {groups.length > 0 && (
+      <div>
+        <h2 class="text-2xl font-bold">Downloads</h2>
+        <div class="mt-5 grid gap-4 md:grid-cols-3">
+          {groups.map(({ os, items }) => (
+            <section class="panel p-5" aria-labelledby={`dl-${os}`}>
+              <h3 id={`dl-${os}`} class="text-lg font-bold">{OS_NAMES[os]}</h3>
+              <ul class="mt-3 divide-y divide-line">
+                {items.map((asset) => (
+                  <li class="flex items-center justify-between gap-3 py-3">
+                    <div>
+                      <p class="text-sm font-medium">{asset.label}</p>
+                      <p class="font-mono text-xs text-muted">{formatBytes(asset.size)}</p>
+                    </div>
+                    <a
+                      href={asset.url}
+                      class="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-line px-3 py-1.5 text-xs font-semibold transition-colors hover:border-accent/50 hover:bg-accent-wash"
+                    >
+                      <DownloadSimple size={13} aria-hidden="true" /> Download
+                      <span class="sr-only"> {asset.label}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <nav class="flex flex-col gap-4 border-t border-line pt-6 sm:flex-row sm:justify-between" aria-label="Other releases">
+      {older ? (
+        <a href={`/changelog/${versionSlug(older.tag_name)}`} class="link inline-flex items-center gap-1.5 text-sm font-medium">
+          <ArrowLeft size={13} /> {older.tag_name}
+        </a>
+      ) : <span />}
+      <a href="/changelog" class="text-sm text-muted hover:text-ink">All releases</a>
+      {newer ? (
+        <a href={`/changelog/${versionSlug(newer.tag_name)}`} class="link inline-flex items-center gap-1.5 text-sm font-medium">
+          {newer.tag_name} <ArrowRight size={13} />
+        </a>
+      ) : <span />}
+    </nav>
+  </section>
+</BaseLayout>

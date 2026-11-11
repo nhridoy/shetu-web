@@ -44,6 +44,12 @@ const rows: { label: string; terra: Cell; termius: Cell }[] = [
     termius: { yes: true, text: 'Yes' },
   },
 ];
+interface Props {
+  /** Link to the full Termius alternative page; off on that page itself. */
+  more?: boolean;
+}
+
+const { more = true } = Astro.props;
 ---
 
 <section id="compare" class="scroll-mt-20">
@@ -101,5 +107,12 @@ const rows: { label: string; terra: Cell; termius: Cell }[] = [
       November 2026. Paid plans billed annually. Termius is a trademark of its
       owner.
     </p>
+    {more && (
+      <p class="mt-6 text-center">
+        <a href="/termius-alternative" class="link text-sm font-medium">
+          Switching from Termius? Read the full comparison
+        </a>
+      </p>
+    )}
   </div>
 </section>

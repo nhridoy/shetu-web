@@ -1,0 +1,89 @@
+---
+import { ArrowRight, Check } from '@phosphor-icons/react';
+import SecurityFlow from '../components/marketing/SecurityFlow.astro';
+import CodeBlock from '../components/ui/CodeBlock.astro';
+import PageHeader from '../components/ui/PageHeader.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { breadcrumbJsonLd, PAGES } from '../lib/seo';
+
+const server = [
+  'Go server with Gin and GORM, PostgreSQL in production',
+  'Multi-arch Docker image for amd64 and arm64, plus Linux binaries',
+  'Email and password sign-in, with optional Google and GitHub OAuth',
+  'Optional email verification over SMTP',
+];
+const teams = [
+  'Create teams and invite people who already have an account',
+  'Owner, admin and member roles',
+  'Each shared vault has its own key, sealed to every member',
+  'The key rotates when a member is removed',
+];
+const steps = `openssl rand -base64 48    # JWT_SECRET
+docker compose up -d
+docker compose logs -f terra-server`;
+---
+
+<BaseLayout
+  {...PAGES['/self-hosted']}
+  jsonLd={breadcrumbJsonLd([{ name: 'Self-hosted sync', path: '/self-hosted' }])}
+>
+  <PageHeader
+    eyebrow="Self-hosted"
+    title="Self-hosted SSH sync."
+    lede="Terra's sync server is open source. Run it on your own box and your vault and team vaults sync through infrastructure you control. Addresses, usernames, passwords and private keys are encrypted before they leave each device."
+  >
+    <div class="mt-8 flex flex-wrap items-center gap-3">
+      <a href="/docs/server" class="btn-primary px-5 py-3">Read the server guide</a>
+      <a href="https://github.com/nhridoy/terra-server" class="btn-ghost px-5 py-3">terra-server on GitHub</a>
+    </div>
+  </PageHeader>
+
+  <SecurityFlow compact />
+
+  <section class="mx-auto grid max-w-[1200px] grid-cols-1 gap-12 px-5 py-16 sm:px-6 md:py-24 lg:grid-cols-2">
+    <div>
+      <h2 class="text-3xl font-bold">Deploy with Docker</h2>
+      <p class="mt-4 leading-relaxed text-muted">
+        Put the compose file from the server guide next to a PostgreSQL
+        database, set <code class="font-mono text-sm text-ink">DATABASE_URL</code>,
+        <code class="font-mono text-sm text-ink">JWT_SECRET</code> and
+        <code class="font-mono text-sm text-ink">BASE_URL</code>, then start it:
+      </p>
+      <div class="mt-5">
+        <CodeBlock code={steps} label="server" />
+      </div>
+      <p class="mt-4 text-sm leading-relaxed text-muted">
+        Terminate TLS at a reverse proxy such as Caddy. In the app, set
+        <strong class="text-ink">Server URL</strong> on the sign-in screen to
+        your server.
+      </p>
+      <a href="/docs/server" class="link mt-5 inline-flex items-center gap-1.5 text-sm font-medium">
+        Full self-hosting guide <ArrowRight size={13} />
+      </a>
+    </div>
+    <div class="space-y-6">
+      {[
+        { title: 'The server', items: server },
+        { title: 'Teams', items: teams },
+      ].map((group) => (
+        <div class="panel p-6">
+          <h2 class="text-xl font-bold">{group.title}</h2>
+          <ul class="mt-4 space-y-2.5">
+            {group.items.map((item) => (
+              <li class="flex items-start gap-3 text-[15px] text-ink/90">
+                <span class="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-accent-wash text-accent">
+                  <Check size={11} weight="bold" />
+                </span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+      <p class="text-sm leading-relaxed text-muted">
+        Want the details on what the server can and cannot read? See
+        <a href="/security" class="link">how Terra handles your keys</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

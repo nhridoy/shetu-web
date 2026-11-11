@@ -15,7 +15,7 @@ import TerraWindow from '../mockups/TerraWindow.astro';
   <div class="relative mx-auto max-w-[1200px] px-5 pt-16 pb-20 sm:px-6 md:pt-24 md:pb-28">
     <div class="mx-auto max-w-3xl text-center">
       <a
-        href="/releases"
+        href="/changelog"
         class="group inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-line-strong bg-white/[0.03] py-1 pr-3 pl-1.5 font-mono text-[11px] tracking-[0.06em] text-muted transition-colors hover:border-accent/40 hover:text-ink"
       >
         <span class="rounded-full bg-accent-wash px-2 py-0.5 text-accent"><ReleaseTag client:load /></span>
@@ -51,8 +51,10 @@ import TerraWindow from '../mockups/TerraWindow.astro';
         </button>
       </div>
       <p class="mt-2.5 text-xs text-muted">
-        macOS and Linux. For Windows and every other build, use the arrow next
-        to Download or the{" "}
+        macOS and Linux. Step-by-step guides for{" "}
+        <a href="/download/windows" class="link">Windows</a>,{" "}
+        <a href="/download/macos" class="link">macOS</a> and{" "}
+        <a href="/download/linux" class="link">Linux</a>, or every build on the{" "}
         <a href="/download" class="link">download page</a>.
       </p>
     </div>
