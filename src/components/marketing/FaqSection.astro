@@ -1,0 +1,81 @@
+---
+import { ArrowUpRight } from '@phosphor-icons/react';
+
+interface Faq {
+  question: string;
+  answer: string;
+  href?: string;
+  linkLabel?: string;
+}
+
+const faqs: Faq[] = [
+  {
+    question: 'Is Terra open source?',
+    answer:
+      'Yes. The desktop client, the sync server, and this site are MIT licensed.',
+  },
+  {
+    question: 'Do I need a Terra server?',
+    answer:
+      'No for direct SSH. Sync and shared vaults require a Terra server you run.',
+  },
+  {
+    question: 'Why does macOS or Windows warn me?',
+    answer:
+      'Terra is not signed by Apple or Microsoft yet. Follow the first-launch steps in the docs.',
+    href: '/docs/troubleshooting',
+    linkLabel: 'First-launch steps',
+  },
+];
+---
+
+<section class="border-t border-line">
+  <div class="mx-auto max-w-[1200px] px-6 py-20 md:py-28">
+    <div class="max-w-2xl">
+      <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
+        Before you install
+      </p>
+      <h2
+        class="mt-3 text-balance text-4xl font-medium tracking-[-0.04em] md:text-5xl"
+      >
+        A few things to know.
+      </h2>
+    </div>
+
+    <div class="mt-10 max-w-3xl">
+      {faqs.map((faq) => (
+        <details class="group border-b border-line py-5">
+          <summary
+            class="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-medium"
+          >
+            {faq.question}
+            <span
+              class="font-mono text-lg text-accent group-open:hidden"
+              aria-hidden="true"
+            >
+              +
+            </span>
+            <span
+              class="hidden font-mono text-lg text-accent group-open:inline"
+              aria-hidden="true"
+            >
+              −
+            </span>
+          </summary>
+          <p class="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
+            {faq.answer}
+            {faq.href && (
+              <a
+                href={faq.href}
+                class="ml-1 inline-flex items-center gap-1 font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent"
+              >
+                {faq.linkLabel}
+                <ArrowUpRight size={12} weight="bold" />
+              </a>
+            )}
+          </p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,71 @@
+---
+import CodeBlock from '../ui/CodeBlock.astro';
+
+const commands = `cd server
+docker compose -f docker-compose.prod.yml pull
+docker compose -f docker-compose.prod.yml up -d`;
+---
+
+<section id="self-hosted" class="scroll-mt-24 border-t border-line bg-surface">
+  <div
+    class="mx-auto grid max-w-[1200px] gap-10 px-6 py-20 md:grid-cols-2 md:items-start md:gap-16 md:py-28"
+  >
+    <div>
+      <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
+        Self-hosted
+      </p>
+      <h2
+        class="mt-3 text-balance text-3xl font-medium tracking-[-0.04em] md:text-4xl"
+      >
+        Run the sync server yourself.
+      </h2>
+      <p class="mt-4 text-lg leading-relaxed text-muted">
+        Terra’s sync server is open source. Run it on your own infrastructure
+        with PostgreSQL, set
+        <code
+          class="rounded border border-line bg-elevated px-1.5 py-0.5 font-mono text-[0.85em] text-ink"
+        >
+          JWT_SECRET
+        </code>
+        and
+        <code
+          class="rounded border border-line bg-elevated px-1.5 py-0.5 font-mono text-[0.85em] text-ink"
+        >
+          BASE_URL
+        </code>
+        , and keep sync and shared vaults where you want them.
+      </p>
+      <ul class="mt-6 space-y-2 text-sm text-muted">
+        <li class="flex gap-2.5">
+          <span
+            class="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent"
+            aria-hidden="true"
+          ></span>
+          PostgreSQL for production
+        </li>
+        <li class="flex gap-2.5">
+          <span
+            class="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent"
+            aria-hidden="true"
+          ></span>
+          Google and GitHub OAuth
+        </li>
+        <li class="flex gap-2.5">
+          <span
+            class="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent"
+            aria-hidden="true"
+          ></span>
+          Your own domain and TLS
+        </li>
+      </ul>
+      <a
+        href="/docs/server"
+        class="mt-6 inline-flex text-sm font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent"
+      >
+        Read the server guide
+      </a>
+    </div>
+
+    <CodeBlock code={commands} label="server/" />
+  </div>
+</section>

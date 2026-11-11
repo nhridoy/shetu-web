@@ -1,12 +1,20 @@
 ---
-import InstallCommand from '../components/download/InstallCommand.astro';
+import editHost from '../assets/app/edit-host.webp';
+import editor from '../assets/app/editor.webp';
+import teamVault from '../assets/app/team-vault.webp';
+import terminal from '../assets/app/terminal.webp';
+import themes from '../assets/app/themes.webp';
 import ClosingCta from '../components/marketing/ClosingCta.astro';
 import FactStrip from '../components/marketing/FactStrip.astro';
+import FaqSection from '../components/marketing/FaqSection.astro';
 import FeatureGrid from '../components/marketing/FeatureGrid.astro';
+import FeatureShowcase from '../components/marketing/FeatureShowcase.astro';
 import Hero from '../components/marketing/Hero.astro';
-import OpenSource from '../components/marketing/OpenSource.astro';
+import InstallSection from '../components/marketing/InstallSection.astro';
+import OpenSourceSection from '../components/marketing/OpenSourceSection.astro';
+import PortForwardingSection from '../components/marketing/PortForwardingSection.astro';
 import SecurityFlow from '../components/marketing/SecurityFlow.astro';
-import SelfHostPanel from '../components/marketing/SelfHostPanel.astro';
+import SelfHostSection from '../components/marketing/SelfHostSection.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE_DESCRIPTION } from '../lib/site';
 
@@ -31,29 +39,79 @@ const jsonLd = {
   <Hero />
   <FactStrip />
   <FeatureGrid />
+
+  <FeatureShowcase
+    id="hosts"
+    eyebrow="Hosts"
+    title="Your whole fleet, one list."
+    body="Group machines by project or environment, add tags and colors, and find the right host without digging through config files."
+    bullets={[
+      'Groups, tags, and colors',
+      'Search across hosts',
+      'Connection status at a glance',
+    ]}
+    image={editHost}
+    alt="Terra edit-host form with groups, tags, color, and authentication options"
+    imageSide="right"
+  />
+
+  <FeatureShowcase
+    id="terminal"
+    eyebrow="Terminal"
+    title="A terminal that keeps up."
+    body="Open tabs, split panes, and save a workspace when a task spans several machines. Local and remote shells live in the same window."
+    bullets={[
+      'Tabs and split panes',
+      'Saved workspaces',
+      'Local and remote shells',
+    ]}
+    image={terminal}
+    alt="Terra terminal with split panes, tabs, and a connected host"
+    imageSide="left"
+  />
+
+  <FeatureShowcase
+    id="files"
+    eyebrow="Files"
+    title="Files without leaving the session."
+    body="Open an SFTP browser beside the terminal, transfer files, and edit remote files in place. No separate client, no context switch."
+    bullets={[
+      'SFTP browser',
+      'Remote file editor',
+      'Transfers beside the terminal',
+    ]}
+    image={editor}
+    alt="Terra file editor with a project explorer open"
+    imageSide="right"
+  />
+
+  <FeatureShowcase
+    id="teams"
+    eyebrow="Teams"
+    title="Share access with your team."
+    body="Create a team, invite members, and share vaults with the people who need them. Member roles keep access organized."
+    bullets={['Team invites', 'Shared vaults', 'Member roles']}
+    image={teamVault}
+    alt="Terra team page with an invite dialog and member role controls"
+    imageSide="left"
+  />
+
+  <FeatureShowcase
+    id="themes"
+    eyebrow="Themes"
+    title="Make the workspace yours."
+    body="Choose a dark, light, or named theme. The whole workspace changes, not just the terminal."
+    bullets={['Dark and light', 'Named themes', 'Workspace-wide']}
+    image={themes}
+    alt="Terra appearance settings with a grid of themes"
+    imageSide="right"
+  />
+
+  <PortForwardingSection />
   <SecurityFlow />
-  <SelfHostPanel />
-
-  <section class="border-y border-line bg-surface">
-    <div class="mx-auto max-w-[1200px] px-6 py-20 md:py-28">
-      <div class="max-w-2xl">
-        <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
-          Install
-        </p>
-        <h2 class="mt-3 text-4xl font-medium tracking-[-0.04em]">
-          One command. No installer maze.
-        </h2>
-        <p class="mt-4 text-lg leading-relaxed text-muted">
-          The script picks the right build for your OS and architecture. Both
-          commands are listed, so you can copy the one you need.
-        </p>
-      </div>
-      <div class="mt-8 max-w-3xl">
-        <InstallCommand />
-      </div>
-    </div>
-  </section>
-
-  <OpenSource />
+  <SelfHostSection />
+  <OpenSourceSection />
+  <InstallSection />
+  <FaqSection />
   <ClosingCta />
 </BaseLayout>
