@@ -242,13 +242,13 @@ export default function DownloadPanel({
           <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-4">
               <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-accent/25 to-accent-2/20 text-ink ring-1 ring-accent/40">
-                <OsIcon os={platform?.os ?? ''} size={26} />
+                <OsIcon os={recommended.os} size={26} />
               </span>
               <div>
                 <p className="eyebrow">Recommended for your system</p>
                 <h2 className="mt-1.5 text-2xl font-bold tracking-[-0.03em]">
-                  {osLabel(platform?.os ?? '')}{' '}
-                  {platform?.arch === 'arm64' ? 'ARM64' : 'x64'}
+                  {osLabel(recommended.os)}{' '}
+                  {recommended.arch === 'arm64' ? 'ARM64' : 'x64'}
                 </h2>
                 <p className="mt-1 text-sm text-muted">
                   {recommended.label} · {formatBytes(recommended.size)} ·{' '}

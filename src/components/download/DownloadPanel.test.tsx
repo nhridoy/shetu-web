@@ -79,6 +79,20 @@ describe('DownloadPanel', () => {
     expect(await screen.findByTestId('fallback-notice')).toBeInTheDocument();
   });
 
+  it('names the architecture of the build it links, not the detected one', async () => {
+    render(
+      <DownloadPanel
+        variant="full"
+        detect={async () => ({ os: 'windows', arch: 'arm64' })}
+        load={async () => ({ release, source: 'live' })}
+      />,
+    );
+    await screen.findByTestId('recommended-download');
+    expect(
+      screen.getByRole('heading', { level: 2, name: /windows x64/i }),
+    ).toBeInTheDocument();
+  });
+
   describe('hero build menu', () => {
     const renderHero = () =>
       render(
