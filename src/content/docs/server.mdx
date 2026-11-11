@@ -1,13 +1,13 @@
 ---
 title: Self-host the sync server
-seoTitle: "Self-host the Terra sync server with Docker and PostgreSQL"
-description: "Self-host the Terra sync server with Docker Compose and PostgreSQL: environment variables, TLS behind a reverse proxy, OAuth, email verification and upgrades."
+seoTitle: "Self-host the Shetu sync server with Docker and PostgreSQL"
+description: "Self-host the Shetu sync server with Docker Compose and PostgreSQL: environment variables, TLS behind a reverse proxy, OAuth, email verification and upgrades."
 section: server
 order: 2
 updated: "2026-11-11"
 ---
 
-Terra signs you in and syncs your vault through a Terra server. Run your own to keep accounts, sync and shared vaults on your infrastructure. The server stores ciphertext and wrapped keys. It never sees your SSH traffic, and it cannot read host addresses, usernames, passwords, private keys or commands. See [what the server can see](/docs/security#what-the-server-can-see), or the [self-hosted sync overview](/self-hosted) for the short version.
+Shetu signs you in and syncs your vault through a Shetu server. Run your own to keep accounts, sync and shared vaults on your infrastructure. The server stores ciphertext and wrapped keys. It never sees your SSH traffic, and it cannot read host addresses, usernames, passwords, private keys or commands. See [what the server can see](/docs/security#what-the-server-can-see), or the [self-hosted sync overview](/self-hosted) for the short version.
 
 ## Requirements
 
@@ -27,35 +27,35 @@ services:
   postgres:
     image: postgres:17-alpine
     environment:
-      POSTGRES_USER: terra
+      POSTGRES_USER: shetu
       POSTGRES_PASSWORD: change-me
-      POSTGRES_DB: terra
+      POSTGRES_DB: shetu
     volumes:
-      - terra-db:/var/lib/postgresql/data
+      - shetu-db:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U terra"]
+      test: ["CMD-SHELL", "pg_isready -U shetu"]
       interval: 5s
       timeout: 5s
       retries: 10
 
-  terra-server:
-    image: ghcr.io/nhridoy/terra-server:latest
+  shetu-server:
+    image: ghcr.io/nhridoy/shetu-server:latest
     depends_on:
       postgres:
         condition: service_healthy
     ports:
       - "8080:8080"
     environment:
-      TERRA_HOST: 0.0.0.0
-      TERRA_PORT: "8080"
-      DATABASE_URL: postgres://terra:change-me@postgres:5432/terra?sslmode=disable
+      SHETU_HOST: 0.0.0.0
+      SHETU_PORT: "8080"
+      DATABASE_URL: postgres://shetu:change-me@postgres:5432/shetu?sslmode=disable
       JWT_SECRET: replace-with-a-long-random-string
       BASE_URL: https://sync.example.com
       CORS_ALLOWED_ORIGINS: http://tauri.localhost,tauri://localhost
     restart: unless-stopped
 
 volumes:
-  terra-db:
+  shetu-db:
 ```
 
 Generate a secret with:
@@ -73,7 +73,7 @@ docker compose up -d
 Check the logs:
 
 ```bash
-docker compose logs -f terra-server
+docker compose logs -f shetu-server
 ```
 
 ## Environment
@@ -83,14 +83,14 @@ docker compose logs -f terra-server
 | `DATABASE_URL` | Yes | PostgreSQL connection string in production |
 | `JWT_SECRET` | Yes | Signs access tokens |
 | `BASE_URL` | Yes in production | Public URL, used for OAuth callbacks |
-| `TERRA_HOST` | No | Bind address, default `0.0.0.0` |
-| `TERRA_PORT` | No | HTTP port, default `8080` |
+| `SHETU_HOST` | No | Bind address, default `0.0.0.0` |
+| `SHETU_PORT` | No | HTTP port, default `8080` |
 | `JWT_EXPIRY` | No | Access token lifetime, default `15m` |
 | `REFRESH_TOKEN_EXPIRY` | No | Refresh token lifetime, default `720h` |
 | `CORS_ALLOWED_ORIGINS` | No | Browser origins allowed to call the API |
 | `TRUSTED_PROXIES` | No | CIDRs trusted for `X-Forwarded-For` |
 
-The full list is in [`.env.example`](https://github.com/nhridoy/terra-server/blob/main/.env.example).
+The full list is in [`.env.example`](https://github.com/nhridoy/shetu-server/blob/main/.env.example).
 
 ## TLS and reverse proxy
 
@@ -117,7 +117,7 @@ Email and password registration works out of the box. Set `JWT_SECRET` before ex
 
 Google and GitHub OAuth are optional. Set the matching `OAUTH_GOOGLE_CLIENT_ID` / `OAUTH_GOOGLE_CLIENT_SECRET` or `OAUTH_GITHUB_CLIENT_ID` / `OAUTH_GITHUB_CLIENT_SECRET`. The callback URL is based on `BASE_URL`.
 
-The desktop app uses loopback callbacks. Keep the default `TERRA_OAUTH_REDIRECT_URIS` unless you also change the client's listener ports.
+The desktop app uses loopback callbacks. Keep the default `SHETU_OAUTH_REDIRECT_URIS` unless you also change the client's listener ports.
 
 ## Email verification
 
@@ -130,15 +130,15 @@ The server refuses to start when verification is on and neither SMTP nor `LOG_OT
 Pull the new image and recreate the container:
 
 ```bash
-docker compose pull terra-server
-docker compose up -d terra-server
+docker compose pull shetu-server
+docker compose up -d shetu-server
 ```
 
 GORM runs schema migrations on startup. Back up PostgreSQL before upgrading production.
 
 ## Point the client at your server
 
-On Terra's sign-in or sign-up screen, set **Server URL** to your server, for example `https://sync.example.com`. Then create an account or sign in.
+On Shetu's sign-in or sign-up screen, set **Server URL** to your server, for example `https://sync.example.com`. Then create an account or sign in.
 
 ## Next
 

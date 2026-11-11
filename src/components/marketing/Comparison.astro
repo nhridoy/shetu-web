@@ -2,45 +2,45 @@
 import { Check, X } from '@phosphor-icons/react';
 
 type Cell = { yes: boolean; text: string };
-const rows: { label: string; terra: Cell; termius: Cell }[] = [
+const rows: { label: string; shetu: Cell; termius: Cell }[] = [
   {
     label: 'Price',
-    terra: { yes: true, text: 'Free, MIT licensed' },
+    shetu: { yes: true, text: 'Free, MIT licensed' },
     termius: { yes: true, text: 'Free Starter plan; Pro $10/mo' },
   },
   {
     label: 'Source code',
-    terra: { yes: true, text: 'Open (MIT)' },
+    shetu: { yes: true, text: 'Open (MIT)' },
     termius: { yes: false, text: 'Closed' },
   },
   {
     label: 'Self-host the sync server',
-    terra: { yes: true, text: 'Docker or binary' },
+    shetu: { yes: true, text: 'Docker or binary' },
     termius: { yes: false, text: 'Not offered' },
   },
   {
     label: 'Encrypted sync across devices',
-    terra: { yes: true, text: 'Free with your server' },
+    shetu: { yes: true, text: 'Free with your server' },
     termius: { yes: true, text: 'Pro plan' },
   },
   {
     label: 'Shared team vaults',
-    terra: { yes: true, text: 'Free with your server' },
+    shetu: { yes: true, text: 'Free with your server' },
     termius: { yes: true, text: 'Team plan, $20/seat/mo' },
   },
   {
     label: 'SSH, SFTP, port forwarding',
-    terra: { yes: true, text: 'Yes' },
+    shetu: { yes: true, text: 'Yes' },
     termius: { yes: true, text: 'Yes' },
   },
   {
     label: 'Mobile apps',
-    terra: { yes: false, text: 'No' },
+    shetu: { yes: false, text: 'No' },
     termius: { yes: true, text: 'iOS and Android' },
   },
   {
     label: 'Mosh and Telnet',
-    terra: { yes: false, text: 'No' },
+    shetu: { yes: false, text: 'No' },
     termius: { yes: true, text: 'Yes' },
   },
 ];
@@ -57,7 +57,7 @@ const { more = true } = Astro.props;
     <div class="reveal text-center">
       <p class="eyebrow">Compare</p>
       <h2 class="mt-4 text-balance text-4xl leading-[1.05] font-bold md:text-5xl">
-        Terra and Termius, side by side.
+        Shetu and Termius, side by side.
       </h2>
       <p class="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-muted">
         Termius is a polished product. Here is an honest look at where each one
@@ -69,14 +69,14 @@ const { more = true } = Astro.props;
       class="panel reveal mt-12 overflow-x-auto"
       tabindex="0"
       role="region"
-      aria-label="Terra and Termius comparison table"
+      aria-label="Shetu and Termius comparison table"
     >
       <table class="w-full min-w-[560px] border-collapse text-left text-sm">
-        <caption class="sr-only">Feature and price comparison of Terra and Termius</caption>
+        <caption class="sr-only">Feature and price comparison of Shetu and Termius</caption>
         <thead>
           <tr class="border-b border-line">
             <th scope="col" class="w-[38%] px-5 py-4 font-mono text-[11px] font-medium tracking-[0.14em] text-muted uppercase"><span class="sr-only">Feature</span></th>
-            <th scope="col" class="w-[31%] bg-accent-wash/60 px-5 py-4 text-base font-bold text-ink">Terra</th>
+            <th scope="col" class="w-[31%] bg-accent-wash/60 px-5 py-4 text-base font-bold text-ink">Shetu</th>
             <th scope="col" class="w-[31%] px-5 py-4 text-base font-bold text-muted">Termius</th>
           </tr>
         </thead>
@@ -84,7 +84,7 @@ const { more = true } = Astro.props;
           {rows.map((row) => (
             <tr class="border-b border-line last:border-0">
               <th scope="row" class="px-5 py-3.5 font-medium text-ink/90">{row.label}</th>
-              {[row.terra, row.termius].map((cell, i) => (
+              {[row.shetu, row.termius].map((cell, i) => (
                 <td class:list={['px-5 py-3.5', i === 0 && 'bg-accent-wash/60']}>
                   <span class="flex items-center gap-2.5">
                     {cell.yes ? (

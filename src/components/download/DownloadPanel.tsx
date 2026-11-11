@@ -230,7 +230,7 @@ export default function DownloadPanel({
             ? `Download for ${osLabel(targetOs)}`
             : recommended
               ? `Download for ${osLabel(platform?.os ?? '')}`
-              : 'Download Terra'
+              : 'Download Shetu'
         }
         groups={grouped}
         recommendedUrl={recommended?.url}

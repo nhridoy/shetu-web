@@ -28,7 +28,7 @@ const steps = [
   {
     Icon: PlugsConnected,
     title: 'SSH goes straight to the host',
-    body: 'Connections run from your computer to your server. Nothing is relayed through Terra.',
+    body: 'Connections run from your computer to your server. Nothing is relayed through Shetu.',
     tag: 'Direct SSH, no relay',
   },
 ];
@@ -36,7 +36,7 @@ const steps = [
 
 <section id="security" class="relative scroll-mt-20 border-y border-line bg-surface/40">
   <div class="mx-auto max-w-[1200px] px-5 py-20 sm:px-6 md:py-28">
-    {compact && <h2 class="sr-only">How Terra protects your vault</h2>}
+    {compact && <h2 class="sr-only">How Shetu protects your vault</h2>}
     {!compact && (
       <div class="reveal max-w-2xl">
         <p class="eyebrow">Security</p>
@@ -44,7 +44,7 @@ const steps = [
           Your keys stay yours.
         </h2>
         <p class="mt-5 text-lg leading-relaxed text-muted">
-          Terra encrypts on your device first. The server only ever holds what
+          Shetu encrypts on your device first. The server only ever holds what
           it cannot read.
         </p>
       </div>
@@ -74,7 +74,7 @@ const steps = [
       </p>
       {!compact && (
         <a href="/security" class="link inline-flex shrink-0 items-center gap-1.5 text-sm font-medium">
-          How Terra handles your keys <ArrowRight size={13} />
+          How Shetu handles your keys <ArrowRight size={13} />
         </a>
       )}
     </div>

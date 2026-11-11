@@ -18,7 +18,7 @@ export function buildRss(releases: Release[]): string {
       : 'New builds for macOS, Windows and Linux.';
     return [
       '<item>',
-      `<title>${escapeXml(`Terra ${release.tag_name}`)}</title>`,
+      `<title>${escapeXml(`Shetu ${release.tag_name}`)}</title>`,
       `<link>${url}</link>`,
       `<guid isPermaLink="true">${url}</guid>`,
       `<pubDate>${new Date(release.published_at).toUTCString()}</pubDate>`,
@@ -29,7 +29,7 @@ export function buildRss(releases: Release[]): string {
   return [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>',
-    '<title>Terra changelog</title>',
+    '<title>Shetu changelog</title>',
     `<link>${absoluteUrl('/changelog')}</link>`,
     `<atom:link href="${absoluteUrl('/changelog/rss.xml')}" rel="self" type="application/rss+xml"/>`,
     `<description>${escapeXml(PAGES['/changelog'].description)}</description>`,

@@ -13,7 +13,7 @@ import { mapAssets, type Release } from './releases';
 
 const v15 = readFileSync('src/lib/fixtures/release-v0.0.15.md', 'utf8');
 const v5 =
-  '**Full Changelog**: https://github.com/nhridoy/terra-client/compare/v0.0.4...v0.0.5';
+  '**Full Changelog**: https://github.com/nhridoy/shetu-client/compare/v0.0.4...v0.0.5';
 
 describe('release notes', () => {
   it('strips the install section', () => {
@@ -41,7 +41,7 @@ describe('release notes', () => {
 
   it('autolinks bare URLs', () => {
     expect(renderNotes(v15)).toContain(
-      '<a href="https://github.com/nhridoy/terra-client/pull/11" rel="nofollow noopener"',
+      '<a href="https://github.com/nhridoy/shetu-client/pull/11" rel="nofollow noopener"',
     );
   });
 

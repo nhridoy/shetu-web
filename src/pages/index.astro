@@ -11,8 +11,8 @@ import OpenSourceSection from '../components/marketing/OpenSourceSection.astro';
 import SecurityFlow from '../components/marketing/SecurityFlow.astro';
 import SelfHostSection from '../components/marketing/SelfHostSection.astro';
 import SftpPanes from '../components/mockups/SftpPanes.astro';
+import ShetuWindow from '../components/mockups/ShetuWindow.astro';
 import TerminalPane from '../components/mockups/TerminalPane.astro';
-import TerraWindow from '../components/mockups/TerraWindow.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { latestRelease, loadReleases } from '../lib/changelog';
 import { PAGES, softwareJsonLd } from '../lib/seo';
@@ -55,10 +55,10 @@ const latest = latestRelease(await loadReleases());
       'Edit remote files in the built-in editor',
     ]}
   >
-    <p class="sr-only">Terra SFTP view with a local folder on the left and the prod-api server on the right.</p>
-    <TerraWindow tab="SFTP" title="prod-api · /srv/api">
+    <p class="sr-only">Shetu SFTP view with a local folder on the left and the prod-api server on the right.</p>
+    <ShetuWindow tab="SFTP" title="prod-api · /srv/api">
       <SftpPanes />
-    </TerraWindow>
+    </ShetuWindow>
   </FeatureShowcase>
 
   <FeatureShowcase
@@ -74,7 +74,7 @@ const latest = latestRelease(await loadReleases());
     side="left"
   >
     <p class="sr-only">A saved workspace with three terminals: two servers and a local shell.</p>
-    <TerraWindow title="release-day">
+    <ShetuWindow title="release-day">
       <div class="grid h-[300px] grid-cols-2 grid-rows-2">
         <TerminalPane
           title="deploy@prod-api"
@@ -91,22 +91,22 @@ const latest = latestRelease(await loadReleases());
           lines={[{ prompt: 'me$', cmd: 'make release', out: ['tagged v2.4.0'] }]}
         />
       </div>
-    </TerraWindow>
+    </ShetuWindow>
   </FeatureShowcase>
 
   <FeatureShowcase
     id="teams"
     eyebrow="Teams"
     title="Share a vault, not a password."
-    body="Create a team on your Terra server, invite people, and share the hosts they need. Each shared vault has its own key, sealed to every member."
+    body="Create a team on your Shetu server, invite people, and share the hosts they need. Each shared vault has its own key, sealed to every member."
     bullets={[
       'Owner, admin and member roles',
       'Shared vaults with their own keys',
       'Remove someone, then rotate the vault key in one click',
     ]}
   >
-    <p class="sr-only">Terra team view listing four members with owner, admin and member roles.</p>
-    <TerraWindow title="Team · Platform">
+    <p class="sr-only">Shetu team view listing four members with owner, admin and member roles.</p>
+    <ShetuWindow title="Team · Platform">
       <div class="p-4 text-[12px]">
         <div class="flex items-center justify-between">
           <p class="font-semibold text-ink">Platform team</p>
@@ -138,7 +138,7 @@ const latest = latestRelease(await loadReleases());
           Vault key sealed to 4 members
         </p>
       </div>
-    </TerraWindow>
+    </ShetuWindow>
   </FeatureShowcase>
 
   <SecurityFlow />

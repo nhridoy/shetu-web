@@ -11,7 +11,7 @@ const lines = [
   { c: '# generate a JWT_SECRET for compose.yaml', comment: true },
   { c: 'openssl rand -base64 48' },
   { c: 'docker compose up -d' },
-  { c: '✔ terra-server  Started', out: true },
+  { c: '✔ shetu-server  Started', out: true },
 ];
 ---
 
@@ -23,7 +23,7 @@ const lines = [
         Run the sync server yourself.
       </h2>
       <p class="mt-5 max-w-lg text-lg leading-relaxed text-muted">
-        Sync, sign-in and shared vaults go through a Terra server. It is open
+        Sync, sign-in and shared vaults go through a Shetu server. It is open
         source too, so you can run it on your own box and keep every byte where
         you want it.
       </p>
@@ -47,8 +47,8 @@ const lines = [
       <figure class="relative overflow-hidden rounded-xl border border-line-strong bg-terminal shadow-2xl shadow-black/60">
         <div class="flex items-center gap-2 border-b border-line px-4 py-2.5 font-mono text-[11px] text-muted">
           <span class="h-1.5 w-1.5 rounded-full bg-terminal-text"></span>
-          you@server: ~/terra
-          <span class="ml-auto">ghcr.io/nhridoy/terra-server</span>
+          you@server: ~/shetu
+          <span class="ml-auto">ghcr.io/nhridoy/shetu-server</span>
         </div>
         <pre class="overflow-x-auto p-5 font-mono text-[12.5px] leading-[1.9]"><code>{lines.map((l) => (
           <span class:list={['block', l.comment ? 'text-muted' : l.out ? 'text-terminal-text' : 'text-ink']}>{!l.comment && !l.out && <span class="text-accent">$ </span>}{l.c}</span>

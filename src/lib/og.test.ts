@@ -21,7 +21,7 @@ describe('share images', () => {
     const png = await renderOgPng(
       {
         title: 'Free open-source SSH client for Linux',
-        subtitle: 'Install Terra on Linux.',
+        subtitle: 'Install Shetu on Linux.',
       },
       fonts,
     );

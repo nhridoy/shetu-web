@@ -1,11 +1,11 @@
 ---
+import ShetuWindow from '../components/mockups/ShetuWindow.astro';
 import TerminalPane from '../components/mockups/TerminalPane.astro';
-import TerraWindow from '../components/mockups/TerraWindow.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout
-  title="Page not found · Terra"
+  title="Page not found · Shetu"
   description="The page you requested does not exist."
   noindex
   image="/og/index.png"
@@ -30,7 +30,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
       <div class="relative">
         <div class="glow-beam pointer-events-none absolute -inset-8 opacity-60" aria-hidden="true"></div>
-        <TerraWindow title="ssh" class="relative">
+        <ShetuWindow title="ssh" class="relative">
           <TerminalPane
             title="me@laptop"
             lines={[
@@ -42,7 +42,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             ]}
             class="h-56"
           />
-        </TerraWindow>
+        </ShetuWindow>
       </div>
     </div>
   </section>

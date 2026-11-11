@@ -1,8 +1,8 @@
-# Terra Distribution and Marketing Site — Implementation Plan
+# Shetu Distribution and Marketing Site — Implementation Plan
 
-> **For the implementing agent:** Use the `executing-plans` skill to implement this plan task by task. Read the approved design spec at `docs/superpowers/specs/2026-11-09-terra-distribution-site-design.md` first. Do not invent product claims, pricing, customers, benchmarks, or cloud URLs.
+> **For the implementing agent:** Use the `executing-plans` skill to implement this plan task by task. Read the approved design spec at `docs/superpowers/specs/2026-11-09-shetu-distribution-site-design.md` first. Do not invent product claims, pricing, customers, benchmarks, or cloud URLs.
 
-**Goal:** Replace the single-page `terra-web` landing page with a static, multi-page distribution and marketing site for Terra, with an OS-aware download experience, fresh MDX docs, a live GitHub release feed, and a Field Manual visual system.
+**Goal:** Replace the single-page `shetu-web` landing page with a static, multi-page distribution and marketing site for Shetu, with an OS-aware download experience, fresh MDX docs, a live GitHub release feed, and a Field Manual visual system.
 
 **Architecture:** Astro 7 static output. Marketing pages are pre-rendered `.astro` with no hydration. Two React islands handle runtime GitHub data (`DownloadPanel`, `ReleaseList`). The install command switcher is static HTML/CSS so it works without JavaScript. Docs are MDX content collections rendered through a shared `DocsLayout`. All runtime data has a committed fallback snapshot.
 
@@ -12,15 +12,15 @@
 
 ## Global Constraints
 
-- **Only modify `terra-web`.** Do not touch `terra-client`, `terra-server`, or the umbrella `terra` repo.
+- **Only modify `shetu-web`.** Do not touch `shetu-client`, `shetu-server`, or the umbrella `shetu` repo.
 - **Static output only.** No Astro adapter, no server runtime, no API routes that require a server.
 - **pnpm only.** Do not use npm or yarn. Commit `pnpm-lock.yaml` with dependency changes.
 - **Accuracy is a hard requirement.** Never claim SRP6a, XSalsa20, GitLab OAuth, Microsoft OAuth, a mobile app, pricing, customers, testimonials, benchmarks, or cloud signup URLs. The code uses Argon2id, XChaCha20-Poly1305, and X25519; only Google and GitHub OAuth exist.
-- **Real release facts.** The current release is `v0.0.15`, published `2026-11-05T10:20:49Z`. Asset names are `Terra-0.0.15-<Platform>-<Arch>.<ext>` as listed in Task 3.
+- **Real release facts.** The current release is `v0.0.15`, published `2026-11-05T10:20:49Z`. Asset names are `Shetu-0.0.15-<Platform>-<Arch>.<ext>` as listed in Task 3.
 - **No JavaScript required** for reading, navigating, install commands, or reaching GitHub Releases. Only live release metadata upgrades.
 - **Responsive from 360px.** No horizontal scroll at 360, 768, 1024, or 1440px.
 - **Accessibility:** semantic landmarks, skip link, one `h1` per page, visible focus, AA contrast, keyboard-operable controls, `prefers-reduced-motion`.
-- **No placeholders in shipped copy.** `example.com` may appear only inside documentation examples for self-hosters, never as a Terra URL.
+- **No placeholders in shipped copy.** `example.com` may appear only inside documentation examples for self-hosters, never as a Shetu URL.
 - **Node `>=22.12.0` and pnpm 12.6.0.** Add `"packageManager": "pnpm@12.6.0"` to `package.json`.
 
 ## Review Focus
@@ -182,8 +182,8 @@ describe('site constants', () => {
   });
 
   it('points both install commands at the client repository', () => {
-    expect(INSTALL_COMMANDS.unix).toContain('nhridoy/terra-client');
-    expect(INSTALL_COMMANDS.windows).toContain('nhridoy/terra-client');
+    expect(INSTALL_COMMANDS.unix).toContain('nhridoy/shetu-client');
+    expect(INSTALL_COMMANDS.windows).toContain('nhridoy/shetu-client');
   });
 
   it('uses absolute GitHub URLs for every repository', () => {
@@ -207,15 +207,15 @@ Expected: fail because `src/lib/site.ts` does not exist.
 Create `src/lib/site.ts`:
 
 ```ts
-export const SITE_NAME = 'Terra';
+export const SITE_NAME = 'Shetu';
 export const SITE_DESCRIPTION =
   'The open-source, self-hostable SSH client. Direct SSH, encrypted vaults, SFTP, and port forwarding in one desktop workspace.';
 
 export const REPOS = {
-  monorepo: 'https://github.com/nhridoy/terra',
-  client: 'https://github.com/nhridoy/terra-client',
-  server: 'https://github.com/nhridoy/terra-server',
-  web: 'https://github.com/nhridoy/terra-web',
+  monorepo: 'https://github.com/nhridoy/shetu',
+  client: 'https://github.com/nhridoy/shetu-client',
+  server: 'https://github.com/nhridoy/shetu-server',
+  web: 'https://github.com/nhridoy/shetu-web',
 } as const;
 
 export const NAV_ITEMS = [
@@ -227,9 +227,9 @@ export const NAV_ITEMS = [
 ] as const;
 
 export const INSTALL_COMMANDS = {
-  unix: 'curl -fsSL https://raw.githubusercontent.com/nhridoy/terra-client/main/install.sh | bash',
+  unix: 'curl -fsSL https://raw.githubusercontent.com/nhridoy/shetu-client/main/install.sh | bash',
   windows:
-    'irm https://raw.githubusercontent.com/nhridoy/terra-client/main/install.ps1 | iex',
+    'irm https://raw.githubusercontent.com/nhridoy/shetu-client/main/install.ps1 | iex',
 } as const;
 ```
 
@@ -583,7 +583,7 @@ const isActive = (href: string) =>
   <div class="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-6">
     <a href="/" class="flex items-center gap-2 font-mono text-sm font-medium tracking-tight">
       <span class="grid h-6 w-6 place-items-center rounded border border-ink bg-ink text-[10px] text-paper">T</span>
-      terra
+      shetu
     </a>
     <nav class="hidden items-center gap-7 md:flex" aria-label="Primary">
       {NAV_ITEMS.map((item) => (
@@ -636,7 +636,7 @@ const year = new Date().getFullYear();
 <footer class="border-t border-line">
   <div class="mx-auto grid max-w-[1200px] gap-8 px-6 py-12 md:grid-cols-[1.5fr_1fr_1fr]">
     <div>
-      <a href="/" class="font-mono text-sm font-medium">terra</a>
+      <a href="/" class="font-mono text-sm font-medium">shetu</a>
       <p class="mt-3 max-w-xs text-sm leading-relaxed text-muted">
         The open-source, self-hostable SSH client. Your servers. Your rules.
       </p>
@@ -655,10 +655,10 @@ const year = new Date().getFullYear();
     <div>
       <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">Source</p>
       <ul class="mt-3 space-y-2">
-        <li><a href={REPOS.monorepo} class="text-sm text-muted hover:text-accent">terra</a></li>
-        <li><a href={REPOS.client} class="text-sm text-muted hover:text-accent">terra-client</a></li>
-        <li><a href={REPOS.server} class="text-sm text-muted hover:text-accent">terra-server</a></li>
-        <li><a href={REPOS.web} class="text-sm text-muted hover:text-accent">terra-web</a></li>
+        <li><a href={REPOS.monorepo} class="text-sm text-muted hover:text-accent">shetu</a></li>
+        <li><a href={REPOS.client} class="text-sm text-muted hover:text-accent">shetu-client</a></li>
+        <li><a href={REPOS.server} class="text-sm text-muted hover:text-accent">shetu-server</a></li>
+        <li><a href={REPOS.web} class="text-sm text-muted hover:text-accent">shetu-web</a></li>
       </ul>
     </div>
   </div>
@@ -674,7 +674,7 @@ Create `src/pages/404.astro`:
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Not found — Terra" description="The page you requested does not exist.">
+<BaseLayout title="Not found — Shetu" description="The page you requested does not exist.">
   <section class="mx-auto max-w-[1200px] px-6 py-24">
     <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">404</p>
     <h1 class="mt-4 text-5xl font-medium tracking-[-0.045em]">That host is unreachable.</h1>
@@ -1013,62 +1013,62 @@ const raw = {
   tag_name: 'v0.0.15',
   name: 'v0.0.15',
   published_at: '2026-11-05T10:20:49Z',
-  html_url: 'https://github.com/nhridoy/terra-client/releases/tag/v0.0.15',
+  html_url: 'https://github.com/nhridoy/shetu-client/releases/tag/v0.0.15',
   prerelease: false,
   body: 'Notes',
   assets: [
     {
-      name: 'Terra-0.0.15-Linux-ARM64.AppImage',
+      name: 'Shetu-0.0.15-Linux-ARM64.AppImage',
       browser_download_url: 'https://example.com/linux-arm64.AppImage',
       size: 90401288,
     },
     {
-      name: 'Terra-0.0.15-Linux-ARM64.AppImage.sig',
+      name: 'Shetu-0.0.15-Linux-ARM64.AppImage.sig',
       browser_download_url: 'https://example.com/linux-arm64.AppImage.sig',
       size: 440,
     },
     {
-      name: 'Terra-0.0.15-Linux-ARM64.deb',
+      name: 'Shetu-0.0.15-Linux-ARM64.deb',
       browser_download_url: 'https://example.com/linux-arm64.deb',
       size: 15362046,
     },
     {
-      name: 'Terra-0.0.15-Linux-x64.AppImage',
+      name: 'Shetu-0.0.15-Linux-x64.AppImage',
       browser_download_url: 'https://example.com/linux-x64.AppImage',
       size: 91871736,
     },
     {
-      name: 'Terra-0.0.15-Linux-x64.deb',
+      name: 'Shetu-0.0.15-Linux-x64.deb',
       browser_download_url: 'https://example.com/linux-x64.deb',
       size: 14774326,
     },
     {
-      name: 'Terra-0.0.15-macOS-Apple-Silicon.dmg',
+      name: 'Shetu-0.0.15-macOS-Apple-Silicon.dmg',
       browser_download_url: 'https://example.com/mac-arm64.dmg',
       size: 12292167,
     },
     {
-      name: 'Terra-0.0.15-macOS-Intel.dmg',
+      name: 'Shetu-0.0.15-macOS-Intel.dmg',
       browser_download_url: 'https://example.com/mac-x64.dmg',
       size: 13237946,
     },
     {
-      name: 'Terra-0.0.15-Windows-ARM64-Setup.exe',
+      name: 'Shetu-0.0.15-Windows-ARM64-Setup.exe',
       browser_download_url: 'https://example.com/win-arm64.exe',
       size: 7674339,
     },
     {
-      name: 'Terra-0.0.15-Windows-x64-Setup.exe',
+      name: 'Shetu-0.0.15-Windows-x64-Setup.exe',
       browser_download_url: 'https://example.com/win-x64.exe',
       size: 8653414,
     },
     {
-      name: 'Terra-0.0.15-macOS-Apple-Silicon.app.tar.gz',
+      name: 'Shetu-0.0.15-macOS-Apple-Silicon.app.tar.gz',
       browser_download_url: 'https://example.com/mac-arm64.app.tar.gz',
       size: 12479459,
     },
     {
-      name: 'terra-latest.json',
+      name: 'shetu-latest.json',
       browser_download_url: 'https://example.com/latest.json',
       size: 5158,
     },
@@ -1360,12 +1360,12 @@ const release: Release = {
   tag_name: 'v1.2.3',
   name: 'v1.2.3',
   published_at: '2026-01-01T00:00:00Z',
-  html_url: 'https://github.com/nhridoy/terra-client/releases/tag/v1.2.3',
+  html_url: 'https://github.com/nhridoy/shetu-client/releases/tag/v1.2.3',
   prerelease: false,
   body: 'Notes',
   assets: [
     {
-      name: 'Terra-1.2.3-Linux-x64.AppImage',
+      name: 'Shetu-1.2.3-Linux-x64.AppImage',
       browser_download_url: 'https://example.com/app',
       size: 10,
     },
@@ -1494,7 +1494,7 @@ export interface ReleasesResult {
   source: 'live' | 'fallback';
 }
 
-const API_BASE = 'https://api.github.com/repos/nhridoy/terra-client';
+const API_BASE = 'https://api.github.com/repos/nhridoy/shetu-client';
 const TTL_MS = 10 * 60 * 1000;
 
 interface Options {
@@ -1558,7 +1558,7 @@ export async function getLatestRelease(
     apiBase = API_BASE,
     fallback,
   } = options;
-  const key = `terra:latest-release:${apiBase}`;
+  const key = `shetu:latest-release:${apiBase}`;
   const cached = readCache<Release>(cache, key, now, ttlMs);
   if (cached) return { release: cached, source: 'live' };
 
@@ -1585,7 +1585,7 @@ export async function getReleases(
     apiBase = API_BASE,
     fallback,
   } = options;
-  const key = `terra:releases:${apiBase}`;
+  const key = `shetu:releases:${apiBase}`;
   const cached = readCache<Release[]>(cache, key, now, ttlMs);
   if (cached) return { releases: cached, source: 'live' };
 
@@ -1629,48 +1629,48 @@ Create `src/data/releases.json` with the real `v0.0.15` assets:
     "tag_name": "v0.0.15",
     "name": "v0.0.15",
     "published_at": "2026-11-05T10:20:49Z",
-    "html_url": "https://github.com/nhridoy/terra-client/releases/tag/v0.0.15",
+    "html_url": "https://github.com/nhridoy/shetu-client/releases/tag/v0.0.15",
     "prerelease": false,
     "body": "",
     "assets": [
       {
-        "name": "Terra-0.0.15-Linux-ARM64.AppImage",
-        "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Linux-ARM64.AppImage",
+        "name": "Shetu-0.0.15-Linux-ARM64.AppImage",
+        "browser_download_url": "https://github.com/nhridoy/shetu-client/releases/download/v0.0.15/Shetu-0.0.15-Linux-ARM64.AppImage",
         "size": 90401288
       },
       {
-        "name": "Terra-0.0.15-Linux-ARM64.deb",
-        "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Linux-ARM64.deb",
+        "name": "Shetu-0.0.15-Linux-ARM64.deb",
+        "browser_download_url": "https://github.com/nhridoy/shetu-client/releases/download/v0.0.15/Shetu-0.0.15-Linux-ARM64.deb",
         "size": 15362046
       },
       {
-        "name": "Terra-0.0.15-Linux-x64.AppImage",
-        "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Linux-x64.AppImage",
+        "name": "Shetu-0.0.15-Linux-x64.AppImage",
+        "browser_download_url": "https://github.com/nhridoy/shetu-client/releases/download/v0.0.15/Shetu-0.0.15-Linux-x64.AppImage",
         "size": 91871736
       },
       {
-        "name": "Terra-0.0.15-Linux-x64.deb",
-        "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Linux-x64.deb",
+        "name": "Shetu-0.0.15-Linux-x64.deb",
+        "browser_download_url": "https://github.com/nhridoy/shetu-client/releases/download/v0.0.15/Shetu-0.0.15-Linux-x64.deb",
         "size": 14774326
       },
       {
-        "name": "Terra-0.0.15-macOS-Apple-Silicon.dmg",
-        "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-macOS-Apple-Silicon.dmg",
+        "name": "Shetu-0.0.15-macOS-Apple-Silicon.dmg",
+        "browser_download_url": "https://github.com/nhridoy/shetu-client/releases/download/v0.0.15/Shetu-0.0.15-macOS-Apple-Silicon.dmg",
         "size": 12292167
       },
       {
-        "name": "Terra-0.0.15-macOS-Intel.dmg",
-        "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-macOS-Intel.dmg",
+        "name": "Shetu-0.0.15-macOS-Intel.dmg",
+        "browser_download_url": "https://github.com/nhridoy/shetu-client/releases/download/v0.0.15/Shetu-0.0.15-macOS-Intel.dmg",
         "size": 13237946
       },
       {
-        "name": "Terra-0.0.15-Windows-ARM64-Setup.exe",
-        "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Windows-ARM64-Setup.exe",
+        "name": "Shetu-0.0.15-Windows-ARM64-Setup.exe",
+        "browser_download_url": "https://github.com/nhridoy/shetu-client/releases/download/v0.0.15/Shetu-0.0.15-Windows-ARM64-Setup.exe",
         "size": 7674339
       },
       {
-        "name": "Terra-0.0.15-Windows-x64-Setup.exe",
-        "browser_download_url": "https://github.com/nhridoy/terra-client/releases/download/v0.0.15/Terra-0.0.15-Windows-x64-Setup.exe",
+        "name": "Shetu-0.0.15-Windows-x64-Setup.exe",
+        "browser_download_url": "https://github.com/nhridoy/shetu-client/releases/download/v0.0.15/Shetu-0.0.15-Windows-x64-Setup.exe",
         "size": 8653414
       }
     ]
@@ -1726,17 +1726,17 @@ const release: Release = {
   tag_name: 'v9.9.9',
   name: 'v9.9.9',
   published_at: '2026-01-01T00:00:00Z',
-  html_url: 'https://github.com/nhridoy/terra-client/releases/tag/v9.9.9',
+  html_url: 'https://github.com/nhridoy/shetu-client/releases/tag/v9.9.9',
   prerelease: false,
   body: '',
   assets: [
     {
-      name: 'Terra-9.9.9-Linux-x64.AppImage',
+      name: 'Shetu-9.9.9-Linux-x64.AppImage',
       browser_download_url: 'https://example.com/linux-x64.AppImage',
       size: 1024,
     },
     {
-      name: 'Terra-9.9.9-Windows-x64-Setup.exe',
+      name: 'Shetu-9.9.9-Windows-x64-Setup.exe',
       browser_download_url: 'https://example.com/windows-x64.exe',
       size: 1024,
     },
@@ -1889,7 +1889,7 @@ export default function DownloadPanel({
       >
         {recommended
           ? `Download for ${osLabel(platform?.os ?? '')}`
-          : 'Download Terra'}
+          : 'Download Shetu'}
       </a>
     );
   }
@@ -2032,7 +2032,7 @@ const commands = [
     id: 'unix',
     label: 'macOS / Linux',
     command: INSTALL_COMMANDS.unix,
-    hint: 'On Debian or Ubuntu this installs the .deb. Elsewhere it places the AppImage at ~/.local/bin/terra, which needs libfuse2.',
+    hint: 'On Debian or Ubuntu this installs the .deb. Elsewhere it places the AppImage at ~/.local/bin/shetu, which needs libfuse2.',
   },
   {
     id: 'windows',
@@ -2258,14 +2258,14 @@ Create `src/components/marketing/WorkspaceMock.astro`:
   <div
     class="overflow-hidden rounded-xl border border-white/10 bg-terminal text-terminal-text"
     role="img"
-    aria-label="Illustration of the Terra workspace with host list, terminal tabs, and SFTP panel"
+    aria-label="Illustration of the Shetu workspace with host list, terminal tabs, and SFTP panel"
   >
     <div class="flex items-center gap-2 border-b border-white/10 px-4 py-3">
       <span class="h-2.5 w-2.5 rounded-full bg-white/20"></span>
       <span class="h-2.5 w-2.5 rounded-full bg-white/20"></span>
       <span class="h-2.5 w-2.5 rounded-full bg-white/20"></span>
       <span class="ml-auto font-mono text-[10px] uppercase tracking-[0.18em] text-white/40">
-        terra · workspace
+        shetu · workspace
       </span>
     </div>
     <div class="grid grid-cols-[96px_1fr] text-[11px] sm:grid-cols-[120px_1fr]">
@@ -2292,7 +2292,7 @@ Create `src/components/marketing/WorkspaceMock.astro`:
         <p class="mt-1 text-white/50">198.51.100.7 — GET /api/v1/status 200 4ms</p>
         <div class="mt-5 border-t border-white/10 pt-3">
           <p class="text-[9px] uppercase tracking-[0.16em] text-white/30">
-            SFTP · /var/www/terra
+            SFTP · /var/www/shetu
           </p>
           <p class="mt-2 text-white/70">index.html <span class="float-right text-white/40">12 KB</span></p>
           <p class="text-white/70">assets/ <span class="float-right text-white/40">dir</span></p>
@@ -2419,7 +2419,7 @@ const steps = [
         The server never sees the keys.
       </h2>
       <p class="mt-4 max-w-lg text-lg leading-relaxed text-muted">
-        Terra encrypts your vault before anything reaches sync. The server can
+        Shetu encrypts your vault before anything reaches sync. The server can
         store and return ciphertext, but it cannot read your credentials,
         private keys, or SSH traffic.
       </p>
@@ -2457,23 +2457,23 @@ const compose = `services:
   postgres:
     image: postgres:17-alpine
     environment:
-      POSTGRES_USER: terra
+      POSTGRES_USER: shetu
       POSTGRES_PASSWORD: change-me
-      POSTGRES_DB: terra
+      POSTGRES_DB: shetu
     volumes:
-      - terra-db:/var/lib/postgresql/data
+      - shetu-db:/var/lib/postgresql/data
 
-  terra-server:
-    image: ghcr.io/nhridoy/terra-server:latest
+  shetu-server:
+    image: ghcr.io/nhridoy/shetu-server:latest
     ports:
       - "8080:8080"
     environment:
-      DATABASE_URL: postgres://terra:change-me@postgres:5432/terra?sslmode=disable
+      DATABASE_URL: postgres://shetu:change-me@postgres:5432/shetu?sslmode=disable
       JWT_SECRET: replace-with-a-long-random-string
       BASE_URL: https://sync.example.com
 
 volumes:
-  terra-db:`;
+  shetu-db:`;
 ---
 
 <section class="mx-auto max-w-[1200px] px-6 py-20 md:py-28">
@@ -2486,14 +2486,14 @@ volumes:
         Sync on your infrastructure.
       </h2>
       <p class="mt-4 text-lg leading-relaxed text-muted">
-        Terra works without a Terra account or sync server. If you want sync
+        Shetu works without a Shetu account or sync server. If you want sync
         across devices, run the Go server next to your own PostgreSQL. You
         control the data and the uptime.
       </p>
       <ol class="mt-6 space-y-3 text-sm text-muted">
         <li><span class="font-mono text-accent">01</span> Start PostgreSQL and the server with Docker Compose.</li>
         <li><span class="font-mono text-accent">02</span> Set a long <code class="font-mono text-ink">JWT_SECRET</code> and your public <code class="font-mono text-ink">BASE_URL</code>.</li>
-        <li><span class="font-mono text-accent">03</span> Point Terra at your server in settings and sign in.</li>
+        <li><span class="font-mono text-accent">03</span> Point Shetu at your server in settings and sign in.</li>
       </ol>
       <a
         href="/docs/server"
@@ -2515,22 +2515,22 @@ import { REPOS } from '../../lib/site';
 
 const repos = [
   {
-    name: 'terra',
+    name: 'shetu',
     href: REPOS.monorepo,
     description: 'Project home, docs, and cross-cutting issues.',
   },
   {
-    name: 'terra-client',
+    name: 'shetu-client',
     href: REPOS.client,
     description: 'Tauri v2 desktop client: Rust, React, TypeScript.',
   },
   {
-    name: 'terra-server',
+    name: 'shetu-server',
     href: REPOS.server,
     description: 'Go sync and auth server: Gin, GORM, PostgreSQL.',
   },
   {
-    name: 'terra-web',
+    name: 'shetu-web',
     href: REPOS.web,
     description: 'This site: Astro, React islands, Tailwind.',
   },
@@ -2585,12 +2585,12 @@ Create `src/components/marketing/ClosingCta.astro`:
       Your servers. Your rules.
     </h2>
     <p class="mt-4 max-w-xl text-base leading-relaxed text-paper/70">
-      Download Terra for your platform, or read the docs and self-host the sync
+      Download Shetu for your platform, or read the docs and self-host the sync
       server when you need it.
     </p>
     <div class="mt-8 flex flex-wrap gap-3">
       <a href="/download" class="rounded-lg bg-paper px-5 py-3 text-sm font-medium text-ink">
-        Download Terra
+        Download Shetu
       </a>
       <a href="/docs" class="rounded-lg border border-white/20 px-5 py-3 text-sm font-medium text-paper">
         Read the docs
@@ -2620,20 +2620,20 @@ import WorkspaceMock from '../components/marketing/WorkspaceMock.astro';
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
-  name: 'Terra',
+  name: 'Shetu',
   applicationCategory: 'DeveloperApplication',
   operatingSystem: 'Windows, macOS, Linux',
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
   license: 'https://opensource.org/licenses/MIT',
-  codeRepository: 'https://github.com/nhridoy/terra',
-  downloadUrl: 'https://github.com/nhridoy/terra-client/releases/latest',
+  codeRepository: 'https://github.com/nhridoy/shetu',
+  downloadUrl: 'https://github.com/nhridoy/shetu-client/releases/latest',
   description:
     'The open-source, self-hostable SSH client. Direct SSH, encrypted vaults, SFTP, and port forwarding in one desktop workspace.',
 };
 ---
 
 <BaseLayout
-  title="Terra — Your servers. Your rules."
+  title="Shetu — Your servers. Your rules."
   description="The open-source, self-hostable SSH client. Direct SSH, encrypted vaults, SFTP, and port forwarding in one desktop workspace."
   jsonLd={jsonLd}
 >
@@ -2757,15 +2757,15 @@ import InstallCommand from '../components/download/InstallCommand.astro';
 ---
 
 <BaseLayout
-  title="Download Terra"
-  description="Download Terra for Windows, macOS, or Linux. Direct SSH, encrypted vault, SFTP, and optional self-hosted sync."
+  title="Download Shetu"
+  description="Download Shetu for Windows, macOS, or Linux. Direct SSH, encrypted vault, SFTP, and optional self-hosted sync."
 >
   <section class="mx-auto max-w-[1200px] px-6 pt-14 pb-16 md:pt-20">
     <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
       Download
     </p>
     <h1 class="mt-4 text-5xl font-medium tracking-[-0.05em] md:text-6xl">
-      Get Terra for your machine.
+      Get Shetu for your machine.
     </h1>
     <p class="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
       Pick the build that matches your OS and architecture. Detection is a
@@ -2796,12 +2796,12 @@ import InstallCommand from '../components/download/InstallCommand.astro';
       <h2 class="text-3xl font-medium tracking-[-0.03em]">First launch</h2>
       <div class="mt-5 space-y-4">
         <Callout tone="warning" title="macOS">
-          Terra is not signed by Apple yet. Drag it to Applications, open it
+          Shetu is not signed by Apple yet. Drag it to Applications, open it
           once, then go to <strong>System Settings → Privacy & Security</strong>
           and click <strong>Open Anyway</strong>.
         </Callout>
         <Callout tone="warning" title="Windows">
-          Terra is not signed by Microsoft yet. On the SmartScreen prompt, click
+          Shetu is not signed by Microsoft yet. On the SmartScreen prompt, click
           <strong>More info → Run anyway</strong>. If your browser warns that the
           file is uncommon, choose <strong>Keep</strong>.
         </Callout>
@@ -2826,7 +2826,7 @@ import InstallCommand from '../components/download/InstallCommand.astro';
         </li>
         <li>
           <strong class="text-ink">Network:</strong> direct SSH access to your
-          hosts. No Terra account is required for local use.
+          hosts. No Shetu account is required for local use.
         </li>
       </ul>
       <p class="mt-5 text-sm text-muted">
@@ -2847,7 +2847,7 @@ import InstallCommand from '../components/download/InstallCommand.astro';
 
 ```sh
 pnpm build
-grep -q "Get Terra for your machine" dist/download/index.html
+grep -q "Get Shetu for your machine" dist/download/index.html
 grep -q "download-matrix" dist/download/index.html
 grep -q "System Settings" dist/download/index.html
 grep -q "SmartScreen" dist/download/index.html
@@ -2899,9 +2899,9 @@ import type { Release } from '../../lib/releases';
 
 const release: Release = {
   tag_name: 'v1.0.0',
-  name: 'Terra 1.0.0',
+  name: 'Shetu 1.0.0',
   published_at: '2026-02-01T00:00:00Z',
-  html_url: 'https://github.com/nhridoy/terra-client/releases/tag/v1.0.0',
+  html_url: 'https://github.com/nhridoy/shetu-client/releases/tag/v1.0.0',
   prerelease: true,
   body: 'A big release.',
   assets: [],
@@ -2931,7 +2931,7 @@ describe('ReleaseList', () => {
       screen.getByRole('link', { name: 'View releases on GitHub' }),
     ).toHaveAttribute(
       'href',
-      'https://github.com/nhridoy/terra-client/releases',
+      'https://github.com/nhridoy/shetu-client/releases',
     );
   });
 });
@@ -3003,7 +3003,7 @@ export default function ReleaseList({ load }: ReleaseListProps) {
             : 'Release history is loaded from GitHub.'}
         </p>
         <a
-          href="https://github.com/nhridoy/terra-client/releases"
+          href="https://github.com/nhridoy/shetu-client/releases"
           className="mt-3 inline-flex text-sm font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent"
         >
           View releases on GitHub
@@ -3083,8 +3083,8 @@ import ReleaseList from '../components/download/ReleaseList';
 ---
 
 <BaseLayout
-  title="Releases — Terra"
-  description="Terra release history, tags, dates, and download assets."
+  title="Releases — Shetu"
+  description="Shetu release history, tags, dates, and download assets."
 >
   <section class="mx-auto max-w-[900px] px-6 py-16">
     <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
@@ -3094,12 +3094,12 @@ import ReleaseList from '../components/download/ReleaseList';
       Every release, in the open.
     </h1>
     <p class="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
-      Terra ships from GitHub Releases. The list below is fetched live and
+      Shetu ships from GitHub Releases. The list below is fetched live and
       falls back to the last known release when the API is unavailable.
     </p>
     <div class="mt-8 flex flex-wrap gap-4 text-sm">
       <a
-        href="https://github.com/nhridoy/terra-client/releases"
+        href="https://github.com/nhridoy/shetu-client/releases"
         class="font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent"
       >
         All releases on GitHub
@@ -3187,13 +3187,13 @@ Create `src/content/docs/desktop.mdx`:
 ````mdx
 ---
 title: Desktop app
-description: Install Terra on macOS, Windows, or Linux, connect your first host, and manage your encrypted vault.
+description: Install Shetu on macOS, Windows, or Linux, connect your first host, and manage your encrypted vault.
 section: desktop
 order: 1
 updated: 2026-11-09
 ---
 
-Terra is a desktop SSH client for macOS, Windows, and Linux. It connects directly from your machine to your servers. The optional sync server never proxies SSH traffic.
+Shetu is a desktop SSH client for macOS, Windows, and Linux. It connects directly from your machine to your servers. The optional sync server never proxies SSH traffic.
 
 ## Install
 
@@ -3202,16 +3202,16 @@ Terra is a desktop SSH client for macOS, Windows, and Linux. It connects directl
 macOS and Linux:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/nhridoy/terra-client/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/nhridoy/shetu-client/main/install.sh | bash
 ```
 
 Windows PowerShell:
 
 ```powershell
-irm https://raw.githubusercontent.com/nhridoy/terra-client/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/nhridoy/shetu-client/main/install.ps1 | iex
 ```
 
-The script detects your OS and architecture and installs the matching build. On Debian or Ubuntu it installs the `.deb`. Elsewhere it places the AppImage at `~/.local/bin/terra`, which needs `libfuse2`.
+The script detects your OS and architecture and installs the matching build. On Debian or Ubuntu it installs the `.deb`. Elsewhere it places the AppImage at `~/.local/bin/shetu`, which needs `libfuse2`.
 
 ### From a downloaded file
 
@@ -3228,9 +3228,9 @@ Download the build for your platform from [the download page](/download). The cu
 
 ## First launch
 
-Terra is not signed by Apple or Microsoft yet. You will see a warning once.
+Shetu is not signed by Apple or Microsoft yet. You will see a warning once.
 
-**macOS:** drag Terra to Applications, open it once, then go to **System Settings → Privacy & Security** and click **Open Anyway**.
+**macOS:** drag Shetu to Applications, open it once, then go to **System Settings → Privacy & Security** and click **Open Anyway**.
 
 **Windows:** on the SmartScreen prompt, click **More info → Run anyway**. If your browser warns that the file is uncommon, choose **Keep**.
 
@@ -3238,30 +3238,30 @@ In-app updates do not repeat the warning.
 
 ## Connect your first host
 
-1. Open Terra and choose **New host**.
+1. Open Shetu and choose **New host**.
 2. Enter the hostname, port (usually 22), and username.
 3. Choose the authentication method your server allows: password or private key.
 4. Save the host and connect.
 
-Terra opens an SSH session in a tab. From the same workspace you can open an SFTP panel, split the terminal, and add port forwards.
+Shetu opens an SSH session in a tab. From the same workspace you can open an SFTP panel, split the terminal, and add port forwards.
 
 ## The vault
 
-The vault stores credentials and keys encrypted on your device. Terra derives the vault key from your master password with Argon2id and encrypts vault contents with XChaCha20-Poly1305.
+The vault stores credentials and keys encrypted on your device. Shetu derives the vault key from your master password with Argon2id and encrypts vault contents with XChaCha20-Poly1305.
 
-Create the vault on first use and store the recovery kit somewhere safe. The recovery kit is the only way to recover the vault if you forget the master password. Terra cannot recover it for you.
+Create the vault on first use and store the recovery kit somewhere safe. The recovery kit is the only way to recover the vault if you forget the master password. Shetu cannot recover it for you.
 
 ## Updates
 
-Terra checks for updates from GitHub Releases. You can also download the latest build from [the releases page](/releases). If an update fails, reinstall from the latest release.
+Shetu checks for updates from GitHub Releases. You can also download the latest build from [the releases page](/releases). If an update fails, reinstall from the latest release.
 
 ## Uninstall
 
-**macOS:** quit Terra, move it from Applications to the Trash, then remove `~/Library/Application Support/com.nhridoy.terra` if you want to delete local data.
+**macOS:** quit Shetu, move it from Applications to the Trash, then remove `~/Library/Application Support/com.nhridoy.shetu` if you want to delete local data.
 
-**Windows:** uninstall Terra from **Settings → Apps**, then remove `%APPDATA%\com.nhridoy.terra` if you want to delete local data.
+**Windows:** uninstall Shetu from **Settings → Apps**, then remove `%APPDATA%\com.nhridoy.shetu` if you want to delete local data.
 
-**Linux:** remove the AppImage, or remove the `.deb` with your package manager. Then remove `~/.local/share/com.nhridoy.terra` if you want to delete local data.
+**Linux:** remove the AppImage, or remove the `.deb` with your package manager. Then remove `~/.local/share/com.nhridoy.shetu` if you want to delete local data.
 
 ## Next
 
@@ -3277,13 +3277,13 @@ Create `src/content/docs/server.mdx`:
 ````mdx
 ---
 title: Self-host the sync server
-description: Run the Terra sync and auth server with Docker Compose, PostgreSQL, TLS, and optional OAuth.
+description: Run the Shetu sync and auth server with Docker Compose, PostgreSQL, TLS, and optional OAuth.
 section: server
 order: 2
 updated: 2026-11-09
 ---
 
-Terra works without a server. Self-hosting adds encrypted sync and account features across devices. The server stores ciphertext and wrapped keys. It never sees your SSH traffic or plaintext credentials.
+Shetu works without a server. Self-hosting adds encrypted sync and account features across devices. The server stores ciphertext and wrapped keys. It never sees your SSH traffic or plaintext credentials.
 
 ## Requirements
 
@@ -3303,35 +3303,35 @@ services:
   postgres:
     image: postgres:17-alpine
     environment:
-      POSTGRES_USER: terra
+      POSTGRES_USER: shetu
       POSTGRES_PASSWORD: change-me
-      POSTGRES_DB: terra
+      POSTGRES_DB: shetu
     volumes:
-      - terra-db:/var/lib/postgresql/data
+      - shetu-db:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U terra"]
+      test: ["CMD-SHELL", "pg_isready -U shetu"]
       interval: 5s
       timeout: 5s
       retries: 10
 
-  terra-server:
-    image: ghcr.io/nhridoy/terra-server:latest
+  shetu-server:
+    image: ghcr.io/nhridoy/shetu-server:latest
     depends_on:
       postgres:
         condition: service_healthy
     ports:
       - "8080:8080"
     environment:
-      TERRA_HOST: 0.0.0.0
-      TERRA_PORT: "8080"
-      DATABASE_URL: postgres://terra:change-me@postgres:5432/terra?sslmode=disable
+      SHETU_HOST: 0.0.0.0
+      SHETU_PORT: "8080"
+      DATABASE_URL: postgres://shetu:change-me@postgres:5432/shetu?sslmode=disable
       JWT_SECRET: replace-with-a-long-random-string
       BASE_URL: https://sync.example.com
       CORS_ALLOWED_ORIGINS: http://tauri.localhost,tauri://localhost
     restart: unless-stopped
 
 volumes:
-  terra-db:
+  shetu-db:
 ```
 
 Generate a secret with:
@@ -3349,7 +3349,7 @@ docker compose up -d
 Check the logs:
 
 ```bash
-docker compose logs -f terra-server
+docker compose logs -f shetu-server
 ```
 
 ## Environment
@@ -3359,15 +3359,15 @@ docker compose logs -f terra-server
 | `DATABASE_URL` | Yes | PostgreSQL connection string in production |
 | `JWT_SECRET` | Yes | Signs access tokens |
 | `BASE_URL` | Yes in production | Public URL, used for OAuth callbacks |
-| `TERRA_HOST` | No | Bind address, default `0.0.0.0` |
-| `TERRA_PORT` | No | HTTP port, default `8080` |
+| `SHETU_HOST` | No | Bind address, default `0.0.0.0` |
+| `SHETU_PORT` | No | HTTP port, default `8080` |
 | `JWT_EXPIRY` | No | Access token lifetime, default `15m` |
 | `REFRESH_TOKEN_EXPIRY` | No | Refresh token lifetime, default `720h` |
 | `CORS_ALLOWED_ORIGINS` | No | Browser origins allowed to call the API |
 | `TRUSTED_PROXIES` | No | CIDRs trusted for `X-Forwarded-For` |
 | `REDIS_URL` | No | Shared token storage for multiple instances |
 
-The full list is in [`.env.example`](https://github.com/nhridoy/terra-server/blob/main/.env.example).
+The full list is in [`.env.example`](https://github.com/nhridoy/shetu-server/blob/main/.env.example).
 
 ## TLS and reverse proxy
 
@@ -3394,7 +3394,7 @@ Email and password registration works out of the box. Set `JWT_SECRET` before ex
 
 Google and GitHub OAuth are optional. Set the matching `OAUTH_GOOGLE_CLIENT_ID` / `OAUTH_GOOGLE_CLIENT_SECRET` or `OAUTH_GITHUB_CLIENT_ID` / `OAUTH_GITHUB_CLIENT_SECRET`. The callback URL is based on `BASE_URL`.
 
-The desktop app uses loopback callbacks. Keep the default `TERRA_OAUTH_REDIRECT_URIS` unless you also change the client's listener ports.
+The desktop app uses loopback callbacks. Keep the default `SHETU_OAUTH_REDIRECT_URIS` unless you also change the client's listener ports.
 
 ## Email verification
 
@@ -3407,15 +3407,15 @@ The server refuses to start when verification is on and neither SMTP nor `LOG_OT
 Pull the new image and recreate the container:
 
 ```bash
-docker compose pull terra-server
-docker compose up -d terra-server
+docker compose pull shetu-server
+docker compose up -d shetu-server
 ```
 
 GORM runs schema migrations on startup. Back up PostgreSQL before upgrading production.
 
 ## Point the client at your server
 
-Open Terra's settings and find the sync section. Enter your server URL, for example `https://sync.example.com`. Sign in or create an account. Sync is optional; local-only use keeps working without it.
+Open Shetu's settings and find the sync section. Enter your server URL, for example `https://sync.example.com`. Sign in or create an account. Sync is optional; local-only use keeps working without it.
 
 ## Next
 
@@ -3430,18 +3430,18 @@ Create `src/content/docs/security.mdx`:
 ```mdx
 ---
 title: Security reference
-description: How Terra derives keys, encrypts the vault, wraps team keys, and what the sync server can see.
+description: How Shetu derives keys, encrypts the vault, wraps team keys, and what the sync server can see.
 section: server
 order: 3
 updated: 2026-11-09
 ---
 
-Terra is designed so the sync server never needs plaintext credentials. This page is the technical reference. For the shorter trust page, see [Security](/security).
+Shetu is designed so the sync server never needs plaintext credentials. This page is the technical reference. For the shorter trust page, see [Security](/security).
 
 ## Key hierarchy
 
 1. **Master password.** You choose it. It never leaves your device.
-2. **Vault key.** Terra derives it from the master password with Argon2id.
+2. **Vault key.** Shetu derives it from the master password with Argon2id.
 3. **Encrypted vault.** Credentials and private keys are encrypted with XChaCha20-Poly1305 before they are stored or synced.
 4. **Identity key.** Each account has an X25519 identity key used to wrap team keys.
 5. **Team keys.** A team key is wrapped for each member's public key. The server stores the wrapped keys, not the team key.
@@ -3474,20 +3474,20 @@ The server does not receive:
 
 ## Recovery kit
 
-Terra creates a recovery kit when you set up the vault. Store it offline. The recovery kit is the only way to recover the vault if you forget the master password. The server cannot reset it, and the maintainers cannot recover it for you.
+Shetu creates a recovery kit when you set up the vault. Store it offline. The recovery kit is the only way to recover the vault if you forget the master password. The server cannot reset it, and the maintainers cannot recover it for you.
 
 ## Reporting a vulnerability
 
 Open a private advisory:
 
-[Report a vulnerability](https://github.com/nhridoy/terra/security/advisories/new)
+[Report a vulnerability](https://github.com/nhridoy/shetu/security/advisories/new)
 
 Do not open a public issue for a vulnerability. Include the affected version, your OS, reproduction steps, and impact.
 
 ## Source
 
-- [terra-client](https://github.com/nhridoy/terra-client)
-- [terra-server](https://github.com/nhridoy/terra-server)
+- [shetu-client](https://github.com/nhridoy/shetu-client)
+- [shetu-server](https://github.com/nhridoy/shetu-server)
 ```
 
 **Step 5: Write the troubleshooting guide**
@@ -3497,7 +3497,7 @@ Create `src/content/docs/troubleshooting.mdx`:
 ````mdx
 ---
 title: Troubleshooting
-description: Fix first-launch warnings, connection failures, sync problems, and find Terra's logs.
+description: Fix first-launch warnings, connection failures, sync problems, and find Shetu's logs.
 section: server
 order: 4
 updated: 2026-11-09
@@ -3505,18 +3505,18 @@ updated: 2026-11-09
 
 ## The app will not open on macOS
 
-Terra is not signed by Apple yet.
+Shetu is not signed by Apple yet.
 
-1. Drag Terra to Applications.
+1. Drag Shetu to Applications.
 2. Open it once and dismiss the warning.
 3. Open **System Settings → Privacy & Security**.
-4. Click **Open Anyway** next to Terra.
-5. Open Terra again.
+4. Click **Open Anyway** next to Shetu.
+5. Open Shetu again.
 
 If the app is still blocked, remove the quarantine attribute from the app bundle:
 
 ```bash
-xattr -dr com.apple.quarantine /Applications/Terra.app
+xattr -dr com.apple.quarantine /Applications/Shetu.app
 ```
 
 ## Windows says "Windows protected your PC"
@@ -3545,13 +3545,13 @@ On distributions that do not ship FUSE 2, use the `.deb` instead.
 - Confirm the username.
 - For key authentication, confirm the server accepts your public key.
 - Check private key permissions: `chmod 600 ~/.ssh/id_ed25519`.
-- If the key has a passphrase, enter it when Terra asks.
+- If the key has a passphrase, enter it when Shetu asks.
 
 ## Sync does not connect
 
 - Confirm the server URL starts with `https://` in production.
 - Confirm `BASE_URL` matches the public URL.
-- Confirm the server is running: `docker compose logs -f terra-server`.
+- Confirm the server is running: `docker compose logs -f shetu-server`.
 - If you use a reverse proxy, confirm it forwards to the server and that `TRUSTED_PROXIES` is set.
 - If the browser console reports a CORS error, add the app origin to `CORS_ALLOWED_ORIGINS`.
 
@@ -3563,21 +3563,21 @@ On distributions that do not ship FUSE 2, use the `.deb` instead.
 
 ## Find the logs
 
-If Terra opens, use **Settings → Advanced → Export logs**.
+If Shetu opens, use **Settings → Advanced → Export logs**.
 
-If Terra crashes before it opens, attach the newest `terra*.log` from:
+If Shetu crashes before it opens, attach the newest `shetu*.log` from:
 
-- macOS: `~/Library/Logs/com.nhridoy.terra/`
-- Windows: `%LOCALAPPDATA%\com.nhridoy.terra\logs\`
-- Linux: `~/.local/share/com.nhridoy.terra/logs/` or `$XDG_DATA_HOME/com.nhridoy.terra/logs/`
+- macOS: `~/Library/Logs/com.nhridoy.shetu/`
+- Windows: `%LOCALAPPDATA%\com.nhridoy.shetu\logs\`
+- Linux: `~/.local/share/com.nhridoy.shetu/logs/` or `$XDG_DATA_HOME/com.nhridoy.shetu/logs/`
 
-Terra does not log passwords, keys, or terminal output, and removes IP addresses and hostnames from error messages.
+Shetu does not log passwords, keys, or terminal output, and removes IP addresses and hostnames from error messages.
 
 ## Report a problem
 
 Open an issue with the log file and your OS version:
 
-[Open a bug report](https://github.com/nhridoy/terra-client/issues/new)
+[Open a bug report](https://github.com/nhridoy/shetu-client/issues/new)
 ````
 
 **Step 6: Create the docs navigation**
@@ -3689,7 +3689,7 @@ const toc = headings.filter(
 );
 ---
 
-<BaseLayout title={`${title} — Terra Docs`} description={description}>
+<BaseLayout title={`${title} — Shetu Docs`} description={description}>
   <div class="mx-auto grid max-w-[1200px] gap-10 px-6 py-10 lg:grid-cols-[210px_minmax(0,1fr)_190px] lg:py-14">
     <aside class="lg:sticky lg:top-24 lg:self-start">
       <details class="rounded-xl border border-line bg-surface p-4 lg:hidden">
@@ -3786,15 +3786,15 @@ const server = docs.filter((entry) => entry.data.section === 'server');
 ---
 
 <BaseLayout
-  title="Docs — Terra"
-  description="Install Terra, self-host the sync server, and read the security reference."
+  title="Docs — Shetu"
+  description="Install Shetu, self-host the sync server, and read the security reference."
 >
   <section class="mx-auto max-w-[1200px] px-6 py-16 md:py-20">
     <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
       Documentation
     </p>
     <h1 class="mt-4 text-5xl font-medium tracking-[-0.05em]">
-      Run Terra your way.
+      Run Shetu your way.
     </h1>
     <p class="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
       Install the desktop app, self-host sync, and read the security model.
@@ -3983,8 +3983,8 @@ import SecurityFlow from '../components/marketing/SecurityFlow.astro';
 ---
 
 <BaseLayout
-  title="Security — Terra"
-  description="Terra connects directly to your servers and encrypts your vault on your device. The sync server stores ciphertext, never plaintext."
+  title="Security — Shetu"
+  description="Shetu connects directly to your servers and encrypts your vault on your device. The sync server stores ciphertext, never plaintext."
 >
   <section class="mx-auto max-w-[1200px] px-6 pt-14 pb-16 md:pt-20">
     <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
@@ -3994,7 +3994,7 @@ import SecurityFlow from '../components/marketing/SecurityFlow.astro';
       Trust the math, not the server.
     </h1>
     <p class="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
-      Terra connects directly to your servers. Your credentials are encrypted on
+      Shetu connects directly to your servers. Your credentials are encrypted on
       your device before they are stored or synced. The server stores ciphertext
       and wrapped keys, never plaintext.
     </p>
@@ -4070,7 +4070,7 @@ import SecurityFlow from '../components/marketing/SecurityFlow.astro';
       <div>
         <h2 class="text-3xl font-medium tracking-[-0.03em]">Recovery kit</h2>
         <p class="mt-4 text-sm leading-relaxed text-muted">
-          Terra creates a recovery kit when you set up the vault. Store it
+          Shetu creates a recovery kit when you set up the vault. Store it
           offline. It is the only way to recover the vault if you forget the
           master password. The server cannot reset it, and the maintainers
           cannot recover it for you.
@@ -4084,7 +4084,7 @@ import SecurityFlow from '../components/marketing/SecurityFlow.astro';
           reproduction steps, and impact.
         </p>
         <a
-          href="https://github.com/nhridoy/terra/security/advisories/new"
+          href="https://github.com/nhridoy/shetu/security/advisories/new"
           class="mt-4 inline-flex text-sm font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent"
         >
           Report a vulnerability
@@ -4145,25 +4145,25 @@ import { REPOS } from '../lib/site';
 
 const repos = [
   {
-    name: 'terra',
+    name: 'shetu',
     href: REPOS.monorepo,
     description:
       'Project home, documentation, and cross-cutting issues. Start here if you are new.',
   },
   {
-    name: 'terra-client',
+    name: 'shetu-client',
     href: REPOS.client,
     description:
       'The Tauri v2 desktop client. Rust for the native layer, React and TypeScript for the interface.',
   },
   {
-    name: 'terra-server',
+    name: 'shetu-server',
     href: REPOS.server,
     description:
       'The Go sync and auth server. Gin, GORM, PostgreSQL, and optional Redis.',
   },
   {
-    name: 'terra-web',
+    name: 'shetu-web',
     href: REPOS.web,
     description:
       'This site. Astro, React islands, Tailwind, and MDX documentation.',
@@ -4172,8 +4172,8 @@ const repos = [
 ---
 
 <BaseLayout
-  title="Community — Terra"
-  description="Contribute to Terra, report issues, and read the MIT license."
+  title="Community — Shetu"
+  description="Contribute to Shetu, report issues, and read the MIT license."
 >
   <section class="mx-auto max-w-[1200px] px-6 pt-14 pb-16 md:pt-20">
     <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent">
@@ -4183,7 +4183,7 @@ const repos = [
       Built in the open.
     </h1>
     <p class="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
-      Terra is MIT licensed and developed in public. Read the code, report a
+      Shetu is MIT licensed and developed in public. Read the code, report a
       bug, or send a pull request. The project is small enough that a focused
       contribution makes a visible difference.
     </p>
@@ -4218,17 +4218,17 @@ const repos = [
       </p>
       <ul class="mt-5 space-y-3 text-sm">
         <li>
-          <a class="font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent" href="https://github.com/nhridoy/terra/issues">
+          <a class="font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent" href="https://github.com/nhridoy/shetu/issues">
             Project issues
           </a>
         </li>
         <li>
-          <a class="font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent" href="https://github.com/nhridoy/terra-client/issues">
+          <a class="font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent" href="https://github.com/nhridoy/shetu-client/issues">
             Desktop client issues
           </a>
         </li>
         <li>
-          <a class="font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent" href="https://github.com/nhridoy/terra-server/issues">
+          <a class="font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent" href="https://github.com/nhridoy/shetu-server/issues">
             Server issues
           </a>
         </li>
@@ -4243,17 +4243,17 @@ const repos = [
       </p>
       <ul class="mt-5 space-y-3 text-sm">
         <li>
-          <a class="font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent" href="https://github.com/nhridoy/terra/blob/main/CONTRIBUTING.md">
+          <a class="font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent" href="https://github.com/nhridoy/shetu/blob/main/CONTRIBUTING.md">
             Contributing guide
           </a>
         </li>
         <li>
-          <a class="font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent" href="https://github.com/nhridoy/terra/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">
+          <a class="font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent" href="https://github.com/nhridoy/shetu/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22">
             Good first issues
           </a>
         </li>
         <li>
-          <a class="font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent" href="https://github.com/nhridoy/terra/blob/main/LICENSE">
+          <a class="font-medium text-accent underline decoration-line underline-offset-4 hover:decoration-accent" href="https://github.com/nhridoy/shetu/blob/main/LICENSE">
             MIT license
           </a>
         </li>
@@ -4264,7 +4264,7 @@ const repos = [
   <section class="border-t border-line">
     <div class="mx-auto max-w-[1200px] px-6 py-16">
       <p class="max-w-2xl text-sm leading-relaxed text-muted">
-        Terra is distributed under the MIT license. The client, server, and
+        Shetu is distributed under the MIT license. The client, server, and
         website are separate repositories so each part can be built, tested, and
         released independently.
       </p>
@@ -4303,8 +4303,8 @@ git commit -m "feat: add the community page"
 - Delete: `src/components/ui/{badge,button,card,separator}.tsx`
 - Delete: `src/lib/utils.ts`
 - Delete: `src/layouts/Layout.astro`
-- Delete: `public/images/terra-servers.webp`
-- Delete: `public/images/terra-transfer.webp`
+- Delete: `public/images/shetu-servers.webp`
+- Delete: `public/images/shetu-transfer.webp`
 - Delete: `docs/asset-provenance.md`
 - Delete: `docs/landing-audit.md`
 - Delete: `components.json`
@@ -4316,7 +4316,7 @@ Run:
 
 ```sh
 grep -R "components/landing\|components/ui/badge\|components/ui/button\|components/ui/card\|components/ui/separator\|lib/utils\|layouts/Layout" src || true
-grep -R "terra-servers.webp\|terra-transfer.webp" src || true
+grep -R "shetu-servers.webp\|shetu-transfer.webp" src || true
 ```
 
 Expected: no output. If there is output, update the import before deleting.
@@ -4326,7 +4326,7 @@ Expected: no output. If there is output, update the import before deleting.
 ```sh
 rm -f src/components/ui/badge.tsx src/components/ui/button.tsx src/components/ui/card.tsx src/components/ui/separator.tsx
 rm -f src/lib/utils.ts src/layouts/Layout.astro components.json
-rm -f public/images/terra-servers.webp public/images/terra-transfer.webp
+rm -f public/images/shetu-servers.webp public/images/shetu-transfer.webp
 rm -f docs/asset-provenance.md docs/landing-audit.md
 rmdir public/images 2>/dev/null || true
 pnpm remove @base-ui/react class-variance-authority cn shadcn tw-animate-css
@@ -4372,9 +4372,9 @@ jobs:
 Replace `README.md` with:
 
 ````md
-# Terra website
+# Shetu website
 
-The distribution and marketing site for Terra, an open-source, self-hostable SSH client.
+The distribution and marketing site for Shetu, an open-source, self-hostable SSH client.
 
 ## Stack
 
@@ -4446,7 +4446,7 @@ test -f dist/404.html
 test -f dist/robots.txt
 test -f dist/sitemap-index.xml
 grep -q "Your servers." dist/index.html
-grep -q "Get Terra for your machine" dist/download/index.html
+grep -q "Get Shetu for your machine" dist/download/index.html
 grep -q "Every release, in the open" dist/releases/index.html
 grep -q "Trust the math, not the server" dist/security/index.html
 grep -q "Built in the open" dist/community/index.html
@@ -4497,4 +4497,4 @@ git commit -m "chore: add CI and remove the legacy landing page"
 - [ ] `robots.txt`, `sitemap-index.xml`, per-page metadata, JSON-LD, and `404.html` exist.
 - [ ] `pnpm lint`, `pnpm check`, `pnpm test`, and `pnpm build` pass.
 - [ ] No page claims SRP6a, XSalsa20, GitLab OAuth, Microsoft OAuth, a mobile app, pricing, customers, testimonials, benchmarks, or cloud signup.
-- [ ] Only `terra-web` files changed.
+- [ ] Only `shetu-web` files changed.

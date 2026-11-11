@@ -59,7 +59,7 @@ describe('page structure', () => {
     expect(crumbs.itemListElement).toHaveLength(2);
     expect(crumbs.itemListElement[0]).toMatchObject({
       name: 'Home',
-      item: 'https://terra.iamnahid.com/',
+      item: 'https://shetu.iamnahid.com/',
     });
   });
 

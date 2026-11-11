@@ -6,12 +6,12 @@ const release: Release = {
   tag_name: 'v1.2.3',
   name: 'v1.2.3',
   published_at: '2026-01-01T00:00:00Z',
-  html_url: 'https://github.com/nhridoy/terra-client/releases/tag/v1.2.3',
+  html_url: 'https://github.com/nhridoy/shetu-client/releases/tag/v1.2.3',
   prerelease: false,
   body: 'Notes',
   assets: [
     {
-      name: 'Terra-1.2.3-Linux-x64.AppImage',
+      name: 'Shetu-1.2.3-Linux-x64.AppImage',
       browser_download_url: 'https://example.com/app',
       size: 10,
     },

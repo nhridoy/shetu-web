@@ -1,7 +1,7 @@
 ---
 title: Troubleshooting
-seoTitle: "Troubleshoot Terra: SSH, sync and first-launch problems"
-description: "Fix common Terra problems: first-launch warnings on macOS and Windows, AppImage start failures, SSH connection and login errors, sync issues and finding logs."
+seoTitle: "Troubleshoot Shetu: SSH, sync and first-launch problems"
+description: "Fix common Shetu problems: first-launch warnings on macOS and Windows, AppImage start failures, SSH connection and login errors, sync issues and finding logs."
 section: server
 order: 4
 updated: "2026-11-11"
@@ -9,18 +9,18 @@ updated: "2026-11-11"
 
 ## The app will not open on macOS
 
-Terra is not notarized by Apple yet.
+Shetu is not notarized by Apple yet.
 
-1. Drag Terra to Applications.
+1. Drag Shetu to Applications.
 2. Open it once and dismiss the warning.
 3. Open **System Settings → Privacy & Security**.
-4. Click **Open Anyway** next to Terra.
-5. Open Terra again.
+4. Click **Open Anyway** next to Shetu.
+5. Open Shetu again.
 
 If the app is still blocked, remove the quarantine attribute from the app bundle:
 
 ```bash
-xattr -dr com.apple.quarantine /Applications/Terra.app
+xattr -dr com.apple.quarantine /Applications/Shetu.app
 ```
 
 ## Windows says "Windows protected your PC"
@@ -49,13 +49,13 @@ On distributions that do not ship FUSE 2, use the `.deb` instead.
 - Confirm the username.
 - For key authentication, confirm the server accepts your public key.
 - Check private key permissions: `chmod 600 ~/.ssh/id_ed25519`.
-- If the key has a passphrase, enter it when Terra asks.
+- If the key has a passphrase, enter it when Shetu asks.
 
 ## Sync does not connect
 
 - Confirm the server URL starts with `https://` in production.
 - Confirm `BASE_URL` matches the public URL.
-- Confirm the server is running: `docker compose logs -f terra-server`.
+- Confirm the server is running: `docker compose logs -f shetu-server`.
 - If you use a reverse proxy, confirm it forwards to the server and that `TRUSTED_PROXIES` is set.
 - If the browser console reports a CORS error, add the app origin to `CORS_ALLOWED_ORIGINS`.
 
@@ -67,18 +67,18 @@ On distributions that do not ship FUSE 2, use the `.deb` instead.
 
 ## Find the logs
 
-If Terra opens, use **Settings → Advanced → Export logs**.
+If Shetu opens, use **Settings → Advanced → Export logs**.
 
-If Terra crashes before it opens, attach the newest `terra*.log` from:
+If Shetu crashes before it opens, attach the newest `shetu*.log` from:
 
-- macOS: `~/Library/Logs/com.nhridoy.terra/`
-- Windows: `%LOCALAPPDATA%\com.nhridoy.terra\logs\`
-- Linux: `~/.local/share/com.nhridoy.terra/logs/` or `$XDG_DATA_HOME/com.nhridoy.terra/logs/`
+- macOS: `~/Library/Logs/com.nhridoy.shetu/`
+- Windows: `%LOCALAPPDATA%\com.nhridoy.shetu\logs\`
+- Linux: `~/.local/share/com.nhridoy.shetu/logs/` or `$XDG_DATA_HOME/com.nhridoy.shetu/logs/`
 
-Terra does not log passwords, keys, or terminal output, and removes IP addresses and hostnames from error messages.
+Shetu does not log passwords, keys, or terminal output, and removes IP addresses and hostnames from error messages.
 
 ## Report a problem
 
 Open an issue with the log file and your OS version:
 
-[Open a bug report](https://github.com/nhridoy/terra-client/issues/new)
+[Open a bug report](https://github.com/nhridoy/shetu-client/issues/new)
