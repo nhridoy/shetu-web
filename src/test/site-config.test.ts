@@ -32,3 +32,19 @@ describe('site config', () => {
     expect(redirects).toContain('/releases/ /changelog 301');
   });
 });
+
+describe('phone layout', () => {
+  // A grid with no column template sizes its column to the longest code line,
+  // pushing install commands and their Copy button off small screens.
+  it('gives grids that hold code blocks a shrinkable mobile column', () => {
+    for (const file of [
+      'src/pages/download/[os].astro',
+      'src/pages/self-hosted.astro',
+    ]) {
+      const grids = read(file).match(/class="[^"]*\bgrid\b[^"]*"/g) ?? [];
+      for (const grid of grids.filter((g) => g.includes('lg:grid-cols-2'))) {
+        expect(grid, file).toContain('grid-cols-1');
+      }
+    }
+  });
+});

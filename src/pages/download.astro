@@ -4,29 +4,31 @@ import DownloadPanel from '../components/download/DownloadPanel';
 import InstallCommand from '../components/download/InstallCommand.astro';
 import Callout from '../components/ui/Callout.astro';
 import PageHeader from '../components/ui/PageHeader.astro';
+import releases from '../data/releases.json';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import type { Release } from '../lib/releases';
+import { PAGES, softwareJsonLd } from '../lib/seo';
 
 const requirements = [
   {
     Icon: AppleLogo,
     os: 'macOS',
+    href: '/download/macos',
     text: 'Apple Silicon or Intel. Download the matching .dmg.',
   },
   {
     Icon: WindowsLogo,
     os: 'Windows',
+    href: '/download/windows',
     text: 'x64 or ARM64. Download the matching NSIS .exe installer.',
   },
   {
     Icon: LinuxLogo,
     os: 'Linux',
+    href: '/download/linux',
     text: 'x64 or ARM64. Use the AppImage (needs libfuse2), or the .deb on Debian and Ubuntu.',
   },
 ];
-
-import releases from '../data/releases.json';
-import type { Release } from '../lib/releases';
-import { PAGES, softwareJsonLd } from '../lib/seo';
 ---
 
 <BaseLayout
@@ -41,6 +43,14 @@ import { PAGES, softwareJsonLd } from '../lib/seo';
 
   <section class="mx-auto max-w-[1200px] px-5 py-14 sm:px-6 md:py-20">
     <DownloadPanel client:load variant="full" />
+    <div class="mt-10 grid gap-4 md:grid-cols-3">
+      {requirements.map(({ Icon, os, href }) => (
+        <a href={href} class="panel lift flex items-center gap-3 p-5">
+          <Icon size={22} weight="fill" className="text-accent" />
+          <span class="font-semibold">Install guide for {os}</span>
+        </a>
+      ))}
+    </div>
   </section>
 
   <section class="border-y border-line bg-surface/40">
