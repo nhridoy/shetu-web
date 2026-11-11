@@ -19,7 +19,16 @@ describe('Lighthouse findings', () => {
     expect(css).toMatch(
       /font-family: "Satoshi Fallback";[^}]*size-adjust: 99\.26%/,
     );
-    expect(css).toMatch(/--font-sans:\s*"Satoshi",\s*"Satoshi Fallback"/);
+    expect(css).toMatch(
+      /--font-sans:\s*"Satoshi",\s*"Satoshi Fallback",\s*"Satoshi Fallback Roboto"/,
+    );
+    // Android has no Arial: a Roboto-tuned family catches it.
+    expect(css).toMatch(
+      /font-family: "Satoshi Fallback Roboto";[^}]*font-weight: 100 500;[^}]*size-adjust: 98\.73%/,
+    );
+    expect(css).toMatch(
+      /font-family: "Satoshi Fallback Roboto";[^}]*font-weight: 600 900;[^}]*size-adjust: 103\.53%/,
+    );
     // Headings are bold; a regular-weight match still re-wraps them on swap.
     expect(css).toMatch(
       /font-family: "Satoshi Fallback";[^}]*font-weight: 600 900;[^}]*size-adjust: 97\.41%/,
@@ -27,13 +36,25 @@ describe('Lighthouse findings', () => {
   });
 
   it('never fades text below readable contrast', () => {
-    const offenders = source.filter((f) => read(f).includes('text-muted/70'));
+    const offenders = source.filter((f) => /text-muted\/\d+/.test(read(f)));
     expect(offenders).toEqual([]);
   });
 
   it('hydrates islands when idle so they do not block the first load', () => {
     const offenders = source.filter((f) => read(f).includes('client:load'));
     expect(offenders).toEqual([]);
+    // Every island still hydrates, just later.
+    for (const file of [
+      'src/components/marketing/Hero.astro',
+      'src/pages/download/[os].astro',
+      'src/pages/termius-alternative.astro',
+      'src/pages/download.astro',
+    ]) {
+      expect(read(file), file).toMatch(/<DownloadPanel\s+client:idle/);
+    }
+    expect(read('src/components/marketing/Hero.astro')).toContain(
+      '<ReleaseTag client:idle',
+    );
   });
 });
 
@@ -43,7 +64,8 @@ describe('hero download button', () => {
     const button =
       panel.match(/data-testid="hero-download"\s+className="([^"]*)"/)?.[1] ??
       '';
-    expect(button).toMatch(/min-w-\[/);
+    // "Download for Windows" measures 200px at this size; keep a little room.
+    expect(button).toContain('min-w-[13rem]');
   });
 });
 

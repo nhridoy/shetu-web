@@ -28,6 +28,27 @@
   line-gap-override: 10.27%;
 }
 
+/* Android ships Roboto, not Arial: same idea, tuned to Roboto. */
+@font-face {
+  font-family: "Satoshi Fallback Roboto";
+  src: local("Roboto"), local("Roboto-Regular");
+  font-weight: 100 500;
+  size-adjust: 98.73%;
+  ascent-override: 102.3%;
+  descent-override: 24.31%;
+  line-gap-override: 10.13%;
+}
+
+@font-face {
+  font-family: "Satoshi Fallback Roboto";
+  src: local("Roboto Bold"), local("Roboto-Bold");
+  font-weight: 600 900;
+  size-adjust: 103.53%;
+  ascent-override: 97.56%;
+  descent-override: 23.18%;
+  line-gap-override: 9.66%;
+}
+
 @theme {
   --color-paper: #07070a;
   --color-surface: #0d0d12;
@@ -43,8 +64,8 @@
   --color-terminal-text: #7ee2a8;
   --color-glow: rgba(139, 124, 255, 0.18);
   --font-sans:
-    "Satoshi", "Satoshi Fallback", ui-sans-serif, system-ui, -apple-system,
-    "Segoe UI", sans-serif;
+    "Satoshi", "Satoshi Fallback", "Satoshi Fallback Roboto", ui-sans-serif,
+    system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono:
     "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, Consolas,
     monospace;
