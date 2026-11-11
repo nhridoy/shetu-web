@@ -68,6 +68,9 @@ function writeCache<T>(
   }
 }
 
+// Islands on one page (hero tag, hero button) share a single request.
+const pendingLatest = new Map<string, Promise<ReleaseResult>>();
+
 export async function getLatestRelease(
   options: Options & { fallback: Release },
 ): Promise<ReleaseResult> {
@@ -83,16 +86,23 @@ export async function getLatestRelease(
   const cached = readCache<Release>(cache, key, now, ttlMs);
   if (cached) return { release: cached, source: 'live' };
 
-  try {
-    const release = parseRelease(
-      await request(`${apiBase}/releases/latest`, fetchImpl),
-    );
-    if (!release.tag_name) throw new Error('Release is missing a tag');
-    writeCache(cache, key, release, now);
-    return { release, source: 'live' };
-  } catch {
-    return { release: fallback, source: 'fallback' };
-  }
+  const pending = pendingLatest.get(key);
+  if (pending) return pending;
+
+  const result = (async (): Promise<ReleaseResult> => {
+    try {
+      const release = parseRelease(
+        await request(`${apiBase}/releases/latest`, fetchImpl),
+      );
+      if (!release.tag_name) throw new Error('Release is missing a tag');
+      writeCache(cache, key, release, now);
+      return { release, source: 'live' };
+    } catch {
+      return { release: fallback, source: 'fallback' };
+    }
+  })().finally(() => pendingLatest.delete(key));
+  pendingLatest.set(key, result);
+  return result;
 }
 
 export async function getReleases(

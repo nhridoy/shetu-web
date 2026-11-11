@@ -14,7 +14,7 @@
 
 - Modify terra-web only. Branch `learn-terra-client-server`, no new worktree. Commit only when the user has said to commit (ask once before the first commit of the session).
 - Dependencies: add `@fontsource-variable/jetbrains-mono`; remove `@fontsource-variable/geist`. Nothing else.
-- Satoshi Variable woff2 (+ italic not needed) self-hosted in `public/fonts/`, from `https://api.fontshare.com/v2/fonts/download/satoshi`, with its license file `public/fonts/Satoshi-LICENSE.txt`.
+- Satoshi Variable loads from the Fontshare CDN (`https://api.fontshare.com/v2/css?f[]=satoshi@1&display=swap`). Never commit the font files: the ITF Free Font License forbids redistribution through a public repository.
 - Tokens: paper `#07070A`, surface `#0D0D12`, elevated `#14141B`, line `rgba(255,255,255,0.08)`, ink `#F4F4F7`, muted `#9A9AAE`, accent (violet) `#8B7CFF`, accent-2 (blue) `#5B8CFF`, terminal green `#7EE2A8` (terminal mockup only).
 - Gradient violet→blue only on: primary button glow, hero light beam, logo, one highlighted headline word.
 - No U+2013 or U+2014 characters in `src/` (copy, titles, comments in shipped markup). Use a period, comma, colon or "·".
@@ -41,7 +41,7 @@
 
 **Files:**
 
-- Create: `public/fonts/Satoshi-Variable.woff2`, `public/fonts/Satoshi-LICENSE.txt`, `src/components/brand/Logo.astro`, `src/test/copy-guard.test.ts`
+- Create: `src/components/brand/Logo.astro`, `src/test/copy-guard.test.ts`
 - Modify: `package.json`, `src/styles/global.css`, `src/layouts/BaseLayout.astro`, `src/components/layout/Header.astro`, `src/components/layout/Footer.astro`, `public/favicon.svg`
 - Test: `src/test/copy-guard.test.ts`
 
@@ -51,7 +51,7 @@
 
 - [ ] **Step 1: Write the failing test** `src/test/copy-guard.test.ts` with one test now (Task 7 adds two more): `it('hides reveal blocks only when JS runs')`: `readFileSync('src/styles/global.css')` contains `html.js .reveal`.
 - [ ] **Step 2: Run** `pnpm vitest run src/test/copy-guard.test.ts`. Expected: FAIL (no `html.js .reveal` yet).
-- [ ] **Step 3: Fonts.** `pnpm add @fontsource-variable/jetbrains-mono && pnpm remove @fontsource-variable/geist`. Download the Satoshi zip into the scratchpad, copy only `Satoshi-Variable.woff2` and the license into `public/fonts/`. Declare `@font-face { font-family: "Satoshi"; src: url(/fonts/Satoshi-Variable.woff2) format("woff2"); font-weight: 300 900; font-display: swap; }` and preload it in `BaseLayout` head.
+- [ ] **Step 3: Fonts.** `pnpm add @fontsource-variable/jetbrains-mono && pnpm remove @fontsource-variable/geist`. Link the Fontshare Satoshi stylesheet in the `BaseLayout` head with `preconnect` to `api.fontshare.com` and `cdn.fontshare.com`.
 - [ ] **Step 4: Tokens and utilities** in `global.css` per Global Constraints and Interfaces. Keep existing `.skip-link`, focus, `.install-panel` tab CSS (restyled to new tokens) and `.docs-prose` (restyled in Task 7). Add reduced-motion block that sets `.reveal` visible with no transition.
 - [ ] **Step 5: BaseLayout.** Inline head script `document.documentElement.classList.add('js')`. Inline body script: IntersectionObserver adds `is-visible` to `.reveal` once (threshold 0.15); if no IntersectionObserver, add it immediately. `theme-color` `#07070A`. Keep the copy-button script. Add `og:image`-free meta as is. Default OG title stays page title.
 - [ ] **Step 6: Logo + favicon.** `Logo.astro`: inline SVG 32×32 viewBox, rounded square (rx 8) filled `#0D0D12` with 1px line stroke, a tilted orbit ellipse stroked with a violet→blue `linearGradient`, and a `>` chevron as the planet in ink. Unique gradient id per instance (`Astro.props` counter or `crypto.randomUUID()` at build). `aria-hidden`; wordmark "Terra" in Satoshi 700 when `wordmark`. Write the same mark as `public/favicon.svg` (keep `favicon.ico`).
@@ -112,7 +112,7 @@
 **Interfaces:**
 
 - Produces: `SecurityFlow.astro` props `{ compact?: boolean }` (reused on /security in Task 8).
-- [ ] **Step 1: SecurityFlow.** Three connected steps: "Your device encrypts" (Argon2id from your account password, XChaCha20-Poly1305), "The server stores ciphertext" (it never decrypts records), "SSH goes straight to the host" (no relay). Honest note exactly: `The server can see record names, tags and timestamps so it can sync them. Addresses, usernames, passwords, keys and commands stay encrypted.` Link "How Terra handles your keys" → `/security`.
+- [ ] **Step 1: SecurityFlow.** Three connected steps: "Your device encrypts" (Argon2id from your account password, XChaCha20-Poly1305), "The server stores ciphertext" (it never decrypts records), "SSH goes straight to the host" (no relay). Honest note exactly: `The server can see record names, tags and timestamps so it can sync them. Addresses, usernames, passwords, private keys and commands stay encrypted.` Link "How Terra handles your keys" → `/security`.
 - [ ] **Step 2: SelfHostSection.** Copy: sync runs through a Terra server you can run yourself; Go, PostgreSQL, multi-arch Docker image. Terminal-styled block with `openssl rand -base64 48` (for `JWT_SECRET`), `docker compose pull`, `docker compose up -d`, captioned "using the compose file from the server guide", link `/docs/server`. Image tag `ghcr.io/nhridoy/terra-server`.
 - [ ] **Step 3: Comparison.astro** `id="compare"`, heading "Terra and Termius, side by side." Rows exactly as the spec table (8 rows, editor row removed). Cells: Phosphor `Check`/`X` icons with visible text for screen readers. Wrapper `overflow-x-auto`. Footnote: `Termius prices as listed on ` + link `termius.com/pricing` + `, November 2026. Paid plans billed annually.`
 - [ ] **Step 4: CloudTeaser.** Small `.panel` with "Coming soon" pill, title "Terra Cloud", body `Don't want to run a server? A hosted, managed sync option is on the way.`, link `Watch the repo on GitHub for release news` → `REPOS.monorepo`.

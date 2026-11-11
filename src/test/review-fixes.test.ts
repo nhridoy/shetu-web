@@ -54,4 +54,20 @@ describe('final review fixes', () => {
       /tabindex="0"[^>]*role="region"|role="region"[^>]*tabindex="0"/,
     );
   });
+
+  it('stops typing mid-command when reduced motion turns on', () => {
+    expect(read('src/components/mockups/TerminalPane.astro')).toMatch(
+      /for \(const ch of[^}]*if \(reduce\.matches\) break;/,
+    );
+  });
+
+  it('reveals blocks as soon as any part enters view', () => {
+    expect(read('src/layouts/BaseLayout.astro')).toContain('threshold: 0,');
+  });
+
+  it('keeps the hero version live', () => {
+    expect(read('src/components/marketing/Hero.astro')).toContain(
+      '<ReleaseTag client:load',
+    );
+  });
 });

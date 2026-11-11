@@ -1,14 +1,12 @@
 ---
 import { ArrowRight, GithubLogo } from '@phosphor-icons/react';
-import releases from '../../data/releases.json';
 import { INSTALL_COMMANDS, REPOS } from '../../lib/site';
 import DownloadPanel from '../download/DownloadPanel';
+import ReleaseTag from '../download/ReleaseTag';
 import { HERO_SESSION } from '../mockups/demo';
 import HostSidebar from '../mockups/HostSidebar.astro';
 import TerminalPane from '../mockups/TerminalPane.astro';
 import TerraWindow from '../mockups/TerraWindow.astro';
-
-const version = releases.latest.tag_name;
 ---
 
 <section class="relative overflow-hidden">
@@ -20,7 +18,7 @@ const version = releases.latest.tag_name;
         href="/releases"
         class="group inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-line-strong bg-white/[0.03] py-1 pr-3 pl-1.5 font-mono text-[11px] tracking-[0.06em] text-muted transition-colors hover:border-accent/40 hover:text-ink"
       >
-        <span class="rounded-full bg-accent-wash px-2 py-0.5 text-accent">{version}</span>
+        <span class="rounded-full bg-accent-wash px-2 py-0.5 text-accent"><ReleaseTag client:load /></span>
         Open-source Termius alternative
         <ArrowRight size={12} className="transition-transform group-hover:translate-x-0.5" />
       </a>

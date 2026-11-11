@@ -76,6 +76,7 @@ const {
         if (cmd) {
           await sleep(500);
           for (const ch of cmd.dataset.cmd ?? '') {
+            if (reduce.matches) break;
             cmd.textContent += ch;
             await sleep(35);
           }

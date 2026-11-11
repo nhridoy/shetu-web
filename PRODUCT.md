@@ -16,7 +16,7 @@ A free, MIT-licensed, open-source Termius alternative. A Tauri desktop SSH clien
 
 ## Capabilities and Constraints
 
-Direct client-to-host SSH, no relay. The vault is encrypted on the device (Argon2id, XChaCha20-Poly1305, X25519 for team vaults) before sync. The app requires signing in to a Terra server; the server can see record names, tags and timestamps, but not addresses, usernames, passwords, keys or commands. A hosted "Terra Cloud" is announced as coming soon, with no prices or signup URL.
+Direct client-to-host SSH, no relay. The vault is encrypted on the device (Argon2id, XChaCha20-Poly1305, X25519 for team vaults) before sync. The app requires signing in to a Terra server; the server can see record names, tags and timestamps, but not addresses, usernames, passwords, private keys or commands. A hosted "Terra Cloud" is announced as coming soon, with no prices or signup URL.
 
 ## Brand Commitments
 

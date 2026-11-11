@@ -33,6 +33,8 @@ const BANNED = [
   /zero-knowledge/i,
   /\b2fa\b/i,
   /two-factor/i,
+  // Public keys are visible to the server; only private keys stay encrypted.
+  /passwords, keys (and|or) commands/i,
 ];
 
 describe('copy guard', () => {

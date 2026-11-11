@@ -85,7 +85,7 @@ Rows where Termius wins stay in. Use check / cross / text cells, not marketing a
 ## Visual system (my calls, user can override)
 
 - **Palette (tokens in `global.css` `@theme`):** background `#07070A`, surface `#0D0D12`, elevated `#14141B`, line `rgba(255,255,255,0.08)`, ink `#F4F4F7`, muted `#9A9AAE`, accent violet `#8B7CFF`, accent blue `#5B8CFF`, accent gradient violet→blue used only for: the primary button glow, the hero light beam, the logo, one highlight word. Terminal green `#7EE2A8` only inside the terminal mockup for prompt text, so it reads as a terminal.
-- **Type:** Satoshi Variable self-hosted from `public/fonts/` (downloaded from Fontshare; its ITF Free Font License permits web self-hosting; ship the license file next to it). JetBrains Mono via `@fontsource-variable/jetbrains-mono`. Remove `@fontsource-variable/geist`. Headings Satoshi 600-700, tight tracking (-0.035em), body Satoshi 400 at 16-17px. Mono for eyebrows, labels, code, terminal.
+- **Type:** Satoshi Variable loaded from the Fontshare CDN (its ITF Free Font License forbids redistributing the font files through a public repository, so they are not committed). JetBrains Mono via `@fontsource-variable/jetbrains-mono`. Remove `@fontsource-variable/geist`. Headings Satoshi 600-700, tight tracking (-0.035em), body Satoshi 400 at 16-17px. Mono for eyebrows, labels, code, terminal.
 - **Shapes:** 14-20px radii on panels, 10px on buttons, 1px hairline borders with a subtle top highlight (`inset 0 1px 0 rgba(255,255,255,0.06)`), soft colored glow behind key visuals.
 - **Backgrounds:** faint dot grid or noise with radial masks; one violet/blue light beam behind the hero window. No full-page gradients.
 - **Icons:** keep Phosphor (already installed).
@@ -106,7 +106,7 @@ Rows where Termius wins stay in. Use check / cross / text cells, not marketing a
 2. **Fact strip:** MIT licensed · macOS, Windows, Linux (x64 + ARM64) · Direct SSH, no relay · Self-hostable sync.
 3. **Feature bento** (Raycast-style asymmetric grid, 6 to 8 tiles, each with a mini coded visual): Split terminal and tabs; Hosts and groups; SFTP dual pane; Port forwarding (local, remote, SOCKS5); Keys (generate Ed25519/RSA/ECDSA, import); Editor + Git; 36 themes (swatch strip); Encrypted session history.
 4. **Deep dives** (2 or 3 alternating text + mockup rows): Files (SFTP + editor in one window), Workspaces (save tab and pane layouts), Teams (shared vaults, roles, key rotation).
-5. **Security:** a 3-step flow (your device encrypts with Argon2id + XChaCha20-Poly1305 → server stores ciphertext → SSH goes direct to host) plus a short honest note: "The server can see record names, tags and timestamps so it can sync them. Addresses, usernames, passwords, keys and commands stay encrypted." Link to /security.
+5. **Security:** a 3-step flow (your device encrypts with Argon2id + XChaCha20-Poly1305 → server stores ciphertext → SSH goes direct to host) plus a short honest note: "The server can see record names, tags and timestamps so it can sync them. Addresses, usernames, passwords, private keys and commands stay encrypted." Link to /security.
 6. **Self-host:** short copy plus a `docker compose` / `docker run` code block styled as a terminal, link to server docs.
 7. **Terra vs Termius** table.
 8. **Terra Cloud teaser:** small card, "Coming soon. Don't want to run a server? Hosted sync is on the way." Link "Follow on GitHub Discussions" to the monorepo discussions.

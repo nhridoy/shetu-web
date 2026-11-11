@@ -87,6 +87,36 @@ describe('getLatestRelease', () => {
   });
 });
 
+describe('getLatestRelease in-flight sharing', () => {
+  it('shares one request between concurrent callers', async () => {
+    const fetchImpl = vi.fn(async () => jsonResponse(release));
+    const options = {
+      fallback: release,
+      fetchImpl: fetchImpl as unknown as typeof fetch,
+      apiBase: 'https://example.com/shared',
+    };
+    const [a, b] = await Promise.all([
+      getLatestRelease(options),
+      getLatestRelease(options),
+    ]);
+    expect(fetchImpl).toHaveBeenCalledTimes(1);
+    expect(a.release.tag_name).toBe('v1.2.3');
+    expect(b.release.tag_name).toBe('v1.2.3');
+  });
+
+  it('fetches again once the earlier request settled', async () => {
+    const fetchImpl = vi.fn(async () => jsonResponse(release));
+    const options = {
+      fallback: release,
+      fetchImpl: fetchImpl as unknown as typeof fetch,
+      apiBase: 'https://example.com/sequential',
+    };
+    await getLatestRelease(options);
+    await getLatestRelease(options);
+    expect(fetchImpl).toHaveBeenCalledTimes(2);
+  });
+});
+
 describe('getReleases', () => {
   it('returns a live list', async () => {
     const fetchImpl = vi.fn(async () => jsonResponse([release]));
