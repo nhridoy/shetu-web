@@ -2,7 +2,13 @@
 import '../styles/global.css';
 import Footer from '../components/layout/Footer.astro';
 import Header from '../components/layout/Header.astro';
-import { absoluteUrl, jsonLdScript, ogImagePath, siteJsonLd } from '../lib/seo';
+import {
+  absoluteUrl,
+  type JsonLd,
+  jsonLdScript,
+  ogImagePath,
+  siteJsonLd,
+} from '../lib/seo';
 import { cleanPath, SITE_NAME } from '../lib/site';
 
 interface Props {
@@ -12,7 +18,7 @@ interface Props {
   image?: string;
   type?: 'website' | 'article';
   noindex?: boolean;
-  jsonLd?: object | object[];
+  jsonLd?: JsonLd | JsonLd[];
 }
 
 const {

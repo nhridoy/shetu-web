@@ -1,6 +1,18 @@
+import type {
+  BreadcrumbList,
+  Organization,
+  SoftwareApplication,
+  TechArticle,
+  Thing,
+  WebSite,
+  WithContext,
+} from 'schema-dts';
 import type { OS } from './platform';
 import type { Release } from './releases';
 import { REPOS } from './site';
+
+/** One schema.org node with its @context, typed by schema-dts. */
+export type JsonLd = WithContext<Thing>;
 
 export const SITE_URL = 'https://terra.iamnahid.com';
 
@@ -83,7 +95,10 @@ const OS_LABELS: Partial<Record<OS, string>> = {
   linux: 'Linux',
 };
 
-export function siteJsonLd(): object[] {
+export function siteJsonLd(): [
+  WithContext<WebSite>,
+  WithContext<Organization>,
+] {
   return [
     {
       '@context': 'https://schema.org',
@@ -102,7 +117,10 @@ export function siteJsonLd(): object[] {
   ];
 }
 
-export function softwareJsonLd(release: Release, os?: OS): object {
+export function softwareJsonLd(
+  release: Release,
+  os?: OS,
+): WithContext<SoftwareApplication> {
   return {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
@@ -111,15 +129,16 @@ export function softwareJsonLd(release: Release, os?: OS): object {
     operatingSystem: (os && OS_LABELS[os]) ?? 'macOS, Windows, Linux',
     softwareVersion: release.tag_name,
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    isAccessibleForFree: true,
     license: 'https://opensource.org/licenses/MIT',
-    codeRepository: REPOS.client,
+    sameAs: REPOS.client,
     downloadUrl: absoluteUrl(os ? `/download/${os}` : '/download'),
   };
 }
 
 export function breadcrumbJsonLd(
   items: { name: string; path: string }[],
-): object {
+): WithContext<BreadcrumbList> {
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -137,7 +156,7 @@ export function techArticleJsonLd(input: {
   description: string;
   path: string;
   updated?: string;
-}): object {
+}): WithContext<TechArticle> {
   return {
     '@context': 'https://schema.org',
     '@type': 'TechArticle',
@@ -150,6 +169,6 @@ export function techArticleJsonLd(input: {
 }
 
 /** JSON for a <script type="application/ld+json"> block; `<` escaped so data cannot close the tag. */
-export function jsonLdScript(data: object): string {
+export function jsonLdScript(data: WithContext<Thing>): string {
   return JSON.stringify(data).replace(/</g, '\\u003c');
 }

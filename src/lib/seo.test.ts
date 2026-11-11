@@ -37,7 +37,7 @@ describe('structured data', () => {
     const crumbs = breadcrumbJsonLd([
       { name: 'Docs', path: '/docs' },
       { name: 'Security', path: '/docs/security' },
-    ]) as { itemListElement: { position: number; item: string }[] };
+    ]) as unknown as { itemListElement: { position: number; item: string }[] };
     expect(crumbs.itemListElement.map((c) => c.position)).toEqual([1, 2]);
     for (const c of crumbs.itemListElement) {
       expect(c.item.startsWith('https://terra.iamnahid.com/')).toBe(true);
@@ -45,7 +45,10 @@ describe('structured data', () => {
   });
 
   it('describes the app as free without a rating', () => {
-    const app = softwareJsonLd(release, 'linux') as Record<string, unknown>;
+    const app = softwareJsonLd(release, 'linux') as unknown as Record<
+      string,
+      unknown
+    >;
     expect((app.offers as { price: string }).price).toBe('0');
     expect(app.operatingSystem).toBe('Linux');
     expect(app.softwareVersion).toBe('v0.0.15');
@@ -55,7 +58,7 @@ describe('structured data', () => {
   it('links the organization to its repositories', () => {
     const org = siteJsonLd().find(
       (node) => (node as { '@type': string })['@type'] === 'Organization',
-    ) as { sameAs: string[] };
+    ) as unknown as { sameAs: string[] };
     expect(org.sameAs).toEqual(Object.values(REPOS));
   });
 });

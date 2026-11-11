@@ -36,7 +36,11 @@ describe('SEO branch review fixes', () => {
   });
 
   it('escapes < in JSON-LD so data cannot close the script tag', () => {
-    const out = jsonLdScript({ name: '</script><script>alert(1)</script>' });
+    const out = jsonLdScript({
+      '@context': 'https://schema.org',
+      '@type': 'Thing',
+      name: '</script><script>alert(1)</script>',
+    });
     expect(out).not.toContain('</script>');
     expect(JSON.parse(out).name).toBe('</script><script>alert(1)</script>');
   });
