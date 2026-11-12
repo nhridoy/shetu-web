@@ -1,69 +1,131 @@
 ---
+// Mirrors the client's sftp/views/SftpPane.tsx: PaneHeader, toolbar, file list, status bar.
 import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowsClockwise,
+  ArrowUp,
   File,
   FileCode,
   Folder,
-  HardDrives,
-  Laptop,
+  GridFour,
+  House,
+  ListDashes,
+  MagnifyingGlass,
 } from '@phosphor-icons/react';
+import PaneHeader from './PaneHeader.astro';
 
 interface Props {
   class?: string;
 }
 
 const { class: className = '' } = Astro.props;
+// Pane titles follow the app: the local folder path, or the host name.
 const panes = [
   {
-    title: 'Local',
-    path: '~/projects/api',
-    Icon: Laptop,
+    title: '/home/me/projects/api',
+    path: ['home', 'me', 'projects', 'api'],
+    remote: false,
     rows: [
-      { name: 'dist', dir: true, size: '', mode: 'drwxr-xr-x' },
-      { name: 'migrations', dir: true, size: '', mode: 'drwxr-xr-x' },
+      { name: 'dist', dir: true, size: '-', date: 'Nov 10' },
+      { name: 'migrations', dir: true, size: '-', date: 'Nov 8' },
       {
         name: 'docker-compose.yml',
         dir: false,
         size: '1.2 KB',
-        mode: '-rw-r--r--',
+        date: 'Nov 11',
       },
-      {
-        name: '.env.production',
-        dir: false,
-        size: '412 B',
-        mode: '-rw-------',
-      },
+      { name: '.env.production', dir: false, size: '412 B', date: 'Oct 29' },
     ],
   },
   {
     title: 'prod-api',
-    path: '/srv/api',
-    Icon: HardDrives,
+    path: ['srv', 'api'],
+    remote: true,
     rows: [
-      { name: 'releases', dir: true, size: '', mode: 'drwxr-xr-x' },
-      { name: 'shared', dir: true, size: '', mode: 'drwxr-x---' },
-      { name: 'Caddyfile', dir: false, size: '688 B', mode: '-rw-r--r--' },
-      { name: 'deploy.sh', dir: false, size: '2.4 KB', mode: '-rwxr-xr-x' },
+      {
+        name: 'releases',
+        dir: true,
+        size: '-',
+        mode: 'drwxr-xr-x',
+        date: 'Nov 11',
+      },
+      {
+        name: 'shared',
+        dir: true,
+        size: '-',
+        mode: 'drwxr-x---',
+        date: 'Sep 2',
+      },
+      {
+        name: 'Caddyfile',
+        dir: false,
+        size: '688 B',
+        mode: '-rw-r--r--',
+        date: 'Oct 14',
+      },
+      {
+        name: 'deploy.sh',
+        dir: false,
+        size: '2.4 KB',
+        mode: '-rwxr-xr-x',
+        date: 'Nov 11',
+      },
     ],
   },
 ];
+const col = 'w-12 shrink-0 text-right';
 ---
 
 <div class:list={['grid grid-cols-1 sm:grid-cols-2', className]}>
-  {panes.map(({ title, path, Icon, rows }, i) => (
-    <div class:list={['min-w-0 p-3 text-[11px]', i === 1 && 'border-t border-line sm:border-t-0 sm:border-l']}>
-      <div class="flex items-center gap-2 text-ink">
-        <Icon size={13} className="text-accent" />
-        <span class="font-semibold">{title}</span>
-        <span class="truncate font-mono text-[10px] text-muted">{path}</span>
+  {panes.map(({ title, path, remote, rows }, i) => (
+    <div
+      class:list={[
+        'flex min-w-0 flex-col bg-terminal text-[11px]',
+        i === 0 && 'ring-1 ring-inset ring-accent/60',
+        i === 1 && 'border-t border-line sm:border-t-0 sm:border-l',
+      ]}
+    >
+      <PaneHeader title={title} active={i === 0} />
+      <div class="space-y-2 p-2.5">
+        <div class="flex items-center gap-2 text-muted">
+          <House size={12} weight="bold" className="shrink-0" />
+          <ArrowLeft size={12} weight="bold" className="hidden shrink-0 @3xl:block" />
+          <ArrowRight size={12} weight="bold" className="hidden shrink-0 @3xl:block" />
+          <ArrowUp size={12} weight="bold" className="shrink-0" />
+          <ArrowsClockwise size={12} weight="bold" className="shrink-0" />
+          <span class="min-w-0 flex-1 truncate rounded border border-line bg-white/[0.04] px-2 py-0.5 font-mono text-[10px] text-ink">
+            {path.map((seg) => <><span class="text-muted">/</span>{seg}</>)}
+          </span>
+        </div>
+        <div class="flex items-center gap-2 text-muted">
+          <span class="flex min-w-0 flex-1 items-center gap-1.5 rounded border border-line bg-white/[0.04] px-2 py-0.5">
+            <MagnifyingGlass size={11} className="shrink-0" />
+            <span class="truncate text-[10px]">Search</span>
+          </span>
+          <span class="flex shrink-0 overflow-hidden rounded bg-white/[0.06]">
+            <span class="bg-accent/30 px-1.5 py-0.5 text-ink"><ListDashes size={11} weight="bold" /></span>
+            <span class="px-1.5 py-0.5"><GridFour size={11} weight="bold" /></span>
+          </span>
+        </div>
       </div>
-      <div class="mt-2.5 space-y-0.5">
+      <div class="flex items-center gap-2 border-b border-line px-4 pb-1 text-[9.5px] text-muted">
+        <span class="flex-1">Name</span>
+        <span class={col}>Size</span>
+        {remote && <span class="hidden w-16 shrink-0 @3xl:inline">Perms</span>}
+        <span class="hidden w-12 shrink-0 @5xl:inline">Modified</span>
+      </div>
+      <div class="flex-1 space-y-0.5 px-2 py-1">
         {rows.map((row, j) => (
           <div
             class:list={[
-              'flex items-center gap-2 rounded-md px-2 py-1.5',
-              i === 0 && j === 2 ? 'bg-accent/15 text-ink ring-1 ring-accent/30' : 'text-muted',
+              'relative flex items-center gap-2 rounded-lg px-2 py-1.5',
+              i === 0 && j === 2 ? 'bg-accent/15 text-ink' : 'text-muted',
             ]}
           >
+            {i === 0 && j === 2 && (
+              <span class="absolute top-1/2 left-0 h-4 w-[3px] -translate-y-1/2 rounded bg-accent"></span>
+            )}
             {row.dir ? (
               <Folder size={12} weight="fill" className="shrink-0 text-accent-2" />
             ) : row.name.endsWith('.sh') || row.name.endsWith('.yml') ? (
@@ -71,11 +133,16 @@ const panes = [
             ) : (
               <File size={12} className="shrink-0" />
             )}
-            <span class="truncate font-mono">{row.name}</span>
-            <span class="ml-auto hidden font-mono text-[9.5px] text-muted md:inline">{row.mode}</span>
-            <span class="w-12 shrink-0 text-right font-mono text-[9.5px] text-muted">{row.size}</span>
+            <span class="flex-1 truncate font-medium">{row.name}</span>
+            <span class:list={[col, 'font-mono text-[9.5px] tabular-nums']}>{row.size}</span>
+            {"mode" in row && <span class="hidden w-16 shrink-0 font-mono text-[9.5px] @3xl:inline">{row.mode}</span>}
+            <span class="hidden w-12 shrink-0 text-[9.5px] tabular-nums @5xl:inline">{row.date}</span>
           </div>
         ))}
+      </div>
+      <div class="flex justify-between border-t border-line px-3 py-1.5 text-[10px] text-muted">
+        <span>{rows.length} items</span>
+        {i === 0 && <span>1 selected</span>}
       </div>
     </div>
   ))}
