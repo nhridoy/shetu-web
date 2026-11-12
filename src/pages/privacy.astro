@@ -4,7 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { PAGES } from '../lib/seo';
 import { REPOS } from '../lib/site';
 
-const updated = 'November 11, 2026';
+const updated = 'November 13, 2026';
 ---
 
 <BaseLayout {...PAGES['/privacy']}>
@@ -43,12 +43,13 @@ const updated = 'November 11, 2026';
         <li>SSH, SFTP and port forwarding connect straight from your device to your hosts. That traffic never passes through our servers.</li>
         <li>Your local database is encrypted on your device. Sign-in secrets are kept in your operating system's keychain.</li>
         <li>The app checks GitHub for updates, which shares your IP address and app version with GitHub.</li>
+        <li>To show profile pictures, the app loads images from <a href="https://gravatar.com">Gravatar</a> using a SHA-256 hash of your email address and of your teammates' email addresses. Gravatar receives that hash and your IP address. If you signed in with Google or GitHub, your picture loads from Google or GitHub instead. Without a picture, the app shows your initials.</li>
       </ul>
 
       <h2>What the sync server stores</h2>
       <p>To create your account and sync your vault, the server stores:</p>
       <ul>
-        <li><strong>Account details:</strong> your email address, your name, how you sign in (password, Google or GitHub), and the account ID from Google or GitHub if you use them.</li>
+        <li><strong>Account details:</strong> your email address, your name, how you sign in (password, Google or GitHub), and, if you sign in with Google or GitHub, your account ID and profile picture link from them.</li>
         <li><strong>Sign-in material:</strong> a password verifier and salts derived on your device, never your password itself, plus your public key and a hash used for account recovery.</li>
         <li><strong>Activity dates:</strong> when you created your account, verified your email and last signed in.</li>
         <li><strong>Devices:</strong> a random ID for each device you sign in on, the app's user agent, and hashed refresh tokens.</li>
@@ -75,7 +76,7 @@ const updated = 'November 11, 2026';
         <li>your email address, which becomes your Shetu account email;</li>
         <li>your name, shown in the app and to members of teams you join;</li>
         <li>your Google account ID, used to recognize you the next time you sign in;</li>
-        <li>your profile picture link, which we discard and do not store.</li>
+        <li>your profile picture link, stored to show your picture in the app and to members of teams you join, and updated each time you sign in with Google.</li>
       </ul>
       <p>
         We use this data only to create your Shetu account and sign you in.
@@ -89,8 +90,8 @@ const updated = 'November 11, 2026';
       </p>
       <p>
         GitHub sign-in works the same way: Shetu asks only for the
-        <code>user:email</code> permission and stores your email, name and
-        GitHub account ID.
+        <code>user:email</code> permission and stores your email, name,
+        profile picture link and GitHub account ID.
       </p>
       <p>
         You can remove Shetu's access at any time from your
