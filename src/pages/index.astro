@@ -10,6 +10,7 @@ import Hero from '../components/marketing/Hero.astro';
 import OpenSourceSection from '../components/marketing/OpenSourceSection.astro';
 import SecurityFlow from '../components/marketing/SecurityFlow.astro';
 import SelfHostSection from '../components/marketing/SelfHostSection.astro';
+import AppSidebar from '../components/mockups/AppSidebar.astro';
 import SftpPanes from '../components/mockups/SftpPanes.astro';
 import ShetuWindow from '../components/mockups/ShetuWindow.astro';
 import TerminalPane from '../components/mockups/TerminalPane.astro';
@@ -17,22 +18,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { latestRelease, loadReleases } from '../lib/changelog';
 import { PAGES, softwareJsonLd } from '../lib/seo';
 
+// Mirrors the client's teams/managers/TeamManager.tsx, seen by the team owner.
 const members = [
-  {
-    name: 'Aisha K.',
-    email: 'aisha@acme.dev',
-    role: 'Owner',
-    color: '#8b7cff',
-  },
-  {
-    name: 'Marco R.',
-    email: 'marco@acme.dev',
-    role: 'Admin',
-    color: '#5b8cff',
-  },
-  { name: 'Lin W.', email: 'lin@acme.dev', role: 'Member', color: '#7ee2a8' },
-  { name: 'Sam T.', email: 'sam@acme.dev', role: 'Member', color: '#f5a524' },
+  { name: 'Aisha K.', email: 'aisha@acme.dev', role: 'owner' },
+  { name: 'Marco R.', email: 'marco@acme.dev', role: 'admin' },
+  { name: 'Lin W.', email: 'lin@acme.dev', role: 'member' },
+  { name: 'Sam T.', email: 'sam@acme.dev', role: 'member' },
 ];
+const teams = [
+  { name: 'Platform', members: 4 },
+  { name: 'Homelab', members: 2 },
+];
+const roleBadge: Record<string, string> = {
+  owner: 'bg-purple-500/20 text-purple-400',
+  admin: 'bg-blue-500/20 text-blue-400',
+  member: 'bg-white/10 text-muted',
+};
 const latest = latestRelease(await loadReleases());
 ---
 
@@ -56,7 +57,7 @@ const latest = latestRelease(await loadReleases());
     ]}
   >
     <p class="sr-only">Shetu SFTP view with a local folder on the left and the prod-api server on the right.</p>
-    <ShetuWindow tab="SFTP" title="prod-api · /srv/api">
+    <ShetuWindow view="SFTP" tabs={['prod-api']}>
       <SftpPanes />
     </ShetuWindow>
   </FeatureShowcase>
@@ -74,15 +75,16 @@ const latest = latestRelease(await loadReleases());
     side="left"
   >
     <p class="sr-only">A saved workspace with three terminals: two servers and a local shell.</p>
-    <ShetuWindow title="release-day">
+    <ShetuWindow tabs={['prod-api', 'staging-web']} workspace="release-day">
       <div class="grid h-[300px] grid-cols-2 grid-rows-2">
         <TerminalPane
-          title="deploy@prod-api"
+          title="prod-api"
+          active
           lines={[{ prompt: 'prod-api$', cmd: 'systemctl status api', out: ['● api.service: active (running)'] }]}
           class="row-span-2 border-r border-line"
         />
         <TerminalPane
-          title="postgres@prod-db-01"
+          title="prod-db-01"
           lines={[{ prompt: 'db-01$', cmd: 'pg_isready', out: ['accepting connections'] }]}
           class="border-b border-line"
         />
@@ -105,38 +107,65 @@ const latest = latestRelease(await loadReleases());
       'Remove someone, then rotate the vault key in one click',
     ]}
   >
-    <p class="sr-only">Shetu team view listing four members with owner, admin and member roles.</p>
-    <ShetuWindow title="Team · Platform">
-      <div class="p-4 text-[12px]">
-        <div class="flex items-center justify-between">
-          <p class="font-semibold text-ink">Platform team</p>
-          <span class="rounded-md border border-line px-2 py-1 text-[11px] text-muted">+ Invite</span>
-        </div>
-        <div class="mt-3 space-y-1.5">
-          {members.map((m) => (
-            <div class="flex items-center gap-3 rounded-lg border border-line bg-white/[0.02] px-3 py-2">
-              <span class="grid h-7 w-7 place-items-center rounded-full text-[11px] font-bold text-paper" style={`background:${m.color}`}>
-                {m.name[0]}
-              </span>
-              <div class="min-w-0">
-                <p class="text-ink">{m.name}</p>
-                <p class="truncate font-mono text-[10px] text-muted">{m.email}</p>
-              </div>
-              <span
-                class:list={[
-                  'ml-auto rounded-full border px-2 py-0.5 font-mono text-[10px]',
-                  m.role === 'Owner' ? 'border-accent/40 bg-accent-wash text-ink' : 'border-line text-muted',
-                ]}
-              >
-                {m.role}
-              </span>
+    <p class="sr-only">Shetu Teams page showing the Platform team and its four members with owner, admin and member roles.</p>
+    <ShetuWindow view="Vaults">
+      <div class="flex text-[11px]">
+        <AppSidebar active="Teams" class="hidden @4xl:flex" />
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center justify-between border-b border-line px-3 py-2.5">
+            <p class="text-[13px] font-semibold text-ink">Teams</p>
+            <span class="rounded-md bg-accent px-2 py-1 font-medium text-paper">+ New Team</span>
+          </div>
+          <div class="flex">
+            <div class="hidden w-32 shrink-0 border-r border-line @xl:block">
+              {teams.map((team, i) => (
+                <div
+                  class:list={[
+                    'flex items-center gap-2 border-b border-line p-2',
+                    i === 0 && 'border-l-2 border-l-accent bg-accent/20',
+                  ]}
+                >
+                  <span class="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-white/10 font-medium text-ink">{team.name[0]}</span>
+                  <span class="min-w-0">
+                    <span class="block truncate font-medium text-ink">{team.name}</span>
+                    <span class="block text-[10px] text-muted">{team.members} members</span>
+                  </span>
+                </div>
+              ))}
             </div>
-          ))}
+            <div class="min-w-0 flex-1 p-3">
+              <div class="flex items-center justify-between gap-2">
+                <p class="text-[15px] font-bold text-ink">Platform</p>
+                <span class="flex shrink-0 gap-1.5">
+                  <span class="hidden rounded-md px-2 py-1 text-ink @2xl:inline">Rename</span>
+                  <span class="rounded-md bg-accent px-2 py-1 font-medium text-paper">Invite Member</span>
+                  <span class="hidden rounded-md bg-red-600 px-2 py-1 font-medium text-white @3xl:inline">Delete Team</span>
+                </span>
+              </div>
+              <div class="mt-3 rounded-lg bg-white/[0.04] p-3">
+                <p class="font-medium text-ink">Members ({members.length})</p>
+                <div class="mt-2 space-y-1.5">
+                  {members.map((m) => (
+                    <div class="flex items-center gap-2.5 rounded-lg bg-white/[0.05] px-2.5 py-2">
+                      <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white/10 text-ink">{m.name[0]}</span>
+                      <span class="min-w-0 flex-1">
+                        <span class="block truncate text-ink">{m.name}</span>
+                        <span class="block truncate text-[10px] text-muted">{m.email}</span>
+                      </span>
+                      <span class:list={['rounded px-2 py-0.5 text-[10px]', roleBadge[m.role]]}>{m.role}</span>
+                      {m.role !== 'owner' && (
+                        <span class="hidden items-center gap-1.5 @2xl:flex">
+                          <span class="rounded border border-line px-1.5 py-0.5 text-[10px] text-muted">{m.role === 'admin' ? 'Admin' : 'Member'} ▾</span>
+                          <span class="text-muted">×</span>
+                        </span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <p class="mt-3 flex items-center gap-2 font-mono text-[10.5px] text-muted">
-          <span class="h-1.5 w-1.5 rounded-full bg-terminal-text"></span>
-          Vault key sealed to 4 members
-        </p>
       </div>
     </ShetuWindow>
   </FeatureShowcase>

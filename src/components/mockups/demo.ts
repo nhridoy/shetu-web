@@ -1,10 +1,7 @@
 // Fictional demo data for the coded app mockups. No real hosts or users.
 export interface DemoHost {
   name: string;
-  user: string;
-  os: 'ubuntu' | 'debian' | 'alpine' | 'macos' | 'freebsd';
   color: string;
-  online: boolean;
 }
 
 export const DEMO_GROUPS: { name: string; hosts: DemoHost[] }[] = [
@@ -13,24 +10,15 @@ export const DEMO_GROUPS: { name: string; hosts: DemoHost[] }[] = [
     hosts: [
       {
         name: 'prod-api',
-        user: 'deploy',
-        os: 'ubuntu',
         color: '#8b7cff',
-        online: true,
       },
       {
         name: 'prod-db-01',
-        user: 'postgres',
-        os: 'debian',
         color: '#5b8cff',
-        online: true,
       },
       {
         name: 'edge-sg',
-        user: 'root',
-        os: 'alpine',
         color: '#f5a524',
-        online: true,
       },
     ],
   },
@@ -39,17 +27,11 @@ export const DEMO_GROUPS: { name: string; hosts: DemoHost[] }[] = [
     hosts: [
       {
         name: 'staging-web',
-        user: 'deploy',
-        os: 'ubuntu',
         color: '#7ee2a8',
-        online: true,
       },
       {
         name: 'ci-runner',
-        user: 'ci',
-        os: 'debian',
         color: '#f472b6',
-        online: false,
       },
     ],
   },
@@ -58,17 +40,11 @@ export const DEMO_GROUPS: { name: string; hosts: DemoHost[] }[] = [
     hosts: [
       {
         name: 'nas',
-        user: 'admin',
-        os: 'freebsd',
         color: '#e5484d',
-        online: true,
       },
       {
         name: 'mac-mini',
-        user: 'me',
-        os: 'macos',
         color: '#9a9aae',
-        online: true,
       },
     ],
   },

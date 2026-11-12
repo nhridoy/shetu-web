@@ -1,0 +1,63 @@
+---
+// Mirrors the client's layout/shell/AppSidebar.tsx. The app shows it on Vault pages only.
+import {
+  ClockCounterClockwise,
+  DesktopTower,
+  FileText,
+  FolderOpen,
+  GearSix,
+  Key,
+  SignOut,
+  User,
+  Users,
+} from '@phosphor-icons/react';
+
+interface Props {
+  active?: 'Hosts' | 'Workspaces' | 'Snippets' | 'Keys' | 'History' | 'Teams';
+  class?: string;
+}
+
+const { active = 'Hosts', class: className = '' } = Astro.props;
+const nav = [
+  { label: 'Hosts', Icon: DesktopTower },
+  { label: 'Workspaces', Icon: FolderOpen },
+  { label: 'Snippets', Icon: FileText },
+  { label: 'Keys', Icon: Key },
+  { label: 'History', Icon: ClockCounterClockwise },
+  { label: 'Teams', Icon: Users },
+] as const;
+const row = 'flex items-center gap-2 rounded-md px-2 py-1.5';
+---
+
+<aside class:list={['w-44 shrink-0 flex-col border-r border-line bg-[#0b0b10] text-[11.5px]', className]}>
+  <div class="flex-1 px-2">
+    <p class="px-2 pt-3 pb-1 text-[10px] font-semibold text-muted">Vault</p>
+    {nav.map(({ label, Icon }) => (
+      <div
+        class:list={[
+          row,
+          label === active ? 'bg-accent/20 font-semibold text-ink' : 'text-muted',
+        ]}
+      >
+        <Icon size={13} className="shrink-0 text-accent" />
+        {label}
+      </div>
+    ))}
+  </div>
+  <div class="space-y-1 border-t border-line p-2">
+    <div class:list={[row, 'text-muted']}>
+      <GearSix size={13} className="shrink-0 text-accent" />
+      Settings
+    </div>
+    <div class="flex items-center gap-2 px-2 py-1">
+      <span class="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-accent/20">
+        <User size={10} className="text-accent" />
+      </span>
+      <span class="min-w-0 flex-1">
+        <span class="block truncate text-ink">Aisha K.</span>
+        <span class="block truncate text-[9.5px] text-muted">aisha@acme.dev</span>
+      </span>
+      <SignOut size={11} className="shrink-0 text-muted" />
+    </div>
+  </div>
+</aside>

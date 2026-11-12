@@ -1,0 +1,48 @@
+---
+// Mirrors the client's components/ui/PaneHeader.tsx.
+import {
+  ArrowsLeftRight,
+  ArrowsOutSimple,
+  DotsSixVertical,
+  SplitHorizontal,
+  SplitVertical,
+  X,
+} from '@phosphor-icons/react';
+
+interface Props {
+  title: string;
+  active?: boolean;
+  /** Only pane in its tab: the app hides drag, focus and close. */
+  solo?: boolean;
+  /** Terminal panes show a connection dot; SFTP panes do not. */
+  status?: boolean;
+  /** Remote terminal panes get the port forwarding button. */
+  forward?: boolean;
+}
+
+const {
+  title,
+  active = false,
+  solo = false,
+  status = false,
+  forward = false,
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    'flex h-7 shrink-0 items-center gap-2 border-b border-line px-2 text-[10.5px] text-muted',
+    active ? 'bg-white/[0.06]' : 'bg-[#0b0b10]',
+  ]}
+>
+  {status && <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-terminal-text"></span>}
+  {!solo && <DotsSixVertical size={11} className="shrink-0" />}
+  <span class="flex-1 truncate">{title}</span>
+  <span class="hidden items-center gap-2.5 sm:flex">
+    {!solo && <ArrowsOutSimple size={11} weight="bold" />}
+    <SplitHorizontal size={11} weight="bold" />
+    <SplitVertical size={11} weight="bold" />
+    {forward && <ArrowsLeftRight size={11} weight="bold" />}
+    {!solo && <X size={11} weight="bold" />}
+  </span>
+</div>

@@ -30,9 +30,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
       <div class="relative">
         <div class="glow-beam pointer-events-none absolute -inset-8 opacity-60" aria-hidden="true"></div>
-        <ShetuWindow title="ssh" class="relative">
+        <ShetuWindow tabs={['Local']} class="relative">
           <TerminalPane
-            title="me@laptop"
+            title="Local"
+            active
+            solo
             lines={[
               {
                 prompt: 'me@laptop:~$',

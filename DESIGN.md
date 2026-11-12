@@ -70,7 +70,7 @@ Satoshi loads from the Fontshare CDN (its license forbids redistributing the fil
 ## Components
 
 - **Logo** `src/components/brand/Logo.astro`: the desktop app icon (shetu-client `src-tauri/icons/icon.svg`, margin trimmed) served from `public/favicon.svg`, plus `public/favicon.ico`. Update both when the app icon changes.
-- **Mockups** `src/components/mockups/`: `ShetuWindow` (app chrome, container-query responsive), `HostSidebar`, `TerminalPane` (optional typing animation), `SftpPanes`, demo data in `demo.ts`. All are `aria-hidden` with an `sr-only` sentence beside them.
+- **Mockups** `src/components/mockups/`: `ShetuWindow` (app chrome, container-query responsive), `AppSidebar` (Vault sidebar), `PaneHeader` (pane controls), `TerminalPane` (optional typing animation), `SftpPanes`, demo data in `demo.ts`. Each mirrors the shetu-client component of the same role, so check the client before changing a mockup's layout or labels. All are `aria-hidden` with an `sr-only` sentence beside them.
 - **Panels** `.panel`, hover lift `.lift`, buttons `.btn-primary` / `.btn-ghost`, links `.link`.
 - **PageHeader** `src/components/ui/PageHeader.astro`: shared header for inner pages.
 - **Share images** `src/lib/og.ts`: 1200x630, near-black with violet/blue glows, app icon and "Shetu" top left, page title (brand suffix removed) and description below, `shetu.iamnahid.com` in accent. One per page, generated at build.
