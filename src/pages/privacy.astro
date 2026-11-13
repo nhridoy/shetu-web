@@ -43,7 +43,7 @@ const updated = 'November 13, 2026';
         <li>SSH, SFTP and port forwarding connect straight from your device to your hosts. That traffic never passes through our servers.</li>
         <li>Your local database is encrypted on your device. Sign-in secrets are kept in your operating system's keychain.</li>
         <li>The app checks GitHub for updates, which shares your IP address and app version with GitHub.</li>
-        <li>To show profile pictures, the app loads images from <a href="https://gravatar.com">Gravatar</a> using a SHA-256 hash of your email address and of your teammates' email addresses. Gravatar receives that hash and your IP address. If you signed in with Google or GitHub, your picture loads from Google or GitHub instead. Without a picture, the app shows your initials.</li>
+        <li>To show profile pictures for you and your teammates, the app loads images from Google or GitHub for people who signed in with them, and otherwise from <a href="https://gravatar.com">Gravatar</a> using a SHA-256 hash of the person's email address. Each image request shares your IP address with that service, and Gravatar also receives the email hash. Without a picture, the app shows initials.</li>
       </ul>
 
       <h2>What the sync server stores</h2>
@@ -79,10 +79,12 @@ const updated = 'November 13, 2026';
         <li>your profile picture link, stored to show your picture in the app and to members of teams you join, and updated each time you sign in with Google.</li>
       </ul>
       <p>
-        We use this data only to create your Shetu account and sign you in.
-        The Google access token is used once during sign-in and is not stored.
-        We do not access your Gmail, Drive, contacts or any other Google data,
-        do not sell or share Google user data, do not use it for advertising,
+        We use this data only to create your Shetu account, sign you in, and
+        show your name and profile picture in the app and to members of teams
+        you join. The Google access token is used once during sign-in and is
+        not stored. We do not access your Gmail, Drive, contacts or any other
+        Google data, do not sell Google user data or share it with anyone
+        other than those team members, do not use it for advertising,
         and do not use it to train AI models. Shetu's use of information
         received from Google APIs adheres to the
         <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>,
@@ -108,7 +110,8 @@ const updated = 'November 13, 2026';
       </p>
       <ul>
         <li>providers that host the service or deliver its email, only as needed to do that;</li>
-        <li>other members of a team you join, who can see your name, email and the vaults you share with them;</li>
+        <li>Google, GitHub and Gravatar, when the app loads profile pictures from them, as described under "The desktop app" above;</li>
+        <li>other members of a team you join, who can see your name, email, profile picture and the vaults you share with them;</li>
         <li>authorities, when the law requires it.</li>
       </ul>
       <p>
