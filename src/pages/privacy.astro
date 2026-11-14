@@ -4,7 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { PAGES } from '../lib/seo';
 import { REPOS } from '../lib/site';
 
-const updated = 'November 13, 2026';
+const updated = 'November 14, 2026';
 ---
 
 <BaseLayout {...PAGES['/privacy']}>
@@ -124,18 +124,34 @@ const updated = 'November 13, 2026';
         We keep your account data for as long as your account exists. When you
         delete a record, the server keeps a small deletion marker so your other
         devices learn about the change. Expired refresh tokens and request logs
-        are not kept longer than needed to run and secure the service.
+        are not kept longer than needed to run and secure the service. If you
+        delete your account, our daily cleanup erases everything once the
+        scheduled date (30 days later) has passed, except your account's random
+        ID and the date it was deleted. Signing in during those 30 days does not
+        cancel the deletion by itself; you must choose "Keep my account".
       </p>
 
       <h2>Your choices and rights</h2>
       <ul>
         <li>You can edit or delete your hosts, keys, snippets and other records in the app at any time.</li>
-        <li>You can ask us to delete your account and everything stored with it, or for a copy of the account details we hold.</li>
+        <li>You can delete your account yourself in the app: Settings → Security → Delete account.</li>
+        <li>You can ask us for a copy of the account details we hold.</li>
         <li>Depending on where you live, you may have further rights, such as to correct your data or object to how we use it. Ask and we will help.</li>
       </ul>
       <p>
-        The app does not have a self-service account deletion button yet. To
-        make a request, <a href={`${REPOS.monorepo}/issues/new`}>open an issue on GitHub</a>
+        When you delete your account, it is scheduled for deletion 30 days later
+        and you are signed out on this device. Your other devices sign out and
+        erase their local copy after they contact the server and it confirms that
+        your account is scheduled for deletion or has been deleted. To cancel,
+        sign in again within those 30 days and choose "Keep my account". After the
+        scheduled date, our daily cleanup erases your account, your encrypted vault
+        and everything in it, and any teams you own together with their shared
+        vaults; you are removed from other teams. We keep only your account's
+        random ID and the date it was deleted, so devices that were offline can
+        still be told to erase their copy.
+      </p>
+      <p>
+        For other requests, <a href={`${REPOS.monorepo}/issues/new`}>open an issue on GitHub</a>
         titled "Privacy request". Do not put your email address or other
         personal details in the issue, since issues are public. We will reply
         there to confirm your identity privately.
